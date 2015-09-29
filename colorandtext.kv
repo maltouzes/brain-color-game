@@ -6,29 +6,42 @@
         size_hint_y: None
         height: 200
         text: root.text
+    Label:
+        id: points
+        font_size: 20
+        sinze_hint_y: None
+        text: str(root.points_str)
     BoxLayout:
         Button:
             id: bt1
-            text: root.texts[0] 
+            text: root.texts[0]
             color: root.colors[0]
             font_size: 40
+            on_press: root.ask()
             on_press: root.start()
+            on_press: root.count_points(0)
         Button:
             id: bt2
             text: root.texts[1]
             color: root.colors[1]
             font_size: 40
+            on_press: root.ask()
             on_press: root.start()
+            on_press: root.count_points(1)
     BoxLayout:
         Button:
             id: bt3
             text: root.texts[2]
             color: root.colors[2]
             font_size: 40
+            on_press: root.ask()
             on_press: root.start()
+            on_press: root.count_points(2)
         Button:
             id: bt4
             text: root.texts[3]
             color: root.colors[3]
             font_size: 40
+            on_press: root.ask()
             on_press: root.start()
+            on_press: root.count_points(3)

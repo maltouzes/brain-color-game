@@ -9,22 +9,28 @@ import random
 class BoxLayoutGame(BoxLayout):
     """ BoxLayout called by kivy """
 
-    text = 'Cliquez pour commencer'
+    text = 'Push a button for start'
+
+# Color: red, green, blue and yellow
     colour1 = [1, 0, 0, 1]
     colour2 = [0, 1, 0, 1]
     colour3 = [0, 0, 1, 1]
     colour4 = [1, 1, 0, 1]
 
-    text1 = 'rouge'
-    text2 = 'vert'
-    text3 = 'bleu'
-    text4 = 'jaune'
+    text1 = 'red'
+    text2 = 'green'
+    text3 = 'blue'
+    text4 = 'yellow'
 
     colors = [colour1, colour2, colour3, colour4]
-
     texts = [text1, text2, text3, text4]
 
-    def start(self, *args):
+    number_random = 0
+# Used for count points
+    points = -1
+    points_str = ""
+
+    def start(self):
         """ on_click start this method """
         random.shuffle(self.colors)
         random.shuffle(self.texts)
@@ -42,14 +48,25 @@ class BoxLayoutGame(BoxLayout):
         color4.color = self.colors[3]
         color4.text = self.texts[3]
 
-        print self.colors
-        print self.texts
-
+    def ask(self):
+        """ update question text """
         welcome = self.ids['welcome_text']
-        number_random = random.randint(0, 3)
-        print number_random
-        self.text = 'Cliquez sur le bouton ' + str(self.texts[number_random])
+        self.number_random = random.randint(0, 3)
+        print self.number_random
+        self.text = 'Push the butlton ' +\
+                    str(self.texts[self.number_random])
         welcome.text = self.text
+
+    def count_points(self, nbr):
+        """ Count the points """
+        print self.colors[nbr]
+        print self.colors[self.number_random]
+        if self.colors[nbr] == self.colors[self.number_random]:
+            self.points += 1
+            points_kv = self.ids['points']
+            points_kv.text = str(self.points)
+        else:
+            pass
 
 
 class ColorAndTextApp(App):
