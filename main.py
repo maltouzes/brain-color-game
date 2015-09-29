@@ -53,7 +53,7 @@ class BoxLayoutGame(BoxLayout):
         welcome = self.ids['welcome_text']
         self.number_random = random.randint(0, 3)
         print self.number_random
-        self.text = 'Push the butlton ' +\
+        self.text = 'Push the button ' +\
                     str(self.texts[self.number_random])
         welcome.text = self.text
 
