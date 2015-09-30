@@ -27,7 +27,8 @@ class BoxLayoutGame(BoxLayout):
 
     number_random = 0
 # Used for count points
-    points = -1
+    points = 0
+    no_points = 0
     points_str = ""
 
     def start(self):
@@ -61,12 +62,17 @@ class BoxLayoutGame(BoxLayout):
         """ Count the points """
         print self.colors[nbr]
         print self.colors[self.number_random]
-        if self.colors[nbr] == self.colors[self.number_random]:
-            self.points += 1
-            points_kv = self.ids['points']
-            points_kv.text = str(self.points)
+        points_kv = self.ids['points']
+        if self.points_str == "":
+            self.points_str = " "
+            print 'start'
         else:
-            pass
+            if self.colors[nbr] == self.colors[self.number_random]:
+                self.points += 1
+            else:
+                self.no_points += 1
+            points_kv.text = "Points " + str(self.points) +\
+                             "   Miss " + str(self.no_points)
 
 
 class ColorAndTextApp(App):
