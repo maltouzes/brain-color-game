@@ -25,11 +25,14 @@ class BoxLayoutGame(BoxLayout):
     colors = [colour1, colour2, colour3, colour4]
     texts = [text1, text2, text3, text4]
 
+    texts_test = ""
     number_random = 0
 # Used for count points
     points = 0
     no_points = 0
     points_str = ""
+
+    mode_game = "color"
 
     def start(self):
         """ on_click start this method """
@@ -53,26 +56,47 @@ class BoxLayoutGame(BoxLayout):
         """ update question text """
         welcome = self.ids['welcome_text']
         self.number_random = random.randint(0, 3)
-        print self.number_random
         self.text = 'Push the button ' +\
                     str(self.texts[self.number_random])
         welcome.text = self.text
 
     def count_points(self, nbr):
         """ Count the points """
-        print self.colors[nbr]
-        print self.colors[self.number_random]
         points_kv = self.ids['points']
         if self.points_str == "":
             self.points_str = " "
-            print 'start'
         else:
-            if self.colors[nbr] == self.colors[self.number_random]:
-                self.points += 1
+            if self.mode_game == "color":
+                self.color_name_to_rgb(self.texts[self.number_random])
+                if self.colors[nbr] == self.texts_test:
+                    self.points += 1
+                else:
+                    self.no_points += 1
+                points_kv.text = "Points " + str(self.points) +\
+                                 "   Miss " + str(self.no_points)
+            elif self.mode_game == "text":
+                if nbr == self.number_random:
+                    self.points += 1
+                else:
+                    self.no_points += 1
+                points_kv.text = "Points " + str(self.points) +\
+                                 "   Miss " + str(self.no_points)
             else:
-                self.no_points += 1
-            points_kv.text = "Points " + str(self.points) +\
-                             "   Miss " + str(self.no_points)
+                pass
+
+    def color_name_to_rgb(self, name):
+        """ Change a name color to a rgb color """
+        if name == 'red':
+            name = [1, 0, 0, 1]
+        elif name == 'green':
+            name = [0, 1, 0, 1]
+        elif name == 'blue':
+            name = [0, 0, 1, 1]
+        elif name == 'yellow':
+            name = [1, 1, 0, 1]
+        else:
+            pass
+        self.texts_test = name
 
 
 class ColorAndTextApp(App):
