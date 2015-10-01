@@ -32,10 +32,12 @@ class BoxLayoutGame(BoxLayout):
     no_points = 0
     points_str = ""
 
-    mode_game = "color"
+    mode_game = "Colours Mode"
 
     def start(self):
         """ on_click start this method """
+        mode_game_kv = self.ids['spinner_game']
+        self.mode_game = mode_game_kv.text
         random.shuffle(self.colors)
         random.shuffle(self.texts)
 
@@ -66,7 +68,7 @@ class BoxLayoutGame(BoxLayout):
         if self.points_str == "":
             self.points_str = " "
         else:
-            if self.mode_game == "color":
+            if self.mode_game == "Colours Mode":
                 self.color_name_to_rgb(self.texts[self.number_random])
                 if self.colors[nbr] == self.texts_test:
                     self.points += 1
@@ -74,7 +76,7 @@ class BoxLayoutGame(BoxLayout):
                     self.no_points += 1
                 points_kv.text = "Points " + str(self.points) +\
                                  "   Miss " + str(self.no_points)
-            elif self.mode_game == "text":
+            elif self.mode_game == "Text Mode":
                 if nbr == self.number_random:
                     self.points += 1
                 else:
