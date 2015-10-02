@@ -1,3 +1,4 @@
+__version__ = '0.1'
 """ A simple Color Game make with kivy """
 
 from kivy.app import App
