@@ -94,16 +94,21 @@ class BoxLayoutGame(BoxLayout):
                 pass
 
     def restart(self):
+        """ Restart the game in another mode  """
         mode_game_kv = self.ids['spinner_game']
         self.points_kv = self.ids['points']
         if mode_game_kv.text != self.mode_game:
             self.points = 0
-            self.no_points = -1
+            self.no_points = 0
             self.points_kv.text = "Push a button for start"
             if self.mode_game == "Colours Mode":
                 self.text = "Start Text Mode"
+                self.points_str = ""
+                self.points_kv.text = "Push on the good text"
             elif self.mode_game == "Text Mode":
                 self.text = "Start Colours Mode"
+                self.points_str = ""
+                self.points_kv.text = "Push on the Good Color"
             else:
                 pass
             self.mode_game = mode_game_kv.text
