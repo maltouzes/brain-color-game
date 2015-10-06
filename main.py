@@ -1,14 +1,22 @@
-__version__ = '0.1'
 """ A simple Color Game make with kivy """
+__version__ = '0.2.2'
 
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.button import Button
+from kivy.properties import ListProperty
+from kivy.properties import ObjectProperty
+from kivy.core.audio import SoundLoader
+from kivy.uix.spinner import Spinner
 
 import random
 
 
 class BoxLayoutGame(BoxLayout):
     """ BoxLayout called by kivy """
+    sound = SoundLoader.load('Single_Ply_Prison_Mastered.ogg')
+    sound.loop = True
+    # sound.play()
 # Text when the game start
     text = 'Push a button for start'
 
@@ -33,6 +41,8 @@ class BoxLayoutGame(BoxLayout):
     points = 0
     no_points = 0
     points_str = ""
+    points_kv = ""
+
 # Choose the game mode, by default: Colours Mode
     mode_game = "Colours Mode"
 
@@ -43,18 +53,18 @@ class BoxLayoutGame(BoxLayout):
         random.shuffle(self.colors)
         random.shuffle(self.texts)
 # Kivy buttons text
-        color1 = self.ids['bt1']
-        color1.color = self.colors[0]
-        color1.text = self.texts[0]
-        color2 = self.ids['bt2']
-        color2.text = self.texts[1]
-        color2.color = self.colors[1]
-        color3 = self.ids['bt3']
-        color3.color = self.colors[2]
-        color3.text = self.texts[2]
-        color4 = self.ids['bt4']
-        color4.color = self.colors[3]
-        color4.text = self.texts[3]
+        bt1 = self.ids['bt1']
+        bt1.color = self.colors[0]
+        bt1.text = self.texts[0]
+        bt2 = self.ids['bt2']
+        bt2.text = self.texts[1]
+        bt2.color = self.colors[1]
+        bt3 = self.ids['bt3']
+        bt3.color = self.colors[2]
+        bt3.text = self.texts[2]
+        bt4 = self.ids['bt4']
+        bt4.color = self.colors[3]
+        bt4.text = self.texts[3]
 
     def ask(self):
         """ update question text """
@@ -67,9 +77,9 @@ class BoxLayoutGame(BoxLayout):
 
     def count_points(self, nbr):
         """ Count the points """
-        points_kv = self.ids['points']
+        self.points_kv = self.ids['points']
 # Start the Game now
-        if self.points_str == "":
+        if not self.points_str:
             self.points_str = " "
         else:
             # Game already started: Count points (depends on the Game mode)
@@ -78,18 +88,22 @@ class BoxLayoutGame(BoxLayout):
                 self.color_name_to_rgb(self.texts[self.number_random])
                 if self.colors[nbr] == self.texts_test:
                     self.points += 1
+                    self.sound_points_play()
                 else:
                     self.no_points += 1
-                points_kv.text = "Points " + str(self.points) +\
-                                 "   Miss " + str(self.no_points)
+                    BoxLayoutGame.sound_miss_play()
+                self.points_kv.text = "Points " + str(self.points) +\
+                                      "   Miss " + str(self.no_points)
             elif self.mode_game == "Text Mode":
                 # Text Mode
                 if nbr == self.number_random:
                     self.points += 1
+                    self.sound_points_play()
                 else:
                     self.no_points += 1
-                points_kv.text = "Points " + str(self.points) +\
-                                 "   Miss " + str(self.no_points)
+                    BoxLayoutGame.sound_miss_play()
+                self.points_kv.text = "Points " + str(self.points) +\
+                                      "   Miss " + str(self.no_points)
             else:
                 pass
 
@@ -112,6 +126,8 @@ class BoxLayoutGame(BoxLayout):
             else:
                 pass
             self.mode_game = mode_game_kv.text
+            self.sound.stop()
+            self.sound.play()
         else:
             pass
 
@@ -129,6 +145,45 @@ class BoxLayoutGame(BoxLayout):
         else:
             pass
         self.texts_test = name
+
+    @staticmethod
+    def sound_miss_play():
+        """ If no points: play miss sound """
+        sound1 = SoundLoader.load('miss.ogg')
+        sound1.play()
+
+    @staticmethod
+    def sound_points_play():
+        """ If points: play point sound """
+        sound1 = SoundLoader.load('points.ogg')
+        sound1.play()
+
+    @staticmethod
+    def sound_play():
+        """ When change mode (spinner): play point sound """
+        sound1 = SoundLoader.load('change.ogg')
+        sound1.play()
+
+    def spinner_restart(self):
+        """ Restart all text when click on spinner """
+        welcome = self.ids['welcome_text']
+        welcome.text = "Please push a button for start"
+        points_kv = self.ids['points']
+        self.points_str = ""
+        points_kv.text = self.points_str
+        self.no_points = 0
+        self.points = 0
+
+
+class MyButton(Button):
+    """ Custom Spinner Button """
+    pass
+
+
+class MySpinner(Spinner):
+    """ Custom Spinner """
+    option_cls = ObjectProperty(MyButton)
+    values = ListProperty()
 
 
 class ColorAndTextApp(App):
