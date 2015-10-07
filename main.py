@@ -1,5 +1,5 @@
 """ A simple Color Game make with kivy """
-__version__ = '0.2.2'
+__version__ = '0.2.4'
 
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
@@ -16,7 +16,7 @@ class BoxLayoutGame(BoxLayout):
     """ BoxLayout called by kivy """
     sound = SoundLoader.load('Single_Ply_Prison_Mastered.ogg')
     sound.loop = True
-    # sound.play()
+    sound.play()
 # Text when the game start
     text = 'Push a button for start'
 
@@ -126,8 +126,6 @@ class BoxLayoutGame(BoxLayout):
             else:
                 pass
             self.mode_game = mode_game_kv.text
-            self.sound.stop()
-            self.sound.play()
         else:
             pass
 
@@ -173,11 +171,17 @@ class BoxLayoutGame(BoxLayout):
         points_kv.text = self.points_str
         self.no_points = 0
         self.points = 0
+        self.sound.stop()
+        self.sound.play()
 
 
 class MyButton(Button):
     """ Custom Spinner Button """
-    pass
+    @staticmethod
+    def sound():
+        """ Play a sound when call by MyButton: kv file """
+        sound_valid = SoundLoader.load("validation.ogg")
+        sound_valid.play()
 
 
 class MySpinner(Spinner):
