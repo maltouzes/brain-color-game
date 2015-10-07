@@ -1,5 +1,5 @@
 """ A simple Color Game make with kivy """
-__version__ = '0.2.4'
+__version__ = '0.2.5'
 
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
@@ -8,6 +8,8 @@ from kivy.properties import ListProperty
 from kivy.properties import ObjectProperty
 from kivy.core.audio import SoundLoader
 from kivy.uix.spinner import Spinner
+from kivy.clock import Clock
+from kivy.uix.popup import Popup
 
 import random
 
@@ -190,9 +192,30 @@ class MySpinner(Spinner):
     values = ListProperty()
 
 
+class PopupWelcome(BoxLayout):
+    """ ok """
+    cancel = ObjectProperty(None)
+
+
 class ColorAndTextApp(App):
     """ Kivy App """
+    _popup = ObjectProperty(None)
+
+    def show_popup(self, dt):
+        """ Welcome popup  """
+        PopupWelcome.text = "Please choose a mode"
+        content = PopupWelcome(cancel=self.dismiss_popup)
+        self._popup = Popup(title="Brain Color Game",
+                            content=content,
+                            size_hint=(1, 1))
+        self._popup.open()
+
+    def dismiss_popup(self):
+        """ Used for dismiss_PopupWelcome """
+        self._popup.dismiss()
+
     def build(self):
+        Clock.schedule_once(self.show_popup, 0)
         return BoxLayoutGame()
 
 

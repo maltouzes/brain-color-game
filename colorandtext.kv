@@ -1,3 +1,5 @@
+#:kivy 1.9.0
+
 <BoxLayoutGame>:
     orientation: 'vertical'
     MySpinner:
@@ -21,7 +23,8 @@
         size_hint_y: None
         height: 100
         text: str(root.points_str)
-    BoxLayout:
+    GridLayout:
+        cols: 2
         Button:
             id: bt1
             text: root.texts[0]
@@ -31,12 +34,6 @@
             on_press: root.ask()
             on_press: root.start()
             on_press: root.count_points(0)
-            # Image:
-                # source: 'image.JPG'
-                # opacity: 0.4
-                # center_x: self.parent.center_x
-                # center_y: self.parent.center_y
-                # size: self.parent.size
         Button:
             id: bt2
             text: root.texts[1]
@@ -46,7 +43,6 @@
             on_press: root.ask()
             on_press: root.start()
             on_press: root.count_points(1)
-    BoxLayout:
         Button:
             id: bt3
             text: root.texts[2]
@@ -66,7 +62,31 @@
             on_press: root.start()
             on_press: root.count_points(3)
 
-<MyButton>
+<MyButton>:
     background_color: [0.76, 0.255, 0.7, 1]
     size_hint: 1, None
     on_press: root.sound()
+
+<PopupWelcome>:
+    orientation: 'vertical'
+    BoxLayout:
+        pos: root.size
+        Label:
+            text: root.text
+            font_size: 40
+            Image:
+                source: 'icon.png'
+                opacity: 0.4
+                center_x: self.parent.center_x
+                center_y: self.parent.center_y
+                size: self.parent.size
+    BoxLayout:
+        size_hint_y: None
+        Button:
+            background_color: [0.76, 0.255, 0.7, 1]
+            text: "Colours Mode"
+            on_press: root.cancel()
+        Button:
+            background_color: [0.76, 0.255, 0.7, 1]
+            text: "Text Mode"
+            on_press: root.cancel()
