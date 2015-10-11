@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """ A simple Color Game make with kivy """
-__version__ = '0.2.19'
+__version__ = '0.2.21'
 
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
@@ -11,11 +11,11 @@ from kivy.core.audio import SoundLoader
 from kivy.uix.spinner import Spinner
 from kivy.clock import Clock
 from kivy.uix.popup import Popup
-from kivy.core.window import Window
+# from kivy.core.window import Window
 from plyer import vibrator
 
 import random
-import platform
+# import platform
 import time
 
 
@@ -24,6 +24,7 @@ class BoxLayoutGame(BoxLayout):
     sound = SoundLoader.load('Single_Ply_Prison_Mastered.ogg')
     sound.loop = True
     sound.play()
+    sound_win = SoundLoader.load("win.ogg")
     sound_pos = "unmute"
 # Text when the game start
     text = 'Push a button for start'
@@ -64,22 +65,25 @@ class BoxLayoutGame(BoxLayout):
     records = "New Records = "
 
     def get_time_1(self):
-        """ """
+        """ Used for start chronometer  """
         self.time_1 = time.time()
 
     def get_time_2(self):
-        """ """
+        """ Used for end chronometer """
         self.time_2 = time.time()
 
     def get_time_final(self):
-        """ """
+        """ chronometer time """
         self.t_final = self.time_2 - self.time_1
         self.t_final = "%.2f" % self.t_final
         if float(self.t_final) < float(self.t_best):
             self.t_best = self.t_final
             self.records = "New Records = "
+            self.sound_win.play()
+            self.sound.stop()
         else:
             self.records = "Best Records = "
+            self.sound_validation()
 
     # def __init__(self, **kwargs):
         # super(BoxLayoutGame, self).__init__(**kwargs)
@@ -106,25 +110,25 @@ class BoxLayoutGame(BoxLayout):
         # if keycode[1] == 'escape':
             # keyboard.release()
         # if keycode[1] == 'a':
-            # if self.popup_open == "True":
-                # print self.popup_open
-                # print "Leave apps?"
-                # self.show_leave_popup()
-                # App.get_running_app().stop()
+        # if self.popup_open == "True":
+            # print self.popup_open
+            # print "Leave apps?"
+            # self.show_leave_popup()
+            # App.get_running_app().stop()
             # else:
-                # self.show_popup(1)
-                # self.sound_play()
-                # print self.popup_open
+            # self.show_popup(1)
+            # self.sound_play()
+            # print self.popup_open
         # if keycode[1] == 'android.KEYCODE_BACK':
             # if self.popup_open == "True":
-                # print self.popup_open
-                # print "Leave apps?"
-                # self.show_leave_popup()
-                # App.get_running_app().stop()
+            # print self.popup_open
+            # print "Leave apps?"
+            # self.show_leave_popup()
+            # App.get_running_app().stop()
             # else:
-                # self.show_popup(1)
-                # self.sound_play()
-                # print self.popup_open
+            # self.show_popup(1)
+            # self.sound_play()
+            # print self.popup_open
 
         # return True
 
@@ -239,7 +243,7 @@ class BoxLayoutGame(BoxLayout):
         """ Count the points """
         self.points_kv = self.ids['points']
         progress_bar = self.ids['progress']
-# Start the Game now
+        # Start the Game now
         if not self.points_str:
             self.points_str = " "
         else:
@@ -284,10 +288,9 @@ class BoxLayoutGame(BoxLayout):
                 progress_bar.value = self.value_progress_bar
             else:
                 pass
-            if self.value_progress_bar >= 99:
+            if self.value_progress_bar >= 50:
                 progress_bar.value = self.value_progress_bar
                 self.get_time_2()
-                self.get_gime_1 = ""
                 self.get_time_final()
                 self.progress_bar_chalenge()
             else:
@@ -330,6 +333,8 @@ class BoxLayoutGame(BoxLayout):
         self.points_kv.text = ""
         self.ask()
         self.time_1 = ""
+        self.sound_win.stop()
+        self.sound.play()
 
     def reboot_progress_bar(self):
         """ reboot the progress bar """
