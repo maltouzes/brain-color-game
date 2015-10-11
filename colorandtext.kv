@@ -130,6 +130,14 @@ BoxLayoutGame:
             pos: 0, 250
             font_size: 30
             text: "Please choose a mode"
+        Label:
+            pos: 0, 210
+            font_size: 20
+            text: "Time mode"
+        Switch:
+            pos_hint: {'center_x': 0.48, 'y': 0.3}
+            on_active: root.sound_play()
+            on_active: root.change_time_mode()
         Button:
             size_hint: 0.6, 0.15
             pos_hint: {'center_x': 0.5, 'y': 0.5}

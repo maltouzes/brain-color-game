@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """ A simple Color Game make with kivy """
-__version__ = '0.2.21'
+__version__ = '0.2.22'
 
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
@@ -63,6 +63,15 @@ class BoxLayoutGame(BoxLayout):
     t_final = ""
     t_best = 100.
     records = "New Records = "
+    time_mode = 0
+
+    def change_time_mode(self):
+        """ Enable or Disable time_mode """
+        if self.time_mode == 0:
+            self.time_mode = 1
+        else:
+            self.time_mode = 0
+        print self.time_mode
 
     def get_time_1(self):
         """ Used for start chronometer  """
@@ -154,7 +163,9 @@ class BoxLayoutGame(BoxLayout):
                                start_color_mode=self.start_color_mode,
                                sound_validation=self.sound_validation,
                                popup_open_change=self.popup_open_change,
-                               reboot_progress_bar=self.reboot_progress_bar)
+                               reboot_progress_bar=self.reboot_progress_bar,
+                               sound_play=self.sound_play,
+                               change_time_mode=self.change_time_mode)
         self._popup = Popup(title="Brain Color Game",
                             title_align='center',
                             title_color=[1, 1, 0, 1],
@@ -426,6 +437,8 @@ class PopupWelcome(BoxLayout):
     sound_validation = ObjectProperty(None)
     popup_open_change = ObjectProperty(None)
     reboot_progress_bar = ObjectProperty(None)
+    sound_play = ObjectProperty(None)
+    change_time_mode = ObjectProperty(None)
 
 
 class LeavePopup(BoxLayout):
