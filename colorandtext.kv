@@ -4,45 +4,29 @@ BoxLayoutGame:
 <BoxLayoutGame>:
     spacing: 5
     orientation: 'vertical'
-    # padding: [5, 5, 5, 5]
-    # spacing: 5
-    # MySpinner:
-        # id: spinner_game
-        # size_hint_y: None
-        # height: 100
-        # text:  root.mode_game
-        # values: "Colours Mode", "Text Mode"
-        # background_color: [0.3, 0.06, 0.23, 1]
-        # on_press: root.sound_play()
-        # on_release: root.spinner_restart()
     BoxLayout:
         size_hint_y: None
-        spacing: 5
-        Button:
-            text: "Menu"
-            background_color: [0.3, 0.06, 0.23, 1]
-            on_press: root.go_start()
-            on_press: root.sound_play()
-            size_hint_y: None
-        Button:
-            size_hint_y: None
-            text: "Restart"
-            background_color: [0.3, 0.06, 0.23, 1]
-            on_press: root.sound_play()
-            on_press: root.replay()
-    BoxLayout:
-        size_hint_y: None
-        padding: [1, 1, 1, 1]
-        spacing: 25
-        ProgressBar:
-            id: progress
-            value: root.value_progress_bar
+        # spacing: 5
         BoxLayout:
-            Label:
-                text: " Mute/Unmute"
-            CheckBox:
-                on_press: root.sound_play()
-                on_active: root.self_active()
+            spacing: 10
+            BoxLayout:
+                Label:
+                    font_size: 18
+                    text: "Time Mode"
+                Switch:
+                # pos_hint: {'center_x': 0.48, 'y': 0.25}
+                    on_active: root.sound_play()
+                    on_active: root.change_time_mode()
+                    active: root.active
+            BoxLayout:
+                # padding: [1, 1, 1, 1]
+                # spacing: 25
+                Label:
+                    font_size: 18
+                    text: " Mute/Unmute"
+                CheckBox:
+                    on_press: root.sound_play()
+                    on_active: root.self_active()
     BoxLayout:
         size_hint_y: None
         Label:
@@ -127,17 +111,9 @@ BoxLayoutGame:
                 # center_y: self.parent.center_y
                 # size: self.parent.size
         Label:
-            pos: 0, 250
+            pos_hint: {'center_x': 0.48, 'y': 0.4}
             font_size: 30
             text: "Please choose a mode"
-        Label:
-            pos: 0, 210
-            font_size: 20
-            text: "Time mode"
-        Switch:
-            pos_hint: {'center_x': 0.48, 'y': 0.3}
-            on_active: root.sound_play()
-            on_active: root.change_time_mode()
         Button:
             size_hint: 0.6, 0.15
             pos_hint: {'center_x': 0.5, 'y': 0.5}
