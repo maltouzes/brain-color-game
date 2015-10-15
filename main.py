@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """ A simple Color Game made with kivy """
-__version__ = '0.2.31'
+__version__ = '0.2.32'
 
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
@@ -22,7 +22,7 @@ class BoxLayoutGame(BoxLayout):
     """ BoxLayout called by kivy """
     _popup = ObjectProperty(None)
     # Music during the game
-    sound = SoundLoader.load('BCG.ogg')
+    sound = SoundLoader.load('BCG-01.ogg')
     sound.loop = True
     sound.play()
     # see get_time_final
@@ -338,8 +338,6 @@ class BoxLayoutGame(BoxLayout):
         self.ask()
         self.old_mode_game = self.mode_game
         self.time_1 = ""
-        # else:
-            # pass
 
     def replay(self):
         """ Button replay """
