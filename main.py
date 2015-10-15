@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
 """ A simple Color Game made with kivy """
-__version__ = '0.2.29'
+__version__ = '0.2.31'
 
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
-from kivy.properties import ListProperty
 from kivy.properties import ObjectProperty
 from kivy.core.audio import SoundLoader
-from kivy.uix.spinner import Spinner
 from kivy.uix.progressbar import ProgressBar
 from kivy.clock import Clock
 from kivy.uix.popup import Popup
@@ -22,59 +20,61 @@ import time
 
 class BoxLayoutGame(BoxLayout):
     """ BoxLayout called by kivy """
+    _popup = ObjectProperty(None)
     # Music during the game
-    sound = SoundLoader.load('Single_Ply_Prison_Mastered.ogg')
+    sound = SoundLoader.load('BCG.ogg')
     sound.loop = True
     sound.play()
     # see get_time_final
     sound_win = SoundLoader.load("win.ogg")
     # Mute or unmute the Music, see active
     sound_pos = "unmute"
-# Text when the game start
+    # Text when the game start
     text = 'Push a button for start'
-# Color: red, green, blue and yellow
+    # Color: rouge, vert, bleu and jaune
     colour1 = [1, 0, 0, 1]
-    colour2 = [0, 1, 0, 1]
+    colour2 = [0, 1, 0.2, 1]
     colour3 = [0, 0, 1, 1]
     colour4 = [1, 1, 0, 1]
 
-    text1 = 'red'
-    text2 = 'green'
-    text3 = 'blue'
-    text4 = 'yellow'
+    text1 = 'rouge'
+    text2 = 'vert'
+    text3 = 'bleu'
+    text4 = 'jaune'
 
     colors = [colour1, colour2, colour3, colour4]
     texts = [text1, text2, text3, text4]
 
     texts_test = ""
-# Used for mix colors and texts
+    # Used for mix colors and texts
     number_random = 0
-# Used for count points
+    # Used for count points
     points = 0
     no_points = 0
-    points_str = ""
-    points_kv = ""
-    popup_open = "False"
+    # start the game
+    points_str = " "
 
-# Choose the game mode, by default: Colours Mode
+    # Choose the game mode, by default: Colours Mode
     mode_game = ""
     old_mode_game = ""
-    _popup = ObjectProperty(None)
-# Time
+    # Time
     time_1 = ""
     time_2 = 0
+    # time_2 - time1
     t_final = ""
+    # best time final
     t_best = 100.
     records = "New Records = "
+    # 0/1 time mode active/disable
     time_mode = 0
+    # Switch active: active/disable time mode
     active = False
-
-    buttono = ObjectProperty(None)
+    # ProgressBar for time mode
     progress_bar_1 = ObjectProperty(None)
     value_progress_bar = 0
 
-    def __init__(self):
-        super(BoxLayoutGame, self).__init__()
+    def __init__(self, **kwargs):
+        super(BoxLayoutGame, self).__init__(**kwargs)
         # From kivy.utils source code: freebsd = linux, darwin = macosx
         if platform == 'linux' or platform == 'win' or platform == 'macosx':
             # Display menu on screen if platform == Desktop
@@ -93,6 +93,29 @@ class BoxLayoutGame(BoxLayout):
             box.add_widget(btn2)
             box.add_widget(btn1)
             self.add_widget(box)
+        self.go_start()
+        self.post_build_init()
+
+    def post_build_init(self):
+        """ import BACK_KEY from Android """
+        if platform() == 'android':
+            import android
+            android.map_key(android.KEYCODE_BACK, 1001)
+
+        win = Window
+        win.bind(on_keyboard=self.key_handler)
+
+    def key_handler(self, window, keycode1, keycode2, text, modifiers):
+        """ On push Back_key: run go_start (popup) """
+        if keycode1 == 27 or keycode1 == 1001:
+            self.go_start()
+        # Returning True will eat the keypress
+            return True
+        return False
+
+    def on_pause(self):
+        """ Enable pause on mobile """
+        return True
 
     def change_time_mode(self):
         """ Enable or Disable time_mode """
@@ -135,19 +158,16 @@ class BoxLayoutGame(BoxLayout):
         """ Leave the apps """
         App.get_running_app().stop()
 
-    def popup_open_change(self):
-        """ on_keyboard_don """
-        self.popup_open = "False"
+    def go_start(self):
+        """ Show show_popup when the apps start """
+        Clock.schedule_once(self.show_popup, 0)
 
     def show_popup(self, dtime):
-        """ Welcome popup  """
-        PopupWelcome.text = "Please choose a mode"
-        PopupWelcome.active = self.active
+        """ Welcome popup """
         content = PopupWelcome(cancel=self.dismiss_popup,
                                start_text_mode=self.start_text_mode,
                                start_color_mode=self.start_color_mode,
                                sound_validation=self.sound_validation,
-                               popup_open_change=self.popup_open_change,
                                reboot_progress_bar=self.reboot_progress_bar,
                                sound_play=self.sound_play,
                                change_time_mode=self.change_time_mode,
@@ -160,7 +180,6 @@ class BoxLayoutGame(BoxLayout):
                             separator_height=5,
                             content=content,
                             size_hint=(1, 1))
-        self.popup_open = "True"
         self._popup.open()
 
     def progress_bar_chalenge(self):
@@ -178,16 +197,17 @@ class BoxLayoutGame(BoxLayout):
 
     def start_text_mode(self):
         """ show_popup: start Text Mode """
-        BoxLayoutGame.mode_game = "Text Mode"
+        self.mode_game = "Text Mode"
         self.restart()
 
     def start_color_mode(self):
         """ show_popup: start Colours Mode """
-        BoxLayoutGame.mode_game = "Colours Mode"
+        self.mode_game = "Colours Mode"
         self.restart()
 
     def show_leave_popup(self):
         """ show LeavePopup """
+        # NOT USED
         LeavePopup.text = "Do you want to leave?"
         content = LeavePopup(cancel=self.dismiss_popup,
                              leave=self.leave)
@@ -200,10 +220,6 @@ class BoxLayoutGame(BoxLayout):
     def dismiss_popup(self):
         """ Used for dismiss_PopupWelcome """
         self._popup.dismiss()
-
-    def go_start(self):
-        """ Show show_popup when the apps start """
-        Clock.schedule_once(self.show_popup, 0)
 
     def start(self):
         """ on_click start this method """
@@ -236,7 +252,7 @@ class BoxLayoutGame(BoxLayout):
 
     def count_points(self, nbr):
         """ Count the points """
-        self.points_kv = self.ids['points']
+        points_kv = self.ids['points']
         # progress_bar = self.ids['progress']
         # Start the Game now
         if not self.points_str:
@@ -268,8 +284,8 @@ class BoxLayoutGame(BoxLayout):
                     except NotImplementedError:
                         pass
                     BoxLayoutGame.sound_miss_play()
-                self.points_kv.text = "Points " + str(self.points) +\
-                                      "   Miss " + str(self.no_points)
+                points_kv.text = "Points " + str(self.points) +\
+                                 "   Miss " + str(self.no_points)
                 try:
                     self.progress_bar_1.value = self.value_progress_bar
                 except AttributeError:
@@ -298,8 +314,8 @@ class BoxLayoutGame(BoxLayout):
                 except AttributeError:
                     pass
 
-                self.points_kv.text = "Points " + str(self.points) +\
-                                      "   Miss " + str(self.no_points)
+                points_kv.text = "Points " + str(self.points) +\
+                                 "   Miss " + str(self.no_points)
                 # progress_bar.value = self.value_progress_bar
             else:
                 pass
@@ -313,18 +329,17 @@ class BoxLayoutGame(BoxLayout):
 
     def restart(self):
         """ Restart the game in another mode  """
-        # mode_game_kv = self.ids['spinner_game']
-        self.points_kv = self.ids['points']
+        points_kv = self.ids['points']
         # if mode_game_kv.text != self.mode_game:
-        if self.mode_game != self.old_mode_game:
-            self.points = 0
-            self.no_points = 0
-            self.points_kv.text = ""
-            self.ask()
-            self.old_mode_game = self.mode_game
-            self.time_1 = ""
-        else:
-            pass
+        # if self.mode_game != self.old_mode_game:
+        self.points = 0
+        self.no_points = 0
+        points_kv.text = ""
+        self.ask()
+        self.old_mode_game = self.mode_game
+        self.time_1 = ""
+        # else:
+            # pass
 
     def replay(self):
         """ Button replay """
@@ -333,10 +348,10 @@ class BoxLayoutGame(BoxLayout):
             self.progress_bar_1.value = self.value_progress_bar
         except AttributeError:
             pass
-        self.points_kv = self.ids['points']
+        points_kv = self.ids['points']
         self.points = 0
         self.no_points = 0
-        self.points_kv.text = ""
+        points_kv.text = ""
         self.ask()
         self.time_1 = ""
         self.sound_win.stop()
@@ -353,13 +368,13 @@ class BoxLayoutGame(BoxLayout):
     def color_name_to_rgb(self, name):
         """ Change a name color to a rgb color """
         # Replace Webcolors library
-        if name == 'red':
+        if name == 'rouge':
             name = [1, 0, 0, 1]
-        elif name == 'green':
-            name = [0, 1, 0, 1]
-        elif name == 'blue':
+        elif name == 'vert':
+            name = [0, 1, 0.2, 1]
+        elif name == 'bleu':
             name = [0, 0, 1, 1]
-        elif name == 'yellow':
+        elif name == 'jaune':
             name = [1, 1, 0, 1]
         else:
             pass
@@ -379,7 +394,7 @@ class BoxLayoutGame(BoxLayout):
 
     @staticmethod
     def sound_play():
-        """ When change mode (spinner): play point sound """
+        """ When change mode: play point sound """
         sound1 = SoundLoader.load('change.ogg')
         sound1.play()
 
@@ -388,12 +403,6 @@ class BoxLayoutGame(BoxLayout):
         """ Play a sound when call by MyButton: kv file """
         sound_valid = SoundLoader.load("validation.ogg")
         sound_valid.play()
-
-    def spinner_restart(self):
-        """ Restart all text when click on spinner """
-        # Not used
-        self.sound.stop()
-        self.sound.play()
 
     def self_active(self):
         """ Used by CheckBox: mute or unmute music """
@@ -405,29 +414,12 @@ class BoxLayoutGame(BoxLayout):
             self.sound.volume = 0
 
 
-class MyButton(Button):
-    """ Custom Spinner Button """
-    # NOT USED
-    # @staticmethod
-    # def sound():
-    # """ Play a sound when call by MyButton: kv file """
-    # sound_valid = SoundLoader.load("validation.ogg")
-    # sound_valid.play()
-
-
-class MySpinner(Spinner):
-    """ Custom Spinner """
-    option_cls = ObjectProperty(MyButton)
-    values = ListProperty()
-
-
 class PopupWelcome(BoxLayout):
     """ Popup open when start the app """
     cancel = ObjectProperty(None)
     start_text_mode = ObjectProperty(None)
     start_color_mode = ObjectProperty(None)
     sound_validation = ObjectProperty(None)
-    popup_open_change = ObjectProperty(None)
     reboot_progress_bar = ObjectProperty(None)
     sound_play = ObjectProperty(None)
     change_time_mode = ObjectProperty(None)
@@ -436,6 +428,7 @@ class PopupWelcome(BoxLayout):
 
 class LeavePopup(BoxLayout):
     """ Leave the apps """
+    # NOT USED
     cancel = ObjectProperty(None)
     leave = ObjectProperty(None)
 
@@ -450,32 +443,9 @@ class XBoxLayout(BoxLayout):
 class ColorAndTextApp(App):
     """ Kivy App """
     def build(self):
-        """ Build the App  """
-        self.bind(on_start=self.post_build_init)
-        BoxLayoutGame().go_start()
+        """ Build the App """
         return BoxLayoutGame()
 
-    def post_build_init(self, ev):
-        """ import BACK_KEY from Android """
-        if platform() == 'android':
-            import android
-            android.map_key(android.KEYCODE_BACK, 1001)
-
-        win = Window
-        win.bind(on_keyboard=self.key_handler)
-
-    def key_handler(self, window, keycode1, keycode2, text, modifiers):
-        """ On push Back_key: run go_start (popup) """
-        if keycode1 == 27 or keycode1 == 1001:
-            BoxLayoutGame().go_start()
-        # Returning True will eat the keypress
-            return True
-        return False
-
-    def on_pause(self):
-        """ Enable pause on mobile """
-        return True
-
-
 if __name__ == '__main__':
-    ColorAndTextApp().run()
+    PROG = ColorAndTextApp()
+    PROG.run()

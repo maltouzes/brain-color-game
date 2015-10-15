@@ -1,6 +1,6 @@
 #:kivy 1.9.0
 
-BoxLayoutGame:
+# BoxLayoutGame:
 <BoxLayoutGame>:
     spacing: 5
     orientation: 'vertical'
@@ -82,15 +82,6 @@ BoxLayoutGame:
             on_press: root.start()
             on_press: root.count_points(3)
 
-<MyButton>:
-    background_color: [0.76, 0.255, 0.7, 1]
-    size_hint: 1, None
-    on_press: root.sound()
-    Button:
-        text: "Start Colours Mode"
-    Button:
-        text: "Start Text Mode"
-
 <PopupWelcome>:
     FloatLayout:
         orientation: 'vertical'
@@ -98,18 +89,12 @@ BoxLayoutGame:
         height: root.height
         width: root.width + 100
         spacing: 8
-        Button:
-            size: root.size
-            pos: root.pos
-            # text: root.text
-            background_color: [0.11, 0.055, 0.23, 1]
-            font_size: 40
-            # Image:
-                # source: 'icon.png'
-                # opacity: 0.4
-                # center_x: self.parent.center_x
-                # center_y: self.parent.center_y
-                # size: self.parent.size
+        canvas.before:
+            Color:
+                rgba: 0.11, 0.055, 0.23, 1
+            Rectangle:
+                size: self.size
+                pos: self.pos
         Label:
             pos_hint: {'center_x': 0.48, 'y': 0.4}
             font_size: 30
@@ -117,14 +102,12 @@ BoxLayoutGame:
         Button:
             size_hint: 0.6, 0.15
             pos_hint: {'center_x': 0.5, 'y': 0.5}
-            # pos: ((root.width * 1/5), root.height / 1.7)
             background_color: [0.76, 0.255, 0.7, 1]
             text: "Colours Mode"
             on_press: root.start_color_mode()
             on_press: root.sound_validation()
-            on_press: root.popup_open_change()
-            on_press: root.cancel()
             on_press: root.reboot_progress_bar()
+            on_press: root.cancel()
         Button:
             size_hint: 0.6, 0.15
             pos_hint: {'center_x': 0.5, 'y': 0.3}
@@ -132,9 +115,8 @@ BoxLayoutGame:
             text: "Text Mode"
             on_press: root.start_text_mode()
             on_press: root.sound_validation()
-            on_press: root.popup_open_change()
-            on_press: root.cancel()
             on_press: root.reboot_progress_bar()
+            on_press: root.cancel()
         Button:
             size_hint: 0.6, 0.15
             pos_hint: {'center_x': 0.5, 'y': 0.1}
@@ -142,24 +124,6 @@ BoxLayoutGame:
             background_color: [0.76, 0.1, 0, 2]
             text: "Exit"
             on_press: root.leave()
-
-<LeavePopup>:
-    orientation: 'vertical'
-    Button:
-        pos: root.size
-        text: root.text
-        background_color: [0.11, 0.055, 0.23, 1]
-        font_size: 40
-    BoxLayout:
-        size_hint_y: None
-        Button:
-            background_color: [0.76, 0.255, 0.7, 1]
-            text: "Yes"
-            on_press: root.leave()
-        Button:
-            background_color: [0.5, 0, 0, 1]
-            text: "No"
-            on_press: root.cancel()
 
 <XBoxLayout>:
     FloatLayout:
@@ -192,3 +156,22 @@ BoxLayoutGame:
             on_press: root.cancel()
             on_press: root.replay()
             on_press: root.reboot_progress_bar()
+
+#NOT USED
+<LeavePopup>:
+    orientation: 'vertical'
+    Button:
+        pos: root.size
+        text: root.text
+        background_color: [0.11, 0.055, 0.23, 1]
+        font_size: 40
+    BoxLayout:
+        size_hint_y: None
+        Button:
+            background_color: [0.76, 0.255, 0.7, 1]
+            text: "Yes"
+            on_press: root.leave()
+        Button:
+            background_color: [0.5, 0, 0, 1]
+            text: "No"
+            on_press: root.cancel()
