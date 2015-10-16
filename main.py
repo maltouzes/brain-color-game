@@ -60,8 +60,10 @@ class BoxLayoutGame(BoxLayout):
     # Time
     time_1 = ""
     time_2 = 0
+    time_penality = 0
     # time_2 - time1
     t_final = ""
+    t_final_no_penality = 0
     # best time final
     t_best = 100.
     records = "New Records = "
@@ -142,11 +144,13 @@ class BoxLayoutGame(BoxLayout):
 
     def get_time_final(self):
         """ chronometer time """
-        self.t_final = self.time_2 - self.time_1
+        self.t_final = (self.time_2 + float(self.time_penality)) - self.time_1
+        self.t_final_no_penality = self.time_2 - self.time_1
+        self.t_final_no_penality = "%.2F" % self.t_final_no_penality
         self.t_final = "%.2f" % self.t_final
         if float(self.t_final) < float(self.t_best):
             self.t_best = self.t_final
-            self.records = "New Records = "
+            self.records = "New Records !!! "
             self.sound_win.play()
             self.sound.stop()
         else:
@@ -185,8 +189,13 @@ class BoxLayoutGame(BoxLayout):
     def progress_bar_chalenge(self):
         """ Popup """
         XBoxLayout.text = "You win "
-        XBoxLayout.text2 = str(self.t_final) + " seconds"
-        XBoxLayout.text3 = self.records + str(self.t_best)
+        XBoxLayout.text2 = "time: " + str(self.t_final_no_penality) +\
+                           " seconds"
+        XBoxLayout.text3 = "Miss " + str(self.no_points)
+        XBoxLayout.text4 = "Penality: 3 * " + str(self.no_points) +\
+                           " = " + str(self.time_penality) + " seconds"
+        XBoxLayout.text5 = "Time Final " + str(self.t_final) + " seconds"
+        XBoxLayout.text6 = self.records + str(self.t_best)
         content = XBoxLayout(cancel=self.dismiss_popup,
                              replay=self.replay,
                              reboot_progress_bar=self.reboot_progress_bar)
@@ -278,6 +287,7 @@ class BoxLayoutGame(BoxLayout):
                 else:
                     # Miss
                     self.no_points += 1
+                    self.time_penality += 3
                     # On Android
                     try:
                         vibrator.vibrate(0.4)
@@ -303,6 +313,7 @@ class BoxLayoutGame(BoxLayout):
                     self.sound_points_play()
                 else:
                     self.no_points += 1
+                    self.time_penality += 3
                     BoxLayoutGame.sound_miss_play()
                     # On Android
                     try:
@@ -334,6 +345,7 @@ class BoxLayoutGame(BoxLayout):
         # if self.mode_game != self.old_mode_game:
         self.points = 0
         self.no_points = 0
+        self.time_penality = 0
         points_kv.text = ""
         self.ask()
         self.old_mode_game = self.mode_game
@@ -349,6 +361,7 @@ class BoxLayoutGame(BoxLayout):
         points_kv = self.ids['points']
         self.points = 0
         self.no_points = 0
+        self.time_penality = 0
         points_kv.text = ""
         self.ask()
         self.time_1 = ""
