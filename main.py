@@ -48,7 +48,7 @@ class GameScreen(Screen):
     # Music during the game
     sound_game = SoundLoader.load('BCG-01.ogg')
     sound_game.loop = True
-    # sound_game.play()
+    sound_game.play()
     # see get_time_final
     sound_win = SoundLoader.load("win.ogg")
     # Mute or unmute the Music, see active
@@ -150,7 +150,7 @@ class GameScreen(Screen):
         self.time_1 = ""
         pts_kv = self.ids['points']
         pts_kv.text = ""
-        self.sound_win.stop()
+        # self.sound_win.stop()
         # self.sound_game.play()
 
     def ask(self):
@@ -268,6 +268,11 @@ class GameScreen(Screen):
                 self.replay()
             else:
                 pass
+            if self.manager.current == 'win':
+                self.sound_win.play()
+            else:
+                self.sound_win.stop()
+                self.sound_game.play()
 
     @staticmethod
     def sound_miss_play():
