@@ -1,88 +1,6 @@
 #:kivy 1.9.0
 
-# BoxLayoutGame:
-<BoxLayoutGame>:
-    spacing: 5
-    orientation: 'vertical'
-    BoxLayout:
-        size_hint_y: None
-        # spacing: 5
-        BoxLayout:
-            spacing: 10
-            BoxLayout:
-                Label:
-                    font_size: 18
-                    text: "Time Mode"
-                Switch:
-                # pos_hint: {'center_x': 0.48, 'y': 0.25}
-                    on_active: root.sound_play()
-                    on_active: root.change_time_mode()
-                    active: root.active
-            BoxLayout:
-                # padding: [1, 1, 1, 1]
-                # spacing: 25
-                Label:
-                    font_size: 18
-                    text: " Mute/Unmute"
-                CheckBox:
-                    on_press: root.sound_play()
-                    on_active: root.self_active()
-    BoxLayout:
-        size_hint_y: None
-        Label:
-            id: welcome_text
-            font_size: 20
-            size_hint_y: None
-            height: 100
-            text: root.text
-        Label:
-            id: points
-            font_size: 20
-            size_hint_y: None
-            height: 100
-            text: str(root.points_str)
-    GridLayout:
-        spacing: [10, 10]
-        padding: [10, 10, 10, 10]
-        cols: 2
-        Button:
-            id: bt1
-            text: root.texts[0]
-            color: root.colors[0]
-            font_size: 40
-            background_color: [0.11, 0.06, 0.23, 1]
-            on_press: root.ask()
-            on_press: root.start()
-            on_press: root.count_points(0)
-        Button:
-            id: bt2
-            text: root.texts[1]
-            color: root.colors[1]
-            font_size: 40
-            background_color: [0.11, 0.06, 0.23, 1]
-            on_press: root.ask()
-            on_press: root.start()
-            on_press: root.count_points(1)
-        Button:
-            id: bt3
-            text: root.texts[2]
-            color: root.colors[2]
-            font_size: 40
-            background_color: [0.11, 0.06, 0.23, 1]
-            on_press: root.ask()
-            on_press: root.start()
-            on_press: root.count_points(2)
-        Button:
-            id: bt4
-            text: root.texts[3]
-            color: root.colors[3]
-            font_size: 40
-            background_color: [0.11, 0.06, 0.23, 1]
-            on_press: root.ask()
-            on_press: root.start()
-            on_press: root.count_points(3)
-
-<PopupWelcome>:
+<MenuScreen>:
     FloatLayout:
         orientation: 'vertical'
         background_color: [1, 1, 0, 1]
@@ -106,8 +24,8 @@
             text: "Colours Mode"
             on_press: root.start_color_mode()
             on_press: root.sound_validation()
-            on_press: root.reboot_progress_bar()
-            on_press: root.cancel()
+            # on_press: GameScreen().reboot_progress_bar()
+            on_press: root.manager.current = 'game'
         Button:
             size_hint: 0.6, 0.15
             pos_hint: {'center_x': 0.5, 'y': 0.3}
@@ -115,8 +33,8 @@
             text: "Text Mode"
             on_press: root.start_text_mode()
             on_press: root.sound_validation()
-            on_press: root.reboot_progress_bar()
-            on_press: root.cancel()
+            # on_press: root.reboot_progress_bar()
+            on_press: root.manager.current = 'game'
         Button:
             size_hint: 0.6, 0.15
             pos_hint: {'center_x': 0.5, 'y': 0.1}
@@ -124,6 +42,91 @@
             background_color: [0.76, 0.1, 0, 2]
             text: "Exit"
             on_press: root.leave()
+
+# on_press: root.manager.current = 'menu' 
+
+
+<GameScreen>:
+    BoxLayout:
+        spacing: 5
+        orientation: 'vertical'
+        BoxLayout:
+            size_hint_y: None
+            # spacing: 5
+            BoxLayout:
+                spacing: 10
+                BoxLayout:
+                    Label:
+                        font_size: 18
+                        text: "Time Mode"
+                    Switch:
+                    # pos_hint: {'center_x': 0.48, 'y': 0.25}
+                        on_active: root.sound_play()
+                        on_active: root.change_time_mode()
+                        active: root.active
+                BoxLayout:
+                    # padding: [1, 1, 1, 1]
+                    # spacing: 25
+                    Label:
+                        font_size: 18
+                        text: " Mute/Unmute"
+                    CheckBox:
+                        on_press: root.sound_play()
+                        on_active: root.self_active()
+        BoxLayout:
+            size_hint_y: None
+            Label:
+                id: welcome_text
+                font_size: 20
+                size_hint_y: None
+                height: 100
+                text: root.text
+            Label:
+                id: points
+                font_size: 20
+                size_hint_y: None
+                height: 100
+                text: str(root.points_str)
+        GridLayout:
+            spacing: [10, 10]
+            padding: [10, 10, 10, 10]
+            cols: 2
+            Button:
+                id: bt1
+                text: root.texts[0]
+                color: root.colors[0]
+                font_size: 40
+                background_color: [0.11, 0.06, 0.23, 1]
+                on_press: root.ask()
+                on_press: root.start()
+                on_press: root.count_points(0)
+            Button:
+                id: bt2
+                text: root.texts[1]
+                color: root.colors[1]
+                font_size: 40
+                background_color: [0.11, 0.06, 0.23, 1]
+                on_press: root.ask()
+                on_press: root.start()
+                on_press: root.count_points(1)
+            Button:
+                id: bt3
+                text: root.texts[2]
+                color: root.colors[2]
+                font_size: 40
+                background_color: [0.11, 0.06, 0.23, 1]
+                on_press: root.ask()
+                on_press: root.start()
+                on_press: root.count_points(2)
+            Button:
+                id: bt4
+                text: root.texts[3]
+                color: root.colors[3]
+                font_size: 40
+                background_color: [0.11, 0.06, 0.23, 1]
+                on_press: root.ask()
+                on_press: root.start()
+                on_press: root.count_points(3)
 
 <XBoxLayout>:
     FloatLayout:
@@ -170,21 +173,3 @@
             on_press: root.replay()
             on_press: root.reboot_progress_bar()
 
-#NOT USED
-<LeavePopup>:
-    orientation: 'vertical'
-    Button:
-        pos: root.size
-        text: root.text
-        background_color: [0.11, 0.055, 0.23, 1]
-        font_size: 40
-    BoxLayout:
-        size_hint_y: None
-        Button:
-            background_color: [0.76, 0.255, 0.7, 1]
-            text: "Yes"
-            on_press: root.leave()
-        Button:
-            background_color: [0.5, 0, 0, 1]
-            text: "No"
-            on_press: root.cancel()
