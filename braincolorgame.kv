@@ -22,6 +22,7 @@
             pos_hint: {'center_x': 0.5, 'y': 0.5}
             background_color: [0.76, 0.255, 0.7, 1]
             text: "Colours Mode"
+            # on_press: root.restart()
             on_press: root.start_color_mode()
             on_press: root.sound_validation()
             # on_press: GameScreen().reboot_progress_bar()
@@ -31,10 +32,11 @@
             pos_hint: {'center_x': 0.5, 'y': 0.3}
             background_color: [0.76, 0.255, 0.7, 1]
             text: "Text Mode"
-            on_press: root.start_text_mode()
+            # on_press: root.restart()
             on_press: root.sound_validation()
             # on_press: root.reboot_progress_bar()
             on_press: root.manager.current = 'game'
+            on_press: root.start_text_mode()
         Button:
             size_hint: 0.6, 0.15
             pos_hint: {'center_x': 0.5, 'y': 0.1}
@@ -42,9 +44,6 @@
             background_color: [0.76, 0.1, 0, 2]
             text: "Exit"
             on_press: root.leave()
-
-# on_press: root.manager.current = 'menu' 
-
 
 <GameScreen>:
     BoxLayout:
@@ -97,6 +96,11 @@
                 color: root.colors[0]
                 font_size: 40
                 background_color: [0.11, 0.06, 0.23, 1]
+                on_press: app.text_2 = str(root.t_final_no_penality)
+                on_press: app.text_3 = str(root.no_points)
+                on_press: app.text_4 = str(root.time_penality)
+                on_press: app.text_5 = str(root.t_final)
+                on_press: app.text_6 = str(root.records) + str(root.t_best)
                 on_press: root.ask()
                 on_press: root.start()
                 on_press: root.count_points(0)
@@ -106,6 +110,11 @@
                 color: root.colors[1]
                 font_size: 40
                 background_color: [0.11, 0.06, 0.23, 1]
+                on_press: app.text_2 = str(root.points)
+                on_press: app.text_3 = str(root.no_points)
+                on_press: app.text_4 = str(root.time_penality)
+                on_press: app.text_5 = str(root.t_final)
+                on_press: app.text_6 = str(root.records) + str(root.t_best)
                 on_press: root.ask()
                 on_press: root.start()
                 on_press: root.count_points(1)
@@ -115,6 +124,11 @@
                 color: root.colors[2]
                 font_size: 40
                 background_color: [0.11, 0.06, 0.23, 1]
+                on_press: app.text_2 = str(root.points)
+                on_press: app.text_3 = str(root.no_points)
+                on_press: app.text_4 = str(root.time_penality)
+                on_press: app.text_5 = str(root.t_final)
+                on_press: app.text_6 = str(root.records) + str(root.t_best)
                 on_press: root.ask()
                 on_press: root.start()
                 on_press: root.count_points(2)
@@ -124,11 +138,16 @@
                 color: root.colors[3]
                 font_size: 40
                 background_color: [0.11, 0.06, 0.23, 1]
+                on_press: app.text_2 = str(root.points)
+                on_press: app.text_3 = str(root.no_points)
+                on_press: app.text_4 = str(root.time_penality)
+                on_press: app.text_5 = str(root.t_final)
+                on_press: app.text_6 = str(root.records) + str(root.t_best)
                 on_press: root.ask()
                 on_press: root.start()
                 on_press: root.count_points(3)
 
-<XBoxLayout>:
+<WinScreen>:
     FloatLayout:
         canvas.before:
             Color:
@@ -142,34 +161,33 @@
         Label:
             pos_hint: {'center_x': 0.5, 'y': 0.45}
             font_size: 20
-            text: root.text
+            text: "You win !"
         Label:
             pos_hint: {'center_x': 0.5, 'y': 0.35}
             font_size: 20
-            text: root.text2
+            text: root.text_2
+            text: "time: " + app.text_2 + " seconds"
         Label:
+            id: label_3
             pos_hint: {'center_x': 0.5, 'y': 0.25}
             font_size: 20
-            text: root.text3
+            text: "Miss: " + app.text_3
         Label:
             pos_hint: {'center_x': 0.5, 'y': 0.15}
             font_size: 20
-            text: root.text4
+            text: "Penality: 3x" + app.text_3 + " = " + app.text_4 + " seconds"
         Label:
             pos_hint: {'center_x': 0.5, 'y': 0.1}
             font_size: 20
-            text: root.text5
+            text: "Time final: " + app.text_5 + " seconds"
         Label:
             pos_hint: {'center_x': 0.5, 'y': 0.02}
             font_size: 20
-            text: root.text6
+            text: app.text_6
 
         Button:
             pos_hint: {'center_x': 0.5, 'y': 0.1}
             size_hint: 0.6, 0.15
             background_color: [0.76, 0.255, 0.7, 1]
             text: "Ok"
-            on_press: root.cancel()
-            on_press: root.replay()
-            on_press: root.reboot_progress_bar()
-
+            on_press: root.manager.current = 'game'
