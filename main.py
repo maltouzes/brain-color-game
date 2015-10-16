@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """ A simple Color Game made with kivy """
-__version__ = '0.4.0'
+__version__ = '0.4.1'
 
 from kivy.app import App
 from kivy.uix.progressbar import ProgressBar
@@ -263,7 +263,9 @@ class GameScreen(Screen):
                 self.get_time_2()
                 self.get_time_final()
                 self.change_text()
+                self.value_progress_bar = 0
                 self.manager.current = 'win'
+                self.replay()
             else:
                 pass
 
@@ -376,10 +378,15 @@ class WinScreen(Screen):
 
 class BrainColorGame(App):
     """ Main App """
+    # t_final_no_penality
     text_2 = StringProperty('')
+    # no_points
     text_3 = StringProperty('')
+    # time_penality
     text_4 = StringProperty('')
+    # t_final
     text_5 = StringProperty('')
+    # records + t_brest
     text_6 = StringProperty('')
 
     def build(self):
