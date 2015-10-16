@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """ A simple Color Game made with kivy """
-__version__ = '0.3'
+__version__ = '0.4.0'
 
 from kivy.app import App
 from kivy.uix.progressbar import ProgressBar
@@ -321,7 +321,7 @@ class GameScreen(Screen):
             self.replay()
             # Returning True will eat the keypress
             if self.manager.current == 'menu':
-                self.leave()
+                MenuScreen.leave()
             self.manager.current = 'menu'
             return True
         return False
@@ -350,6 +350,7 @@ class GameScreen(Screen):
 
     @staticmethod
     def self_active():
+        """ Mute/Unmute """
         if GameScreen.sound_pos == "unmute":
             GameScreen.sound_pos = "mute"
             GameScreen.sound_game.volume = 0
@@ -358,23 +359,23 @@ class GameScreen(Screen):
             GameScreen.sound_game.volume = 1
 
     def change_text(self):
-        """ """
+        """Not used """
         # label_3 = WinScreen().ids['label_3']
         # label_3.text = "ok"
 
 
 class WinScreen(Screen):
-    """ """
+    """ On Win: Progress_bar """
     text1 = str(GameScreen.points)
     text2 = StringProperty("")
-    text3 = StringProperty("no")
+    text3 = StringProperty("")
     text4 = StringProperty("")
     text5 = StringProperty("")
     text6 = StringProperty("")
 
 
 class BrainColorGame(App):
-
+    """ Main App """
     text_2 = StringProperty('')
     text_3 = StringProperty('')
     text_4 = StringProperty('')
@@ -393,7 +394,7 @@ class BrainColorGame(App):
         return sm
 
     def update(self, *args):
-        """ """
+        """ build self.bind """
         print "whatever"
 
 if __name__ == '__main__':
