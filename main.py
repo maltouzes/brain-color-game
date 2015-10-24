@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """ A simple Color Game made with kivy """
-__version__ = '0.4.1'
+__version__ = '0.4.3'
 
 from kivy.app import App
 from kivy.uix.progressbar import ProgressBar
@@ -18,10 +18,6 @@ import time
 
 class MenuScreen(Screen):
     """ BoxLayout called by kivy """
-    # Music On Menu Screen
-    # sound = SoundLoader.load('BCG-01.ogg')
-    # sound.loop = True
-    # sound.play()
 
     @staticmethod
     def leave():
@@ -45,13 +41,6 @@ class MenuScreen(Screen):
 
 class GameScreen(Screen):
     """ BoxLayout called by kivy """
-    # Music during the game
-    sound_game = SoundLoader.load('BCG-01.ogg')
-    sound_game.loop = True
-    sound_game.play()
-    # see get_time_final
-    sound_win = SoundLoader.load("win.ogg")
-    # Mute or unmute the Music, see active
     sound_pos = "unmute"
     # Text when the game start
     text = 'Push a button for start'
@@ -122,8 +111,8 @@ class GameScreen(Screen):
         if float(self.t_final) < float(self.t_best):
             self.t_best = self.t_final
             self.records = "New Records !!! "
-            self.sound_win.play()
-            self.sound_game.stop()
+            # self.sound_win.play()
+            # self.sound_game.stop()
         else:
             self.records = "Best Records = "
             self.sound_validation()
@@ -150,8 +139,6 @@ class GameScreen(Screen):
         self.time_1 = ""
         pts_kv = self.ids['points']
         pts_kv.text = ""
-        # self.sound_win.stop()
-        # self.sound_game.play()
 
     def ask(self):
         """ update question text """
@@ -205,10 +192,10 @@ class GameScreen(Screen):
                 self.color_name_to_rgb(self.texts[self.number_random])
                 if self.colors[nbr] == self.texts_test:
                     # Win
-                    self.points += 500
+                    self.points += 50
                     if self.active is True:
                         # time mode active
-                        self.value_progress_bar += 50
+                        self.value_progress_bar += 3
                     else:
                         pass
                     self.sound_points_play()
@@ -265,14 +252,11 @@ class GameScreen(Screen):
                 self.change_text()
                 self.value_progress_bar = 0
                 self.manager.current = 'win'
+                BrainColorGame.sound_game.stop()
+                BrainColorGame.sound_win.play()
                 self.replay()
             else:
                 pass
-            if self.manager.current == 'win':
-                self.sound_win.play()
-            else:
-                self.sound_win.stop()
-                self.sound_game.play()
 
     @staticmethod
     def sound_miss_play():
@@ -360,10 +344,10 @@ class GameScreen(Screen):
         """ Mute/Unmute """
         if GameScreen.sound_pos == "unmute":
             GameScreen.sound_pos = "mute"
-            GameScreen.sound_game.volume = 0
+            BrainColorGame.sound_game.volume = 0
         elif GameScreen.sound_pos == "mute":
             GameScreen.sound_pos = "unmute"
-            GameScreen.sound_game.volume = 1
+            BrainColorGame.sound_game.volume = 1
 
     def change_text(self):
         """Not used """
@@ -380,9 +364,16 @@ class WinScreen(Screen):
     text5 = StringProperty("")
     text6 = StringProperty("")
 
+    def sound_stop(self):
+        BrainColorGame.sound_game.play()
+        BrainColorGame.sound_win.stop()
+
 
 class BrainColorGame(App):
     """ Main App """
+    sound_game = SoundLoader.load('BCG-01.ogg')
+    sound_win = SoundLoader.load("win.ogg")
+
     # t_final_no_penality
     text_2 = StringProperty('')
     # no_points
@@ -396,6 +387,7 @@ class BrainColorGame(App):
 
     def build(self):
         """ Use ScreenManager """
+        self.sound_game.play()
         self.bind(text_2=self.update)
         # Create the screen manager
         sm = ScreenManager()
