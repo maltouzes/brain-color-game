@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """ A simple Color Game made with kivy """
-__version__ = '0.4.3'
+__version__ = '0.4.6'
 
 from kivy.app import App
 from kivy.uix.progressbar import ProgressBar
@@ -372,6 +372,7 @@ class WinScreen(Screen):
 class BrainColorGame(App):
     """ Main App """
     sound_game = SoundLoader.load('BCG-01.ogg')
+    sound_game.loop = True
     sound_win = SoundLoader.load("win.ogg")
 
     # t_final_no_penality
@@ -400,6 +401,15 @@ class BrainColorGame(App):
     def update(self, *args):
         """ build self.bind """
         print "whatever"
+
+    def on_pause(self):
+        """ Enable pause on mobile """
+        self.sound_game.volume = 0
+        return True
+
+    def on_resume(self):
+        self.sound_game.volume = 1
+
 
 if __name__ == '__main__':
     BrainColorGame().run()
