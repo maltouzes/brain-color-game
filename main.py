@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """ A simple Color Game made with kivy """
-__version__ = '0.4.10'
+__version__ = '0.4.11'
 
 from kivy.app import App
 from kivy.uix.progressbar import ProgressBar
@@ -14,6 +14,7 @@ from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
 
 import random
 import time
+import os
 
 
 class MenuScreen(Screen):
@@ -80,9 +81,12 @@ class GameScreen(Screen):
     t_final = ""
     t_final_no_penality = 0
     # best time final
-    t_best = 100.
-    t_best_color = 100.
-    t_best_text = 100.
+    score_file = os.getcwd() + "/scores_bcg"
+    score_file_color = os.getcwd() + "/scores_color_bcg"
+    score_file_text = os.getcwd() + "/scores_text_bcg"
+    t_best = 999.
+    t_best_color = 999.
+    t_best_text = 999.
     records = "New Records = "
     # 0/1 time mode active/disable
     time_mode = 0
@@ -96,6 +100,7 @@ class GameScreen(Screen):
         super(GameScreen, self).__init__(**kwargs)
         # if platform == 'linux':
         #     box = BoxLayout'
+        print self.score_file
         self.post_build_init()
 
     def get_time_1(self):
@@ -118,21 +123,47 @@ class GameScreen(Screen):
         print mode
         if mode == "Colours Mode":
             print "compare color"
+            # score_file = os.getcwd() + "/scores_bcg"
+            try:
+                f = open(self.score_file_color, 'r')
+                scr = f.read()
+                scr = float(scr)
+                self.t_best_color = scr
+                f.close()
+            except IOError:
+                pass
+            # t_best depend of the mode
             self.t_best = self.t_best_color
+            print self.t_best_color
             if float(self.t_final) < float(self.t_best_color):
                 self.t_best_color = self.t_final
                 self.records = "New Records !!! "
                 self.t_best = self.t_best_color
+                f = open(self.score_file_color, 'w')
+                f.write(str(self.t_best_color))
+                f.close()
             else:
                 self.records = "Best Records = "
                 self.sound_validation()
         elif mode == "Text Mode":
             print "compate text"
+            try:
+                f = open(self.score_file_text, 'r')
+                scr = f.read()
+                scr = float(scr)
+                self.t_best_text = scr
+                f.close()
+            except IOError:
+                pass
+            # t_best depend of the mode
             self.t_best = self.t_best_text
             if float(self.t_final) < float(self.t_best_text):
                 self.t_best_text = self.t_final
                 self.records = "New Records !!! "
                 self.t_best = self.t_best_text
+                f = open(self.score_file_text, 'w')
+                f.write(str(self.t_best_color))
+                f.close()
             else:
                 self.records = "Best Records = "
                 self.sound_validation()
