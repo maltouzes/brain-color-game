@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """ A simple Color Game made with kivy """
-__version__ = '0.4.6'
+__version__ = '0.4.10'
 
 from kivy.app import App
 from kivy.uix.progressbar import ProgressBar
@@ -44,9 +44,11 @@ class GameScreen(Screen):
     sound_pos = "unmute"
     # Text when the game start
     text = 'Push a button for start'
+    text_button = "Push Me"
     # Color: rouge, vert, bleu and jaune
     colour1 = [1, 0, 0, 1]
-    colour2 = [0, 1, 0.2, 1]
+    # colour2 = [0, 1, 0.2, 1]
+    colour2 = [0.02, 0.898, 0.2, 1]
     colour3 = [0, 0, 1, 1]
     colour4 = [1, 1, 0, 1]
 
@@ -79,6 +81,8 @@ class GameScreen(Screen):
     t_final_no_penality = 0
     # best time final
     t_best = 100.
+    t_best_color = 100.
+    t_best_text = 100.
     records = "New Records = "
     # 0/1 time mode active/disable
     time_mode = 0
@@ -102,23 +106,40 @@ class GameScreen(Screen):
         """ Used for end chronometer """
         self.time_2 = time.time()
 
-    def get_time_final(self):
+    def get_time_final(self, mode):
         """ chronometer time """
         self.t_final = (self.time_2 + float(self.time_penality)) - self.time_1
         self.t_final_no_penality = self.time_2 - self.time_1
         self.t_final_no_penality = "%.2F" % self.t_final_no_penality
         self.t_final = "%.2f" % self.t_final
-        if float(self.t_final) < float(self.t_best):
-            self.t_best = self.t_final
-            self.records = "New Records !!! "
-            # self.sound_win.play()
-            # self.sound_game.stop()
-        else:
-            self.records = "Best Records = "
-            self.sound_validation()
+        self.compare_time_final(mode)
+
+    def compare_time_final(self, mode):
+        print mode
+        if mode == "Colours Mode":
+            print "compare color"
+            self.t_best = self.t_best_color
+            if float(self.t_final) < float(self.t_best_color):
+                self.t_best_color = self.t_final
+                self.records = "New Records !!! "
+                self.t_best = self.t_best_color
+            else:
+                self.records = "Best Records = "
+                self.sound_validation()
+        elif mode == "Text Mode":
+            print "compate text"
+            self.t_best = self.t_best_text
+            if float(self.t_final) < float(self.t_best_text):
+                self.t_best_text = self.t_final
+                self.records = "New Records !!! "
+                self.t_best = self.t_best_text
+            else:
+                self.records = "Best Records = "
+                self.sound_validation()
 
     def replay(self):
         """ Button replay """
+        self.text = ""
         self.value_progress_bar = 0
         try:
             self.progress_bar_1.value = self.value_progress_bar
@@ -139,18 +160,27 @@ class GameScreen(Screen):
         self.time_1 = ""
         pts_kv = self.ids['points']
         pts_kv.text = ""
+        welcome1 = self.ids['welcome_text']
+        welcome1.text = "Push on the good Button"
 
     def ask(self):
         """ update question text """
         try:
             welcome = self.ids['welcome_text']
+            bt_q = self.ids['bt_q']
         except KeyError:
             pass
         self.number_random = random.randint(0, 3)
-        self.text = 'Push the button ' +\
-                    str(self.texts[self.number_random])
+        if GameScreen.mode_game == "Colours Mode":
+            self.text = 'Push on the good color'
+        elif GameScreen.mode_game == "Text Mode":
+            self.text = 'Push on the Good Text'
+        else:
+            pass
+        self.text_button = str(self.texts[self.number_random])
         try:
             welcome.text = self.text
+            bt_q.text = self.text_button
         except UnboundLocalError:
             pass
 
@@ -179,7 +209,7 @@ class GameScreen(Screen):
         points_kv = self.ids['points']
         # progress_bar = self.ids['progress']
         # Start the Game now
-        if not self.points_str:
+        if not self.points_str or nbr == 5:
             self.points_str = " "
         else:
             # Game already started: Count points (depends on the Game mode)
@@ -248,7 +278,13 @@ class GameScreen(Screen):
             if self.value_progress_bar >= 99:
                 # progress_bar.value = self.value_progress_bar
                 self.get_time_2()
-                self.get_time_final()
+                if self.mode_game == "Colours Mode":
+                    print "Colours"
+                    print self.t_best_color
+                    self.get_time_final("Colours Mode")
+                elif self.mode_game == "Text Mode":
+                    self.get_time_final("Text Mode")
+
                 self.change_text()
                 self.value_progress_bar = 0
                 self.manager.current = 'win'
@@ -288,7 +324,8 @@ class GameScreen(Screen):
         if name == 'rouge':
             name = [1, 0, 0, 1]
         elif name == 'vert':
-            name = [0, 1, 0.2, 1]
+            name = [0.02, 0.898, 0.2, 1]
+            # name = [0, 1, 0.2, 1]
         elif name == 'bleu':
             name = [0, 0, 1, 1]
         elif name == 'jaune':
