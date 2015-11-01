@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """ A simple Color Game made with kivy """
-__version__ = '0.4.11'
+__version__ = '0.4.12'
 
 from kivy.app import App
 from kivy.uix.progressbar import ProgressBar
@@ -100,7 +100,6 @@ class GameScreen(Screen):
         super(GameScreen, self).__init__(**kwargs)
         # if platform == 'linux':
         #     box = BoxLayout'
-        print self.score_file
         self.post_build_init()
 
     def get_time_1(self):
@@ -120,9 +119,7 @@ class GameScreen(Screen):
         self.compare_time_final(mode)
 
     def compare_time_final(self, mode):
-        print mode
         if mode == "Colours Mode":
-            print "compare color"
             # score_file = os.getcwd() + "/scores_bcg"
             try:
                 f = open(self.score_file_color, 'r')
@@ -134,7 +131,6 @@ class GameScreen(Screen):
                 pass
             # t_best depend of the mode
             self.t_best = self.t_best_color
-            print self.t_best_color
             if float(self.t_final) < float(self.t_best_color):
                 self.t_best_color = self.t_final
                 self.records = "New Records !!! "
@@ -146,7 +142,6 @@ class GameScreen(Screen):
                 self.records = "Best Records = "
                 self.sound_validation()
         elif mode == "Text Mode":
-            print "compate text"
             try:
                 f = open(self.score_file_text, 'r')
                 scr = f.read()
@@ -162,7 +157,7 @@ class GameScreen(Screen):
                 self.records = "New Records !!! "
                 self.t_best = self.t_best_text
                 f = open(self.score_file_text, 'w')
-                f.write(str(self.t_best_color))
+                f.write(str(self.t_best_text))
                 f.close()
             else:
                 self.records = "Best Records = "
@@ -310,8 +305,6 @@ class GameScreen(Screen):
                 # progress_bar.value = self.value_progress_bar
                 self.get_time_2()
                 if self.mode_game == "Colours Mode":
-                    print "Colours"
-                    print self.t_best_color
                     self.get_time_final("Colours Mode")
                 elif self.mode_game == "Text Mode":
                     self.get_time_final("Text Mode")
@@ -468,7 +461,6 @@ class BrainColorGame(App):
 
     def update(self, *args):
         """ build self.bind """
-        print "whatever"
 
     def on_pause(self):
         """ Enable pause on mobile """
