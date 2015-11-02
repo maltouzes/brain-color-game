@@ -61,6 +61,11 @@ class GameScreen(Screen):
     colors = [colour1, colour2, colour3, colour4]
     texts = [text1, text2, text3, text4]
 
+    colors_dict = {'rouge': [1, 0, 0, 1],
+                   'vert': [0.02, 0.898, 0.2, 1],
+                   'bleu': [0, 0, 1, 1],
+                   'jaune': [1, 1, 0, 1]}
+
     texts_test = ""
     # Used for mix colors and texts
     number_random = 0
@@ -196,7 +201,8 @@ class GameScreen(Screen):
             bt_q = self.ids['bt_q']
         except KeyError:
             pass
-        self.number_random = random.randint(0, 3)
+        # Better than: self.number_random = random.randint(0, 3)
+        self.number_random = int(random.choice('0123'))
         if GameScreen.mode_game == "Colours Mode":
             self.text = 'Push on the good color'
         elif GameScreen.mode_game == "Text Mode":
@@ -309,7 +315,6 @@ class GameScreen(Screen):
                 elif self.mode_game == "Text Mode":
                     self.get_time_final("Text Mode")
 
-                self.change_text()
                 self.value_progress_bar = 0
                 self.manager.current = 'win'
                 BrainColorGame.sound_game.stop()
@@ -344,18 +349,7 @@ class GameScreen(Screen):
 
     def color_name_to_rgb(self, name):
         """ Change a name color to a rgb color """
-        # Replace Webcolors library
-        if name == 'rouge':
-            name = [1, 0, 0, 1]
-        elif name == 'vert':
-            name = [0.02, 0.898, 0.2, 1]
-            # name = [0, 1, 0.2, 1]
-        elif name == 'bleu':
-            name = [0, 0, 1, 1]
-        elif name == 'jaune':
-            name = [1, 1, 0, 1]
-        else:
-            pass
+        name = self.colors_dict[name]
         self.texts_test = name
 
     def post_build_init(self):
@@ -409,11 +403,6 @@ class GameScreen(Screen):
         elif GameScreen.sound_pos == "mute":
             GameScreen.sound_pos = "unmute"
             BrainColorGame.sound_game.volume = 1
-
-    def change_text(self):
-        """Not used """
-        # label_3 = WinScreen().ids['label_3']
-        # label_3.text = "ok"
 
 
 class WinScreen(Screen):
