@@ -236,6 +236,26 @@ class GameScreen(Screen):
         bt4.color = self.colors[3]
         bt4.text = self.texts[3]
 
+    def count_points_good(self):
+        """ Called by count_points """
+        self.points += 50
+        if self.active is True:
+            self.value_progress_bar += 3
+        else:
+            pass
+        self.sound_points_play()
+
+    def count_points_false(self):
+        """ Called by count_points """
+        self.no_points += 1
+        self.time_penality += 3
+        self.sound_miss_play()
+        # On Android
+        try:
+            vibrator.vibrate(0.4)
+        except NotImplementedError:
+            pass
+
     def count_points(self, nbr):
         """ Count the points """
         points_kv = self.ids['points']
@@ -254,25 +274,10 @@ class GameScreen(Screen):
                 self.color_name_to_rgb(self.texts[self.number_random])
                 if self.colors[nbr] == self.texts_test:
                     # Win
-                    self.points += 50
-                    if self.active is True:
-                        # time mode active
-                        self.value_progress_bar += 3
-                    else:
-                        pass
-                    self.sound_points_play()
+                    self.count_points_good()
                 else:
                     # Miss
-                    self.no_points += 1
-                    self.time_penality += 3
-                    # On Android
-                    try:
-                        vibrator.vibrate(0.4)
-                    except NotImplementedError:
-                        pass
-                    self.sound_miss_play()
-                points_kv.text = "Points " + str(self.points) +\
-                                 "   Miss " + str(self.no_points)
+                    self.count_points_false()
                 try:
                     self.progress_bar_1.value = self.value_progress_bar
                 except AttributeError:
@@ -281,47 +286,38 @@ class GameScreen(Screen):
                 # Text Mode
                 if nbr == self.number_random:
                     # Win
-                    self.points += 50
-                    if self.active is True:
-                        # time mode active
-                        self.value_progress_bar += 3
-                    else:
-                        pass
-                    self.sound_points_play()
+                    self.count_points_good()
                 else:
-                    self.no_points += 1
-                    self.time_penality += 3
-                    GameScreen.sound_miss_play()
-                    # On Android
-                    try:
-                        vibrator.vibrate(0.4)
-                    except NotImplementedError:
-                        pass
+                    # Miss
+                    self.count_points_false()
                 try:
                     self.progress_bar_1.value = self.value_progress_bar
                 except AttributeError:
                     pass
 
-                points_kv.text = "Points " + str(self.points) +\
-                                 "   Miss " + str(self.no_points)
-                # progress_bar.value = self.value_progress_bar
             else:
                 pass
+            points_kv.text = "Points " + str(self.points) +\
+                             "   Miss " + str(self.no_points)
             if self.value_progress_bar >= 99:
-                # progress_bar.value = self.value_progress_bar
-                self.get_time_2()
-                if self.mode_game == "Colours Mode":
-                    self.get_time_final("Colours Mode")
-                elif self.mode_game == "Text Mode":
-                    self.get_time_final("Text Mode")
-
-                self.value_progress_bar = 0
-                self.manager.current = 'win'
-                BrainColorGame.sound_game.stop()
-                BrainColorGame.sound_win.play()
-                self.replay()
+                self.count_points_win()
             else:
                 pass
+
+    def count_points_win(self):
+        """ Called by count_point if value_progress_bar > 99 """
+        # progress_bar.value = self.value_progress_bar
+        self.get_time_2()
+        if self.mode_game == "Colours Mode":
+            self.get_time_final("Colours Mode")
+        elif self.mode_game == "Text Mode":
+            self.get_time_final("Text Mode")
+
+        self.value_progress_bar = 0
+        self.manager.current = 'win'
+        BrainColorGame.sound_game.stop()
+        BrainColorGame.sound_win.play()
+        self.replay()
 
     @staticmethod
     def sound_miss_play():
@@ -415,6 +411,7 @@ class WinScreen(Screen):
     text6 = StringProperty("")
 
     def sound_stop(self):
+        """ Game finish: change sound """
         BrainColorGame.sound_game.play()
         BrainColorGame.sound_win.stop()
 
