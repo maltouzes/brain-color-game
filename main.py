@@ -128,12 +128,7 @@ class GameScreen(Screen):
         """ Compare saved time and t_final """
         if mode == "Colours Mode":
             try:
-                file_saved = open(self.score_file_color, 'r')
-                scr = file_saved.read()
-                scr = float(scr)
-                self.t_best_color = scr
-                file_saved.close()
-                # self.open_file(self.score_file_color, self.t_best_color)
+                self.open_file(self.score_file_color, mode)
             except IOError:
                 pass
             # t_best depend of the mode
@@ -146,12 +141,7 @@ class GameScreen(Screen):
                 self.no_new_record()
         elif mode == "Text Mode":
             try:
-                file_saved = open(self.score_file_text, 'r')
-                scr = file_saved.read()
-                scr = float(scr)
-                self.t_best_text = scr
-                file_saved.close()
-                # self.open_file(self.score_file_text, self.t_best_text)
+                self.open_file(self.score_file_text, mode)
             except IOError:
                 pass
             # t_best depend of the mode
@@ -163,17 +153,16 @@ class GameScreen(Screen):
             else:
                 self.no_new_record()
 
-    def open_file(self, score_file_mode, t_best_mode):
+    def open_file(self, score_file_mode, mode):
         """ Open scores file """
-        print score_file_mode
-        print t_best_mode
-        print type(t_best_mode)
         file_saved = open(score_file_mode, 'r')
         scr = file_saved.read()
         scr = float(scr)
-        self.t_best_mode = scr
-        print t_best_mode
-        print self.t_best_color
+        if "Colour" in mode:
+            self.t_best_color = scr
+        else:
+            self.t_best_text = scr
+
         file_saved.close()
 
     def no_new_record(self):
