@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """ A simple Color Game made with kivy """
-__version__ = '0.4.12'
+__version__ = '0.4.13'
 
 from kivy.app import App
 from kivy.uix.progressbar import ProgressBar
@@ -25,11 +25,13 @@ class MenuScreen(Screen):
         """ Leave the apps """
         App.get_running_app().stop()
 
-    def start_text_mode(self):
+    @staticmethod
+    def start_text_mode():
         """ show_popup: start Text Mode """
         GameScreen.mode_game = "Text Mode"
 
-    def start_color_mode(self):
+    @staticmethod
+    def start_color_mode():
         """ show_popup: start Colours Mode """
         GameScreen.mode_game = "Colours Mode"
 
@@ -93,6 +95,7 @@ class GameScreen(Screen):
     t_best_color = 999.
     t_best_text = 999.
     records = "New Records = "
+    t_best_mode = ObjectProperty(None)
     # 0/1 time mode active/disable
     time_mode = 0
     # Switch active: active/disable time mode
@@ -103,8 +106,6 @@ class GameScreen(Screen):
 
     def __init__(self, **kwargs):
         super(GameScreen, self).__init__(**kwargs)
-        # if platform == 'linux':
-        #     box = BoxLayout'
         self.post_build_init()
 
     def get_time_1(self):
@@ -124,49 +125,68 @@ class GameScreen(Screen):
         self.compare_time_final(mode)
 
     def compare_time_final(self, mode):
+        """ Compare saved time and t_final """
         if mode == "Colours Mode":
-            # score_file = os.getcwd() + "/scores_bcg"
             try:
-                f = open(self.score_file_color, 'r')
-                scr = f.read()
+                file_saved = open(self.score_file_color, 'r')
+                scr = file_saved.read()
                 scr = float(scr)
                 self.t_best_color = scr
-                f.close()
+                file_saved.close()
+                # self.open_file(self.score_file_color, self.t_best_color)
             except IOError:
                 pass
             # t_best depend of the mode
             self.t_best = self.t_best_color
             if float(self.t_final) < float(self.t_best_color):
                 self.t_best_color = self.t_final
-                self.records = "New Records !!! "
                 self.t_best = self.t_best_color
-                f = open(self.score_file_color, 'w')
-                f.write(str(self.t_best_color))
-                f.close()
+                self.save_new_record(self.score_file_color, self.t_best_color)
             else:
-                self.records = "Best Records = "
-                self.sound_validation()
+                self.no_new_record()
         elif mode == "Text Mode":
             try:
-                f = open(self.score_file_text, 'r')
-                scr = f.read()
+                file_saved = open(self.score_file_text, 'r')
+                scr = file_saved.read()
                 scr = float(scr)
                 self.t_best_text = scr
-                f.close()
+                file_saved.close()
+                # self.open_file(self.score_file_text, self.t_best_text)
             except IOError:
                 pass
             # t_best depend of the mode
             self.t_best = self.t_best_text
             if float(self.t_final) < float(self.t_best_text):
                 self.t_best_text = self.t_final
-                self.records = "New Records !!! "
                 self.t_best = self.t_best_text
-                f = open(self.score_file_text, 'w')
-                f.write(str(self.t_best_text))
-                f.close()
+                self.save_new_record(self.score_file_text, self.t_best_text)
             else:
-                self.records = "Best Records = "
-                self.sound_validation()
+                self.no_new_record()
+
+    def open_file(self, score_file_mode, t_best_mode):
+        """ Open scores file """
+        print score_file_mode
+        print t_best_mode
+        print type(t_best_mode)
+        file_saved = open(score_file_mode, 'r')
+        scr = file_saved.read()
+        scr = float(scr)
+        self.t_best_mode = scr
+        print t_best_mode
+        print self.t_best_color
+        file_saved.close()
+
+    def no_new_record(self):
+        """ if t_final >= t_best_mode """
+        self.records = "Best Records = "
+        self.sound_validation()
+
+    def save_new_record(self, score_file_mode, t_best_mode):
+        """ save scores in file: mode = text or color """
+        self.records = "New Records !!! "
+        file_saved = open(score_file_mode, 'w')
+        file_saved.write(str(t_best_mode))
+        file_saved.close()
 
     def replay(self):
         """ Button replay """
@@ -244,6 +264,10 @@ class GameScreen(Screen):
         else:
             pass
         self.sound_points_play()
+        try:
+            self.progress_bar_1.value = self.value_progress_bar
+        except AttributeError:
+            pass
 
     def count_points_false(self):
         """ Called by count_points """
@@ -278,10 +302,6 @@ class GameScreen(Screen):
                 else:
                     # Miss
                     self.count_points_false()
-                try:
-                    self.progress_bar_1.value = self.value_progress_bar
-                except AttributeError:
-                    pass
             elif self.mode_game == "Text Mode":
                 # Text Mode
                 if nbr == self.number_random:
@@ -290,10 +310,6 @@ class GameScreen(Screen):
                 else:
                     # Miss
                     self.count_points_false()
-                try:
-                    self.progress_bar_1.value = self.value_progress_bar
-                except AttributeError:
-                    pass
 
             else:
                 pass
@@ -301,8 +317,6 @@ class GameScreen(Screen):
                              "   Miss " + str(self.no_points)
             if self.value_progress_bar >= 99:
                 self.count_points_win()
-            else:
-                pass
 
     def count_points_win(self):
         """ Called by count_point if value_progress_bar > 99 """
@@ -410,7 +424,8 @@ class WinScreen(Screen):
     text5 = StringProperty("")
     text6 = StringProperty("")
 
-    def sound_stop(self):
+    @staticmethod
+    def sound_stop():
         """ Game finish: change sound """
         BrainColorGame.sound_game.play()
         BrainColorGame.sound_win.stop()
@@ -438,12 +453,12 @@ class BrainColorGame(App):
         self.sound_game.play()
         self.bind(text_2=self.update)
         # Create the screen manager
-        sm = ScreenManager()
-        sm = ScreenManager(transition=FadeTransition())
-        sm.add_widget(MenuScreen(name='menu'))
-        sm.add_widget(GameScreen(name='game'))
-        sm.add_widget(WinScreen(name='win'))
-        return sm
+        screen_m = ScreenManager()
+        screen_m = ScreenManager(transition=FadeTransition())
+        screen_m.add_widget(MenuScreen(name='menu'))
+        screen_m.add_widget(GameScreen(name='game'))
+        screen_m.add_widget(WinScreen(name='win'))
+        return screen_m
 
     def update(self, *args):
         """ build self.bind """
