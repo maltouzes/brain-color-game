@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """ A simple Color Game made with kivy """
-__version__ = '0.4.13'
+__version__ = '0.4.16'
 
 from kivy.app import App
 from kivy.uix.progressbar import ProgressBar
@@ -9,12 +9,24 @@ from kivy.core.audio import SoundLoader
 from kivy.core.window import Window
 from plyer import vibrator
 from kivy.utils import platform
+from kivy.uix.settings import SettingsWithSidebar
 
 from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
+# from kivy.uix.image import Image
+from kivy.uix.label import Label
+from kivy.uix.behaviors import ButtonBehavior
 
 import random
 import time
 import os
+import json
+
+
+class Buttonmy(ButtonBehavior, Label):
+    """ My custon button """
+    # def on_press(self):
+    # print("on_press")
+    pass
 
 
 class MenuScreen(Screen):
@@ -222,6 +234,9 @@ class GameScreen(Screen):
         try:
             welcome.text = self.text
             bt_q.text = self.text_button
+            # bt_q.source = ("/home/user/Programmes/brain-color-game3/
+            # brain-color-game/" +
+            # str(self.text_button))
         except UnboundLocalError:
             pass
 
@@ -422,6 +437,7 @@ class WinScreen(Screen):
 
 class BrainColorGame(App):
     """ Main App """
+    use_kivy_settings = False
     sound_game = SoundLoader.load('BCG-01.ogg')
     sound_game.loop = True
     sound_win = SoundLoader.load("win.ogg")
@@ -437,8 +453,24 @@ class BrainColorGame(App):
     # records + t_brest
     text_6 = StringProperty('')
 
+    settings_json = json.dumps([
+        {
+            "type": "title",
+            "title": "Windows"
+        },
+        {
+            "type": "bool",
+            "title": "Fullscreen",
+            "desc": "Set the window in windowed or fullscreen",
+            "section": "graphics",
+            "key": "fullscreen",
+            "true": "auto"
+        }
+    ])
+
     def build(self):
         """ Use ScreenManager """
+        self.settings_cls = SettingsWithSidebar
         self.sound_game.play()
         self.bind(text_2=self.update)
         # Create the screen manager
@@ -448,6 +480,11 @@ class BrainColorGame(App):
         screen_m.add_widget(GameScreen(name='game'))
         screen_m.add_widget(WinScreen(name='win'))
         return screen_m
+
+    def build_settings(self, settings):
+        settings.add_json_panel('BrainColorGame',
+                                self.config,
+                                data=self.settings_json)
 
     def update(self, *args):
         """ build self.bind """

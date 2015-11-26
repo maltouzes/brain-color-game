@@ -158,7 +158,9 @@
                 on_press: root.start()
                 on_press: root.count_points(3)
                 on_press: app.text_3 = str(root.no_points)
-            Button:
+            Buttonmy:
+                # source: ("/home/user/Programmes/brain-color-game3/brain-color-game/blue.png")
+                size_hint: 0.1, 0.1
                 id: bt_q
                 background_color: [0.76, 0.255, 0.7, 1]
                 text: root.text_button
@@ -166,7 +168,7 @@
                 on_press: root.start()
                 on_press: root.count_points(5)
                 font_size: 40
-                size_hint: 0.3, 0.3
+                # size_hint: 0.3, 0.3
                 pos_hint: {'center_x': 0.5, 'center_y': 0.5}
 
 <WinScreen>:
