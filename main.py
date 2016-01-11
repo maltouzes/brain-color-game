@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """ A simple Color Game made with kivy """
-__version__ = '0.5.3'
+__version__ = '0.5.7'
 
 from kivy.app import App
 from kivy.uix.progressbar import ProgressBar
@@ -25,6 +25,10 @@ class Buttonmy(ButtonBehavior, Label):
     """ My custon button """
     # def on_press(self):
     # print("on_press")
+    pass
+
+
+class ButtonColorWord(ButtonBehavior, Image):
     pass
 
 
@@ -79,6 +83,13 @@ class ButtonText(ButtonBehavior, Image):
 class ButtonExit(ButtonBehavior, Image):
     """ My Custom Exit Button """
     pass
+
+
+class StartScreen(Screen):
+    @staticmethod
+    def leave():
+        """ Leave the apps """
+        App.get_running_app().stop()
 
 
 class MenuScreen(Screen):
@@ -428,13 +439,18 @@ class GameScreen(Screen):
 
     def key_handler(self, window, keycode1, keycode2, text, modifiers):
         """ On push Back_key: run go_start (popup) """
-        if self.manager.current == 'menu' or self.manager.current == 'game':
+        if self.manager.current == 'menu' or \
+                self.manager.current == 'game' or \
+                self.manager.current == 'start':
             if keycode1 == 27 or keycode1 == 1001:
                 self.replay()
                 # Returning True will eat the keypress
-                if self.manager.current == 'menu':
+                if self.manager.current == 'start':
                     MenuScreen.leave()
-                self.manager.current = 'menu'
+                if self.manager.current == 'menu':
+                    self.manager.current = 'start'
+                if self.manager.current == 'game':
+                    self.manager.current = 'menu'
                 return True
             return False
 
@@ -540,7 +556,7 @@ class GameScreenRepeat(Screen):
             if keycode1 == 27 or keycode1 == 1001:
                 if self.manager.current == 'menu-repeat':  # hum
                     BrainColorGame.sound_game.play()
-                    self.manager.current = 'menu'
+                    self.manager.current = 'start'
                 else:
                     self.level = 2
                     self.started = 0
@@ -771,6 +787,7 @@ class BrainColorGame(App):
         # Create the screen manager
         screen_m = ScreenManager()
         screen_m = ScreenManager(transition=FadeTransition())
+        screen_m.add_widget(StartScreen(name='start'))
         screen_m.add_widget(MenuScreen(name='menu'))
         screen_m.add_widget(GameScreen(name='game'))
         screen_m.add_widget(GameScreenRepeat(name='game-repeat'))

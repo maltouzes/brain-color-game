@@ -1,15 +1,44 @@
 #:kivy 1.9.0
 #:import os os
+<StartScreen>:
+    Image:
+        source: os.getcwd() +"/BCG_fond.png"
+    FloatLayout:
+        BoxLayout:
+            Label:
+                pos_hint: {'center_x': 0.5, 'y': 0.4}
+                font_size: 18
+                text: " Mute/Unmute"
+            CheckBox:
+                pos_hint: {'center_x': 0.5, 'y': 0.4}
+                on_press: root.manager.get_screen('game').sound_play()
+                on_active: root.manager.get_screen('game').self_active()
+        ButtonColorWord:
+            source: os.getcwd() + "/Button-Color-Word.png"
+            size_hint: 0.7, 0.2
+            pos_hint: {'center_x': 0.5, 'y': 0.6}
+            on_press: root.manager.current = 'menu'
+        ButtonMenuRepeat:
+            source: os.getcwd() + "/Button-Repeat-Mode.png"
+            size_hint: 0.7, 0.20
+            pos_hint: {'center_x': 0.5, 'y': 0.35}
+            on_press: root.manager.current = 'menu-repeat'
+        ButtonExit:
+            source: os.getcwd() + ("/Button-Exit.png")
+            pos_hint: {'center_x': 0.5, 'y': 0}
+            size_hint: 0.6, 0.25
+            on_press: root.leave()
+
+
 <MenuScreenRepeat>:
-    # orientation: 'horizontal'  # or not
     Image:
         source: os.getcwd() + "/CR_fond_Landscape.png"
     FloatLayout:
         ButtonStart:
             # source: os.getcwd() + "/button_start.png"
-            source: os.getcwd() + "/Button-Repeat-Mode-Easiest.png"
-            pos_hint: {'center_x': 0.5, 'center_y': 0.75}
-            size_hint: 0.3, 0.1
+            source: os.getcwd() + "/Button-Repeat-Mode-Easiest-vertical.png"
+            pos_hint: {'center_x': 0.7, 'center_y': 0.7}
+            size_hint: 0.1, 0.3
             text: "Start"
             on_press: root.manager.current = 'game-repeat'
             on_press: root.manager.get_screen('game-repeat').start_started(1)
@@ -17,9 +46,9 @@
             on_press: root.manager.get_screen('game-repeat').easy()
             on_press: root.manager.get_screen('game-repeat').remember()
         ButtonStart:
-            source: os.getcwd() + "/Button-Repeat-Mode-Easy.png"
-            pos_hint: {'center_x': 0.5, 'center_y': 0.6}
-            size_hint: 0.3, 0.1
+            source: os.getcwd() + "/Button-Repeat-Mode-Easy-vertical.png"
+            pos_hint: {'center_x': 0.7, 'center_y': 0.3}
+            size_hint: 0.1, 0.3
             text: "Start"
             on_press: root.manager.current = 'game-repeat'
             on_press: root.manager.get_screen('game-repeat').start_started(1)
@@ -27,9 +56,9 @@
             on_press: root.manager.get_screen('game-repeat').hard()
             on_press: root.manager.get_screen('game-repeat').remember()
         ButtonStart:
-            source: os.getcwd() + "/Button-Repeat-Mode-Medium.png"
-            pos_hint: {'center_x': 0.5, 'center_y': 0.4}
-            size_hint: 0.3, 0.1
+            source: os.getcwd() + "/Button-Repeat-Mode-Medium-vertical.png"
+            pos_hint: {'center_x': 0.48, 'center_y': 0.7}
+            size_hint: 0.1, 0.3
             text: "Start"
             on_press: root.manager.current = 'game-repeat'
             on_press: root.manager.get_screen('game-repeat').start_started(1)
@@ -37,15 +66,20 @@
             on_press: root.manager.get_screen('game-repeat').easy()
             on_press: root.manager.get_screen('game-repeat').forgot()
         ButtonStart:
-            source: os.getcwd() + "/Button-Repeat-Mode-Hard.png"
-            pos_hint: {'center_x': 0.5, 'center_y': 0.2}
-            size_hint: 0.3, 0.1
+            source: os.getcwd() + "/Button-Repeat-Mode-Hard-vertical.png"
+            pos_hint: {'center_x': 0.48, 'center_y': 0.3}
+            size_hint: 0.1, 0.3
             text: "Start"
             on_press: root.manager.current = 'game-repeat'
             on_press: root.manager.get_screen('game-repeat').start_started(1)
             on_press: root.manager.get_screen('game-repeat').ini()
             on_press: root.manager.get_screen('game-repeat').hard()
             on_press: root.manager.get_screen('game-repeat').forgot()
+        ButtonExit:
+            source: os.getcwd() + ("/Button-Return-vertical.png")
+            pos_hint: {'center_x': 0.2, 'y': 0.4}
+            size_hint: 0.6, 0.25
+            on_press: root.manager.current = 'start'
 
 <GameScreenRepeat>:
     GridLayout:
@@ -69,7 +103,7 @@
 
 <MenuScreen>:
     Image:
-        source: os.getcwd() + "/BCG_fond.png"
+        source: os.getcwd() + "/ColorWord_fond.png"
     FloatLayout:
 
         orientation: 'vertical'
@@ -77,83 +111,36 @@
         height: root.height
         width: root.width + 100
         spacing: 8
-        #canvas.before:
-         #   Color:
-          #      rgba: 0.11, 0.055, 0.23, 1
-           # Rectangle:
-            #    # source: os.getcwd() + "/BCG_fond.png"
-             #   size: self.size
-              #  pos: self.pos
-        # Label:
-            # pos_hint: {'center_x': 0.48, 'y': 0.4}
-            # font_size: 30
-            # text: "Please choose a mode"
-            # text: ""
         BoxLayout:
             Label:
                 pos_hint: {'center_x': 0.5, 'y': 0.4}
                 font_size: 18
                 text: " Mute/Unmute"
+                color: 0,0,0,1
             CheckBox:
                 pos_hint: {'center_x': 0.5, 'y': 0.4}
-                # on_press: root.sound_play()
                 on_press: root.manager.get_screen('game').sound_play()
-                # on_active: GameScreen.self_active()
                 on_active: root.manager.get_screen('game').self_active()
 
         ButtonColours:
             source: os.getcwd() + ("/Button-Colours-Mode.png")
             pos_hint: {'center_x': 0.5, 'y': 0.6}
-            size_hint: 0.7, 0.20
+            size_hint: 0.8, 0.25
             on_press: root.sound_validation()
             on_press: root.manager.current = 'game'
             on_press: root.start_color_mode()
         ButtonText:
             source: os.getcwd() + ("/Button-Text-Mode.png")
-            pos_hint: {'center_x': 0.5, 'y': 0.4}
-            size_hint: 0.7, 0.20
+            pos_hint: {'center_x': 0.5, 'y': 0.37}
+            size_hint: 0.8, 0.25
             on_press: root.start_text_mode()
             on_press: root.sound_validation()
             on_press: root.manager.current = 'game'
-        ButtonMenuRepeat:
-            # source: os.getcwd() + "/button_start.png"
-            source: os.getcwd() + "/Button-Repeat-Mode.png"
-            pos_hint: {'center_x': 0.5, 'y': 0.2}
-            size_hint: 0.7, 0.20
-            on_press: root.manager.current = 'menu-repeat'
         ButtonExit:
-            source: os.getcwd() + ("/Button-Exit.png")
+            source: os.getcwd() + ("/Button-Return.png")
             pos_hint: {'center_x': 0.5, 'y': 0}
             size_hint: 0.6, 0.25
-            on_press: root.leave()
-
-        # Button:
-            # size_hint: 0.5, 0.12
-            # pos_hint: {'center_x': 0.5, 'y': 0.5}
-            # background_color: [0.76, 0.255, 0.7, 1]
-            # text: "Colours Mode"
-            # on_press: root.restart()
-            # on_press: root.start_color_mode()
-            # on_press: root.sound_validation()
-            # on_press: GameScreen().reboot_progress_bar()
-            # on_press: root.manager.current = 'game'
-        # Button:
-            # size_hint: 0.5, 0.12
-            # pos_hint: {'center_x': 0.5, 'y': 0.3}
-            # background_color: [0.76, 0.255, 0.7, 1]
-            # text: "Text Mode"
-            # on_press: root.restart()
-            # on_press: root.sound_validation()
-            # on_press: root.reboot_progress_bar()
-            # on_press: root.manager.current = 'game'
-            # on_press: root.start_text_mode()
-        # Button:
-            # size_hint: 0.5, 0.12
-            # pos_hint: {'center_x': 0.5, 'y': 0.1}
-            # pos: ((root.width * 1/5), root.height / 7)
-            # background_color: [0.76, 0.1, 0, 2]
-            # text: "Exit"
-            # on_press: root.leave()
+            on_press: root.manager.current = 'start'
 
 <GameScreen>:
     BoxLayout:
