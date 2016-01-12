@@ -29,6 +29,10 @@ class Buttonmy(ButtonBehavior, Label):
     pass
 
 
+class ButtonHelp(ButtonBehavior, Image):
+    pass
+
+
 class ButtonSound(ButtonBehavior, Image):
     def __init__(self, **kwargs):
         super(ButtonSound, self).__init__(**kwargs)
@@ -38,9 +42,9 @@ class ButtonSound(ButtonBehavior, Image):
         """ Change the img source when the button is pressed """
         print GameScreen.active
         if BrainColorGame.sound_game.volume == 0:
-            self.source = (os.getcwd() + "/sound_off_on.png")
+            self.source = (os.getcwd() + "/sound_on_off1.png")
         else:
-            self.source = (os.getcwd() + "/sound_on_off.png")
+            self.source = (os.getcwd() + "/sound_off_on1.png")
 
 
 class ButtonColorWord(ButtonBehavior, Image):
@@ -74,10 +78,10 @@ class ButtonColours(ButtonBehavior, Image):
 
     def state_changed(self, *args):
         """ Change the img source when the button is pressed """
-        if self.source == (os.getcwd() + "/Button-Colours-Mode-push.png"):
-            self.source = (os.getcwd() + "/Button-Colours-Mode.png")
+        if self.source == (os.getcwd() + "/Button_yellow.png"):
+            self.source = (os.getcwd() + "/Button_purple.png")
         else:
-            self.source = (os.getcwd() + "/Button-Colours-Mode-push.png")
+            self.source = (os.getcwd() + "/Button_yellow.png")
             pass
 
 
@@ -89,10 +93,10 @@ class ButtonText(ButtonBehavior, Image):
 
     def state_changed(self, *args):
         """ Change the img source when the button is pressed """
-        if self.source == (os.getcwd() + "/Button-Text-Mode-push.png"):
-            self.source = (os.getcwd() + "/Button-Text-Mode.png")
+        if self.source == (os.getcwd() + "/Button_yellow.png"):
+            self.source = (os.getcwd() + "/Button_purple.png")
         else:
-            self.source = (os.getcwd() + "/Button-Text-Mode-push.png")
+            self.source = (os.getcwd() + "/Button_yellow.png")
 
 
 class ButtonExit(ButtonBehavior, Image):
