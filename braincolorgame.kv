@@ -22,13 +22,13 @@
             on_press: root.manager.get_screen('game').self_active()
         ButtonColorWord:
             source: os.getcwd() + "/Button-Color-Word.png"
-            size_hint: 0.7, 0.2
-            pos_hint: {'center_x': 0.5, 'y': 0.6}
+            size_hint: 0.6, 0.25
+            pos_hint: {'center_x': 0.5, 'y': 0.55}
             on_press: root.manager.current = 'menu'
             on_press: root.manager.get_screen('menu').sound_validation()
         ButtonMenuRepeat:
             source: os.getcwd() + "/Button-Repeat-Mode.png"
-            size_hint: 0.7, 0.20
+            size_hint: 0.6, 0.25
             pos_hint: {'center_x': 0.5, 'y': 0.35}
             on_press: root.manager.current = 'menu-repeat'
             on_press: root.manager.get_screen('menu').sound_validation()
@@ -44,18 +44,22 @@
         source: os.getcwd() + "/CR_fond_P2.png"
     FloatLayout:
         ButtonStart:
-            # source: os.getcwd() + "/button_start.png"
-            source: os.getcwd() + "/Button-Repeat-Mode-Easiest.png"
+            source: os.getcwd() + "/Button-Repeat-Mode-Easiest-Empty.png"
             pos_hint: {'center_x': 0.5, 'center_y': 0.75}
             size_hint: 0.6, 0.25
-            text: "Start"
             on_press: root.manager.current = 'game-repeat'
             on_press: root.manager.get_screen('game-repeat').start_started(1)
             on_press: root.manager.get_screen('game-repeat').ini()
             on_press: root.manager.get_screen('game-repeat').easy()
             on_press: root.manager.get_screen('game-repeat').remember()
+        Label:
+            text: root.text_easiest
+            font_size: 20
+            color: 0,0,0,1
+            pos_hint: {'center_x': 0.5, 'center_y': 0.75}
+
         ButtonStart:
-            source: os.getcwd() + "/Button-Repeat-Mode-Easy.png"
+            source: os.getcwd() + "/Button-Repeat-Mode-Easiest-Empty.png"
             pos_hint: {'center_x': 0.5, 'center_y': 0.58}
             size_hint: 0.6, 0.25
             text: "Start"
@@ -64,8 +68,14 @@
             on_press: root.manager.get_screen('game-repeat').ini()
             on_press: root.manager.get_screen('game-repeat').hard()
             on_press: root.manager.get_screen('game-repeat').remember()
+        Label:
+            text: root.text_easy
+            font_size: 20
+            color: 0,0,0,1
+            pos_hint: {'center_x': 0.5, 'center_y': 0.58}
+
         ButtonStart:
-            source: os.getcwd() + "/Button-Repeat-Mode-Medium.png"
+            source: os.getcwd() + "/Button-Repeat-Mode-Easiest-Empty.png"
             pos_hint: {'center_x': 0.5, 'center_y': 0.41}
             size_hint: 0.6, 0.25
             text: "Start"
@@ -74,8 +84,14 @@
             on_press: root.manager.get_screen('game-repeat').ini()
             on_press: root.manager.get_screen('game-repeat').easy()
             on_press: root.manager.get_screen('game-repeat').forgot()
+        Label:
+            text: root.text_medium
+            font_size: 20
+            color: 0,0,0,1
+            pos_hint: {'center_x': 0.5, 'center_y': 0.41}
+
         ButtonStart:
-            source: os.getcwd() + "/Button-Repeat-Mode-Hard.png"
+            source: os.getcwd() + "/Button-Repeat-Mode-Easiest-Empty.png"
             pos_hint: {'center_x': 0.5, 'center_y': 0.24}
             size_hint: 0.6, 0.25
             text: "Start"
@@ -84,6 +100,12 @@
             on_press: root.manager.get_screen('game-repeat').ini()
             on_press: root.manager.get_screen('game-repeat').hard()
             on_press: root.manager.get_screen('game-repeat').forgot()
+        Label:
+            text: root.text_hard
+            font_size: 20
+            color: 0,0,0,1
+            pos_hint: {'center_x': 0.5, 'center_y': 0.24}
+
         ButtonExit:
             source: os.getcwd() + ("/Button-Return.png")
             pos_hint: {'center_x': 0.5, 'center_y': 0.07}
@@ -130,12 +152,12 @@
         #        pos_hint: {'center_x': 0.5, 'y': 0.4}
         #        on_press: root.manager.get_screen('game').sound_play()
         #        on_active: root.manager.get_screen('game').self_active()
-        ButtonColorWord:
-            source: os.getcwd() + "/sound_on_off.png"
-            pos_hint: {'center_x': 0.9, 'center_y': 0.85}
-            size_hint: 0.2, 0.2
-            on_press: root.manager.get_screen('game').self_active()
-            on_press: root.manager.get_screen('game').sound_play()
+        #ButtonColorWord:
+        #    source: os.getcwd() + "/sound_on_off.png"
+        #    pos_hint: {'center_x': 0.9, 'center_y': 0.85}
+        #    size_hint: 0.2, 0.2
+        #    on_press: root.manager.get_screen('game').self_active()
+        #    on_press: root.manager.get_screen('game').sound_play()
 
         ButtonColours:
             source: os.getcwd() + ("/Button-Colours-Mode.png")
@@ -175,15 +197,15 @@
                         on_active: root.sound_play()
                         on_active: root.change_time_mode()
                         active: root.active
-                BoxLayout:
+                #BoxLayout:
                     # padding: [1, 1, 1, 1]
                     # spacing: 25
-                    Label:
-                        font_size: 18
-                        text: " Mute/Unmute"
-                    CheckBox:
-                        on_press: root.sound_play()
-                        on_active: root.self_active()
+                 #   Label:
+                  #      font_size: 18
+                   #     text: " Mute/Unmute"
+                    #CheckBox:
+                     #   on_press: root.sound_play()
+                      #  on_active: root.self_active()
         BoxLayout:
             size_hint_y: None
             Label:

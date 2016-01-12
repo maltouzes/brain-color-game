@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """ A simple Color Game made with kivy """
-__version__ = '0.5.12'
+__version__ = '0.5.13'
 
 from kivy.app import App
 from kivy.uix.progressbar import ProgressBar
@@ -30,19 +30,17 @@ class Buttonmy(ButtonBehavior, Label):
 
 
 class ButtonSound(ButtonBehavior, Image):
-    #def __init__(self, **kwargs):
-      #  super(ButtonSound, self).__init__(**kwargs)
-     #   self.bind(state=self.state_changed)
+    def __init__(self, **kwargs):
+        super(ButtonSound, self).__init__(**kwargs)
+        self.bind(state=self.state_changed)
 
-    #def state_changed(self, *args):
-     #   """ Change the img source when the button is pressed """
-      #  print GameScreen.active
-       # if BrainColorGame.sound_game.volume == 0:
-        #    self.source = (os.getcwd() + "/sound_off_on.png")
-        #else:
-         #   self.source = (os.getcwd() + "/sound_on_off.png")
-    pass
-
+    def state_changed(self, *args):
+        """ Change the img source when the button is pressed """
+        print GameScreen.active
+        if BrainColorGame.sound_game.volume == 0:
+            self.source = (os.getcwd() + "/sound_off_on.png")
+        else:
+            self.source = (os.getcwd() + "/sound_on_off.png")
 
 
 class ButtonColorWord(ButtonBehavior, Image):
@@ -751,6 +749,10 @@ class GameScreenRepeat(Screen):
 
 class MenuScreenRepeat(Screen):
     """ The Menu Class """
+    text_easiest = "Easiest"
+    text_easy = "Easy"
+    text_medium = "Hard"
+    text_hard = "Crasy"
 
     @staticmethod
     def leave():
