@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """ A simple Color Game made with kivy """
-__version__ = '0.5.14'
+__version__ = '0.5.15'
 
 from kivy.app import App
 from kivy.uix.progressbar import ProgressBar
@@ -20,6 +20,11 @@ import random
 import time
 import os
 Window.size = (480, 800)
+# Window.size = (240, 400)  # Same as 480, 800 --> ok
+# Window.size = (720, 1280)
+# Window.size = (360, 640)  # Same as 720, 1280 --> ok
+# Window.size = (1080, 1920)
+# Window.size = (540, 960)  # Same as 1080, 1920 --> ok
 
 
 class Buttonmy(ButtonBehavior, Label):
