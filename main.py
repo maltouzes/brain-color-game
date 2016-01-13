@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-""" A simple Color Game made with kivy """
-__version__ = '0.5.15'
+""" simple Color Games made with kivy """
+__version__ = '0.5.18'
 
 from kivy.app import App
 from kivy.uix.progressbar import ProgressBar
@@ -561,6 +561,7 @@ class GameScreenRepeat(Screen):
                'green': [0, 1, 0, 1]}
     colors = []
     question = []
+    lenquestion = "Score : " + str(1)
     level = 2
     started = 0
     path = os.getcwd()
@@ -605,6 +606,9 @@ class GameScreenRepeat(Screen):
 
     def ini(self):
         """ build """
+        self.lenquestion = "Score : " + str(1)
+        lenquestionlabel = self.ids['lenquestionlabel']
+        lenquestionlabel.text = self.lenquestion
         self.level = 2
         self.question = []
         self.question_index = 0
@@ -645,27 +649,27 @@ class GameScreenRepeat(Screen):
         print "here"
         print self.question_index
         print len(self.question)
-        if bt1.background_color == self.colours['red'] and \
-           bt2.background_color == self.colours['blue'] and \
-           bt3.background_color == self.colours['yellow'] and \
-           bt4.background_color == self.colours['green'] and \
+        if bt1.color == self.colours['yellow'] and \
+           bt2.color == self.colours['green'] and \
+           bt3.color == self.colours['red'] and \
+           bt4.color == self.colours['blue'] and \
            self.question_index < len(self.question):
             print "ok"
-            if bt1.background_color == self.question[self.question_index]:
-                bt1.background_color = [0.3, 1, 3, 1]
+            if bt1.color == self.question[self.question_index]:
+                bt1.color = [0.3, 1, 3, 1]
                 self.bt1_sound.play()
-                bt1.background_color = [0.3, 1, 3, 1]
-            elif bt2.background_color == \
+                bt1.color = [0.3, 1, 3, 1]
+            elif bt2.color == \
                     self.question[self.question_index]:
-                bt2.background_color = [0.3, 1, 3, 1]
+                bt2.color = [0.3, 1, 3, 1]
                 self.bt2_sound.play()
-            elif bt3.background_color == \
+            elif bt3.color == \
                     self.question[self.question_index]:
-                bt3.background_color = [0.3, 1, 3, 1]
+                bt3.color = [0.3, 1, 3, 1]
                 self.bt3_sound.play()
-            elif bt4.background_color == \
+            elif bt4.color == \
                     self.question[self.question_index]:
-                bt4.background_color = [0.3, 1, 3, 1]
+                bt4.color = [0.3, 1, 3, 1]
                 self.bt4_sound.play()
             else:
                 pass
@@ -686,16 +690,16 @@ class GameScreenRepeat(Screen):
 
         print "reboot_button"
         self.question_index += 1
-        bt1.background_color = self.colours['red']
-        bt2.background_color = self.colours['blue']
-        bt3.background_color = self.colours['yellow']
-        bt4.background_color = self.colours['green']
+        bt1.color = self.colours['yellow']
+        bt2.color = self.colours['green']
+        bt3.color = self.colours['red']
+        bt4.color = self.colours['blue']
         Clock.schedule_once(self.start, 0.3)
 
     def bt1_pressed(self):
         """ Check if the answer red is good """
         bt1 = self.ids['bt1']
-        self.colors.append(bt1.background_color)
+        self.colors.append(bt1.color)
         print self.colors
         self.bt1_sound.play()
         self.check_answer()
@@ -703,7 +707,7 @@ class GameScreenRepeat(Screen):
     def bt2_pressed(self):
         """ Check if the answer blue is good """
         bt2 = self.ids['bt2']
-        self.colors.append(bt2.background_color)
+        self.colors.append(bt2.color)
         print self.colors
         self.bt2_sound.play()
         self.check_answer()
@@ -711,7 +715,7 @@ class GameScreenRepeat(Screen):
     def bt3_pressed(self):
         """ Check if the answer yellow is good """
         bt3 = self.ids['bt3']
-        self.colors.append(bt3.background_color)
+        self.colors.append(bt3.color)
         print self.colors
         self.bt3_sound.play()
         self.check_answer()
@@ -719,7 +723,7 @@ class GameScreenRepeat(Screen):
     def bt4_pressed(self):
         """ Check if the answer green is good """
         bt4 = self.ids['bt4']
-        self.colors.append(bt4.background_color)
+        self.colors.append(bt4.color)
         print self.colors
         self.bt4_sound.play()
         self.check_answer()
@@ -743,9 +747,14 @@ class GameScreenRepeat(Screen):
 
     def check_answer(self):
         """ Called by Button's push """
+
         if self.colors == self.question:
             print "win"
             self.win()
+            self.lenquestion = "Score: " + str(len(self.question)-1)
+            lenquestionlabel = self.ids['lenquestionlabel']
+            lenquestionlabel.text = self.lenquestion
+
         else:
             if len(self.colors) < len(self.question):
                 for x in range(len(self.colors)):

@@ -133,23 +133,45 @@
             pos_hint: {'center_x': 0.5, 'center_y': 0.12}
 
 <GameScreenRepeat>:
-    GridLayout:
+    Image:
+        source: os.getcwd() + "/GameScreenRepeat_fond.png"
+    FloatLayout:
         cols: 2
-        Button:
+        Label:
+            id: lenquestionlabel
+            bold: True
+            font_size: 25
+            color: 0,0,0,1
+            text: root.lenquestion
+            pos_hint: {'center_x': 0.2, 'center_y': 0.95}
+        ButtonHelp:
+            source: os.getcwd() + "/btpush4-moreshadow.png"
+            pos_hint: {'center_x': 0.25, 'center_y': 0.68}
             id: bt1
-            background_color: root.colours['red']
+            size_hint: 0.5, 0.5
+            color: root.colours['yellow']
             on_press: root.bt1_pressed()
-        Button:
+        ButtonHelp:
+            # source: os.getcwd() + "/btpush2.png"
+            source: os.getcwd() + "/btpush4-moreshadow.png"
+            pos_hint: {'center_x': 0.74, 'center_y': 0.68}
             id: bt2
-            background_color: root.colours['blue']
+            size_hint: 0.5, 0.5
+            color: root.colours['green']
             on_press: root.bt2_pressed()
-        Button:
+        ButtonHelp:
+            source: os.getcwd() + "/btpush4.png"
             id: bt3
-            background_color: root.colours['yellow']
+            size_hint: 0.5, 0.5
+            pos_hint: {'center_x': 0.25, 'center_y': 0.31}
+            color: root.colours['red']
             on_press: root.bt3_pressed()
-        Button:
+        ButtonHelp:
+            source: os.getcwd() + "/btpush3.png"
+            pos_hint: {'center_x': 0.74, 'center_y': 0.31}
             id: bt4
-            background_color: root.colours['green']
+            size_hint: 0.5, 0.5
+            color: root.colours['blue']
             on_press: root.bt4_pressed()
 
 <MenuScreen>:
