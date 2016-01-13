@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """ A simple Color Game made with kivy """
-__version__ = '0.5.13'
+__version__ = '0.5.14'
 
 from kivy.app import App
 from kivy.uix.progressbar import ProgressBar
@@ -328,17 +328,29 @@ class GameScreen(Screen):
         random.shuffle(self.colors)
         random.shuffle(self.texts)
         # Kivy buttons text
+        bt1b = self.ids['bt1b']
+        bt1b.color = self.colors[0]
+        bt1b.text = self.texts[0]
         bt1 = self.ids['bt1']
-        bt1.color = self.colors[0]
+        # bt1.color = self.colors[0]
         bt1.text = self.texts[0]
+        bt2b = self.ids['bt2b']
+        bt2b.color = self.colors[1]
+        bt2b.text = self.texts[1]
         bt2 = self.ids['bt2']
+        # bt2.color = self.colors[1]
         bt2.text = self.texts[1]
-        bt2.color = self.colors[1]
+        bt3b = self.ids['bt3b']
+        bt3b.color = self.colors[2]
+        bt3b.text = self.texts[2]
         bt3 = self.ids['bt3']
-        bt3.color = self.colors[2]
+        # bt3.color = self.colors[2]
         bt3.text = self.texts[2]
+        bt4b = self.ids['bt4b']
+        bt4b.color = self.colors[3]
+        bt4b.text = self.texts[3]
         bt4 = self.ids['bt4']
-        bt4.color = self.colors[3]
+        # bt4.color = self.colors[3]
         bt4.text = self.texts[3]
 
     def count_points_good(self):
@@ -754,9 +766,9 @@ class GameScreenRepeat(Screen):
 class MenuScreenRepeat(Screen):
     """ The Menu Class """
     text_easiest = "Easiest"
-    text_easy = "Easy"
+    text_easy = "Medium"
     text_medium = "Hard"
-    text_hard = "Crasy"
+    text_hard = "Hard"
 
     @staticmethod
     def leave():
