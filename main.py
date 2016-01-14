@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """ simple Color Games made with kivy """
-__version__ = '0.5.20'
+__version__ = '0.5.21'
 
 from kivy.app import App
 from kivy.uix.progressbar import ProgressBar
@@ -103,6 +103,12 @@ class ScoresColorWord(Screen):
                 return True
             return False
 
+    def update(self):
+        ok = self.ids['best_scores_color_word_color_label']
+        ok.text = str(BrainColorGame.best_scores_color_word_color)
+        ok1 = self.ids['best_scores_color_word_text_label']
+        ok1.text = str(BrainColorGame.best_scores_color_word_text)
+
 
 class ScoresColorRepeat(Screen):
     def __init__(self, **kwargs):
@@ -126,15 +132,24 @@ class ScoresColorRepeat(Screen):
                 return True
             return False
 
+    def update(self):
+        ok = self.ids['best_scores_color_repeat_medium_label']
+        ok.text = str(BrainColorGame.best_scores_color_repeat_medium)
+        ok1 = self.ids['best_scores_color_repeat_hard_label']
+        ok1.text = str(BrainColorGame.best_scores_color_repeat_hard)
+
 
 class InstructionsColorRepeat(Screen):
     text = "There is two modes in this game:\n"\
            "Medium and Hard.\n"\
+           "\n"\
            "In medium you must reproduice\n"\
            "the sequence of\nColor/Sound showned,\n"\
            "it's always the same sequence.\n"\
+           "\n"\
            "In Hard:\n"\
            "The sequence is differente every time!\n"\
+           "\n"\
            "Good Luck"
 
     def __init__(self, **kwargs):
@@ -160,6 +175,21 @@ class InstructionsColorRepeat(Screen):
 
 
 class InstructionsColorWord(Screen):
+    text = "There is two modes in this game:\n"\
+           "Color and Text.\n"\
+           "\n"\
+           "In Color Mode you must click\n"\
+           "on the good color\n"\
+           "You don't care about the text inside the button\n"\
+           "Just click on the good color\n"\
+           "\n"\
+           "In Text Mode you must click\n"\
+           "On the same Text showned\n"\
+           "You don't care about the color\n"\
+           "Just click on the same Text\n"\
+           "\n"\
+           "Good Luck"
+
     def __init__(self, **kwargs):
         """ """
         super(InstructionsColorWord, self).__init__(**kwargs)
@@ -351,6 +381,10 @@ class GameScreen(Screen):
         self.t_final = "%.2f" % self.t_final
         self.compare_time_final(mode)
 
+    def update_records(self):
+        BrainColorGame.best_scores_color_word_color = self.t_best_color
+        BrainColorGame.best_scores_color_word_text = self.t_best_text
+
     def compare_time_final(self, mode):
         """ Compare saved time and t_final """
         if mode == "Colours Mode":
@@ -380,17 +414,23 @@ class GameScreen(Screen):
             else:
                 self.no_new_record()
 
+    def open_init(self):
+                self.open_file(self.score_file_color, "Colour")
+                self.open_file(self.score_file_text, "Text")
+
     def open_file(self, score_file_mode, mode):
         """ Open scores file """
-        file_saved = open(score_file_mode, 'r')
-        scr = file_saved.read()
-        scr = float(scr)
-        if "Colour" in mode:
-            self.t_best_color = scr
-        else:
-            self.t_best_text = scr
-
-        file_saved.close()
+        try:
+            file_saved = open(score_file_mode, 'r')
+            scr = file_saved.read()
+            scr = float(scr)
+            if "Colour" in mode:
+                self.t_best_color = scr
+            else:
+                self.t_best_text = scr
+            file_saved.close()
+        except IOError:
+            pass
 
     def no_new_record(self):
         """ if t_final >= t_best_mode """
@@ -692,7 +732,7 @@ class GameScreenRepeat(Screen):
                'green': [0, 1, 0, 1]}
     colors = []
     question = []
-    lenquestion = "Score : " + str(1)
+    lenquestion = "Level: " + str(1)
     level = 2
     started = 0
     life = 3
@@ -703,6 +743,10 @@ class GameScreenRepeat(Screen):
     bt4_sound = SoundLoader.load(path + '/bt4_sound.ogg')
     sound_false = SoundLoader.load(path + '/sound_false.ogg')
     sound_win = SoundLoader.load(path + '/sound_win.ogg')
+    level_best_medium = 1
+    level_best_hard = 1
+    score_file_repeat_medium = os.getcwd() + "/scores_repeat_medium_bcg"
+    score_file_repeat_hard = os.getcwd() + "/scores_repeat_hard_bcg"
 
     def __init__(self, **kwargs):
         """ """
@@ -736,9 +780,40 @@ class GameScreenRepeat(Screen):
                 return True
             return False
 
+    def open_init(self):
+                self.open_file(self.score_file_repeat_medium, "medium")
+                self.open_file(self.score_file_repeat_hard, "hard")
+
+    def open_file(self, score_file_mode, level):
+        """ Open scores file """
+        try:
+            file_saved = open(score_file_mode, 'r')
+            scr = file_saved.read()
+            scr = int(scr)
+            if level == "medium":
+                self.level_best_medium = scr
+            else:
+                self.level_best_hard = scr
+            file_saved.close()
+        except IOError:
+            pass
+
+    def update_records(self):
+        BrainColorGame.best_scores_color_repeat_medium = self.level_best_medium
+        BrainColorGame.best_scores_color_repeat_hard = self.level_best_hard
+
+    def save_new_record(self, score_file_mode):
+        """ save scores in file: mode = text or color """
+        file_saved = open(score_file_mode, 'w')
+        if self.mode == 'remember':
+            file_saved.write(str(self.level_best_medium))
+        else:
+            file_saved.write(str(self.level_best_hard))
+        file_saved.close()
+
     def ini(self):
         """ build """
-        self.lenquestion = "Score : " + str(1)
+        self.lenquestion = "Level: " + str(1)
         lenquestionlabel = self.ids['lenquestionlabel']
         lenquestionlabel.text = self.lenquestion
         self.life = 3
@@ -932,7 +1007,7 @@ class GameScreenRepeat(Screen):
         if self.colors == self.question:
             print "win"
             self.win()
-            self.lenquestion = "Score: " + str(len(self.question)-1)
+            self.lenquestion = "Level: " + str(len(self.question)-1)
             lenquestionlabel = self.ids['lenquestionlabel']
             lenquestionlabel.text = self.lenquestion
 
@@ -963,7 +1038,20 @@ class GameScreenRepeat(Screen):
                 self.question_index = 0
                 Clock.schedule_once(self.start, 0.5)
             LooseColorRepeat.score = (len(self.question)-1)
+        LooseColorRepeat.score = (len(self.question)-1)
         if self.life <= 0:
+            if self.mode == 'remember':
+                if self.level_best_medium < (len(self.question)-1):
+                    self.level_best_medium = (len(self.question)-1)
+                    print "New records"
+                    print self.level_best_medium
+                    self.save_new_record(self.score_file_repeat_medium)
+            else:
+                if self.level_best_hard < (len(self.question)-1):
+                    self.level_best_hard = (len(self.question)-1)
+                    print "New records"
+                    print self.level_best_hard
+                    self.save_new_record(self.score_file_repeat_hard)
             self.manager.current = 'loose'
 
 
@@ -1002,6 +1090,10 @@ class BrainColorGame(App):
     # records + t_brest
     text_6 = StringProperty('')
     score_repeat = StringProperty('')
+    best_scores_color_word_color = StringProperty('')
+    best_scores_color_word_text = StringProperty('')
+    best_scores_color_repeat_medium = StringProperty('1')
+    best_scores_color_repeat_hard = StringProperty('1')
 
     def build_config(self, config):
         """ Not use, maybe should display best scorses """
