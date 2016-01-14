@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """ simple Color Games made with kivy """
-__version__ = '0.5.18'
+__version__ = '0.5.20'
 
 from kivy.app import App
 from kivy.uix.progressbar import ProgressBar
@@ -54,6 +54,132 @@ class ButtonSound(ButtonBehavior, Image):
 
 class ButtonColorWord(ButtonBehavior, Image):
     pass
+
+
+class LooseColorRepeat(Screen):
+    score = 0
+
+    def __init__(self, **kwargs):
+        """ """
+        super(LooseColorRepeat, self).__init__(**kwargs)
+        self.post_build_init()
+
+    def post_build_init(self):
+        """ Bind the android or the keyboard key """
+        if platform() == 'android':
+            import android
+            android.map_key(android.KEYCODE_BACK, 1001)
+        win = Window
+        win.bind(on_keyboard=self.key_handler)
+
+    def key_handler(self, window, keycode1, keycode2, text, modifiers):
+        """ Called by escape key, 'reboot' the game """
+        if keycode1 == 27 or keycode1 == 1001:
+            if self.manager.current == 'loose':
+                self.manager.current = 'menu-repeat'
+                return True
+            return False
+
+
+class ScoresColorWord(Screen):
+    def __init__(self, **kwargs):
+        """ """
+        super(ScoresColorWord, self).__init__(**kwargs)
+        self.post_build_init()
+
+    def post_build_init(self):
+        """ Bind the android or the keyboard key """
+        if platform() == 'android':
+            import android
+            android.map_key(android.KEYCODE_BACK, 1001)
+        win = Window
+        win.bind(on_keyboard=self.key_handler)
+
+    def key_handler(self, window, keycode1, keycode2, text, modifiers):
+        """ Called by escape key, 'reboot' the game """
+        if keycode1 == 27 or keycode1 == 1001:
+            if self.manager.current == 'scores-color-word':
+                self.manager.current = 'menu'
+                return True
+            return False
+
+
+class ScoresColorRepeat(Screen):
+    def __init__(self, **kwargs):
+        """ """
+        super(ScoresColorRepeat, self).__init__(**kwargs)
+        self.post_build_init()
+
+    def post_build_init(self):
+        """ Bind the android or the keyboard key """
+        if platform() == 'android':
+            import android
+            android.map_key(android.KEYCODE_BACK, 1001)
+        win = Window
+        win.bind(on_keyboard=self.key_handler)
+
+    def key_handler(self, window, keycode1, keycode2, text, modifiers):
+        """ Called by escape key, 'reboot' the game """
+        if keycode1 == 27 or keycode1 == 1001:
+            if self.manager.current == 'scores-color-repeat':
+                self.manager.current = 'menu-repeat'
+                return True
+            return False
+
+
+class InstructionsColorRepeat(Screen):
+    text = "There is two modes in this game:\n"\
+           "Medium and Hard.\n"\
+           "In medium you must reproduice\n"\
+           "the sequence of\nColor/Sound showned,\n"\
+           "it's always the same sequence.\n"\
+           "In Hard:\n"\
+           "The sequence is differente every time!\n"\
+           "Good Luck"
+
+    def __init__(self, **kwargs):
+        """ """
+        super(InstructionsColorRepeat, self).__init__(**kwargs)
+        self.post_build_init()
+
+    def post_build_init(self):
+        """ Bind the android or the keyboard key """
+        if platform() == 'android':
+            import android
+            android.map_key(android.KEYCODE_BACK, 1001)
+        win = Window
+        win.bind(on_keyboard=self.key_handler)
+
+    def key_handler(self, window, keycode1, keycode2, text, modifiers):
+        """ Called by escape key, 'reboot' the game """
+        if keycode1 == 27 or keycode1 == 1001:
+            if self.manager.current == 'instruction-color-repeat':
+                self.manager.current = 'menu-repeat'
+                return True
+            return False
+
+
+class InstructionsColorWord(Screen):
+    def __init__(self, **kwargs):
+        """ """
+        super(InstructionsColorWord, self).__init__(**kwargs)
+        self.post_build_init()
+
+    def post_build_init(self):
+        """ Bind the android or the keyboard key """
+        if platform() == 'android':
+            import android
+            android.map_key(android.KEYCODE_BACK, 1001)
+        win = Window
+        win.bind(on_keyboard=self.key_handler)
+
+    def key_handler(self, window, keycode1, keycode2, text, modifiers):
+        """ Called by escape key, 'reboot' the game """
+        if keycode1 == 27 or keycode1 == 1001:
+            if self.manager.current == 'instruction-color-word':
+                self.manager.current = 'menu'
+                return True
+            return False
 
 
 class ButtonOk(ButtonBehavior, Image):
@@ -145,7 +271,7 @@ class GameScreen(Screen):
     sound_pos = "unmute"
     # Text when the game start
     text = 'Push a button for start'
-    text_button = "Push a button"
+    text_button = "Push a button for start"
     # Color: rouge, vert, bleu and jaune
     colour1 = [1, 0, 0, 1]
     # colour2 = [0, 1, 0.2, 1]
@@ -213,6 +339,9 @@ class GameScreen(Screen):
     def get_time_2(self):
         """ Used for end chronometer """
         self.time_2 = time.time()
+
+    def reset_points_str(self):
+        self.points_str = ""
 
     def get_time_final(self, mode):
         """ chronometer time """
@@ -299,7 +428,7 @@ class GameScreen(Screen):
         pts_kv = self.ids['points']
         pts_kv.text = ""
         welcome1 = self.ids['welcome_text']
-        welcome1.text = "Push on the good Button"
+        welcome1.text = "Push a button for start"
 
     def ask(self):
         """ update question text """
@@ -499,7 +628,9 @@ class GameScreen(Screen):
         if self.time_mode == 0:
             self.progress_bar_1 = ProgressBar(id='progress',
                                               value=self.value_progress_bar,
-                                              size_hint_y=0.1)
+                                              size_hint_y=0.1,
+                                              pos_hint={'center_x': 0.5,
+                                                        'center_y': 0.9})
             self.time_mode = 1
             self.active = True
             self.add_widget(self.progress_bar_1)
@@ -564,6 +695,7 @@ class GameScreenRepeat(Screen):
     lenquestion = "Score : " + str(1)
     level = 2
     started = 0
+    life = 3
     path = os.getcwd()
     bt1_sound = SoundLoader.load(path + '/bt1_sound.ogg')
     bt2_sound = SoundLoader.load(path + '/bt2_sound.ogg')
@@ -609,6 +741,9 @@ class GameScreenRepeat(Screen):
         self.lenquestion = "Score : " + str(1)
         lenquestionlabel = self.ids['lenquestionlabel']
         lenquestionlabel.text = self.lenquestion
+        self.life = 3
+        lifelabel = self.ids['lifelabel']
+        lifelabel.text = "Life: " + str(self.life)
         self.level = 2
         self.question = []
         self.question_index = 0
@@ -639,6 +774,15 @@ class GameScreenRepeat(Screen):
         else:
             pass
 
+    def button_start_pushed(self):
+        Clock.schedule_once(lambda dt: self.button_start_pushed_go(), 0.7)
+
+    def button_start_pushed_go(self):
+        # self.remember()
+        self.hard()
+        self.ini()
+        self.start_started(1)
+
     def start_started(self, delta_time):
         """ """
         BrainColorGame.sound_game.stop()
@@ -655,10 +799,10 @@ class GameScreenRepeat(Screen):
            bt4.color == self.colours['blue'] and \
            self.question_index < len(self.question):
             print "ok"
-            if bt1.color == self.question[self.question_index]:
+            if bt1.color == \
+                    self.question[self.question_index]:
                 bt1.color = [0.3, 1, 3, 1]
                 self.bt1_sound.play()
-                bt1.color = [0.3, 1, 3, 1]
             elif bt2.color == \
                     self.question[self.question_index]:
                 bt2.color = [0.3, 1, 3, 1]
@@ -696,37 +840,75 @@ class GameScreenRepeat(Screen):
         bt4.color = self.colours['blue']
         Clock.schedule_once(self.start, 0.3)
 
+    def button_initial_color(self):
+        bt1 = self.ids['bt1']
+        bt2 = self.ids['bt2']
+        bt3 = self.ids['bt3']
+        bt4 = self.ids['bt4']
+        bt1.color = self.colours['yellow']
+        bt2.color = self.colours['green']
+        bt3.color = self.colours['red']
+        bt4.color = self.colours['blue']
+
     def bt1_pressed(self):
         """ Check if the answer red is good """
-        bt1 = self.ids['bt1']
-        self.colors.append(bt1.color)
-        print self.colors
-        self.bt1_sound.play()
-        self.check_answer()
+        if self.question_index < len(self.question):
+            self.question_index = len(self.question)
+        else:
+            bt1 = self.ids['bt1']
+            self.colors.append(bt1.color)
+            print self.colors
+            self.bt1_sound.stop()
+            self.bt1_sound.play()
+            bt1.color = [0.3, 1, 3, 1]
+            # Clock.schedule_once(lambda dt: self.check_answer(), 0.2)
+            Clock.schedule_once(lambda dt: self.button_initial_color(), 0.2)
+            self.check_answer()
 
     def bt2_pressed(self):
         """ Check if the answer blue is good """
-        bt2 = self.ids['bt2']
-        self.colors.append(bt2.color)
-        print self.colors
-        self.bt2_sound.play()
-        self.check_answer()
+        if self.question_index < len(self.question):
+            self.question_index = len(self.question)
+        else:
+            bt2 = self.ids['bt2']
+            self.colors.append(bt2.color)
+            print self.colors
+            self.bt2_sound.stop()
+            self.bt2_sound.play()
+            bt2.color = [0.3, 1, 3, 1]
+            # Clock.schedule_once(lambda dt: self.check_answer(), 0.2)
+            Clock.schedule_once(lambda dt: self.button_initial_color(), 0.2)
+            self.check_answer()
 
     def bt3_pressed(self):
         """ Check if the answer yellow is good """
-        bt3 = self.ids['bt3']
-        self.colors.append(bt3.color)
-        print self.colors
-        self.bt3_sound.play()
-        self.check_answer()
+        if self.question_index < len(self.question):
+            self.question_index = len(self.question)
+        else:
+            bt3 = self.ids['bt3']
+            self.colors.append(bt3.color)
+            print self.colors
+            self.bt3_sound.stop()
+            self.bt3_sound.play()
+            bt3.color = [0.3, 1, 3, 1]
+            # Clock.schedule_once(lambda dt: self.check_answer(), 0.2)
+            Clock.schedule_once(lambda dt: self.button_initial_color(), 0.2)
+            self.check_answer()
 
     def bt4_pressed(self):
         """ Check if the answer green is good """
-        bt4 = self.ids['bt4']
-        self.colors.append(bt4.color)
-        print self.colors
-        self.bt4_sound.play()
-        self.check_answer()
+        if self.question_index < len(self.question):
+            self.question_index = len(self.question)
+        else:
+            bt4 = self.ids['bt4']
+            self.colors.append(bt4.color)
+            print self.colors
+            self.bt4_sound.stop()
+            self.bt4_sound.play()
+            bt4.color = [0.3, 1, 3, 1]
+            # Clock.schedule_once(lambda dt: self.check_answer(), 0.2)
+            Clock.schedule_once(lambda dt: self.button_initial_color(), 0.2)
+            self.check_answer()
 
     def win(self):
         """ Called by check_answer """
@@ -747,7 +929,6 @@ class GameScreenRepeat(Screen):
 
     def check_answer(self):
         """ Called by Button's push """
-
         if self.colors == self.question:
             print "win"
             self.win()
@@ -763,18 +944,27 @@ class GameScreenRepeat(Screen):
                         print "ok"
                     else:
                         print "false"
+                        self.life -= 1
+                        lifelabel = self.ids['lifelabel']
+                        lifelabel.text = "Life: " + str(self.life)
                         self.colors = []
                         self.question_index = 0
                         Clock.schedule_once(self.start, 0.5)
                         print "Question: " + str(self.question)
                         self.sound_false.play()
             else:
+                self.life -= 1
+                lifelabel = self.ids['lifelabel']
+                lifelabel.text = "Life: " + str(self.life)
                 print "you loose"
                 self.sound_false.play()
                 self.colors = []
                 print "Question: " + str(self.question)
                 self.question_index = 0
                 Clock.schedule_once(self.start, 0.5)
+            LooseColorRepeat.score = (len(self.question)-1)
+        if self.life <= 0:
+            self.manager.current = 'loose'
 
 
 class MenuScreenRepeat(Screen):
@@ -811,6 +1001,7 @@ class BrainColorGame(App):
     text_5 = StringProperty('')
     # records + t_brest
     text_6 = StringProperty('')
+    score_repeat = StringProperty('')
 
     def build_config(self, config):
         """ Not use, maybe should display best scorses """
@@ -831,17 +1022,31 @@ class BrainColorGame(App):
         """ Use ScreenManager """
         self.use_kivy_settings = False
         self.settings_cls = SettingsWithNoMenu
-        self.sound_game.play()
+        # self.sound_game.play()
         self.bind(text_2=self.update)
         # Create the screen manager
         screen_m = ScreenManager()
         screen_m = ScreenManager(transition=FadeTransition())
-        screen_m.add_widget(StartScreen(name='start'))
-        screen_m.add_widget(MenuScreen(name='menu'))
-        screen_m.add_widget(GameScreen(name='game'))
-        screen_m.add_widget(GameScreenRepeat(name='game-repeat'))
-        screen_m.add_widget(MenuScreenRepeat(name='menu-repeat'))
+        screen_m.add_widget(StartScreen(
+                            name='start'))
+        screen_m.add_widget(MenuScreen(
+                            name='menu'))
+        screen_m.add_widget(GameScreen(
+                            name='game'))
+        screen_m.add_widget(GameScreenRepeat(
+                            name='game-repeat'))
+        screen_m.add_widget(MenuScreenRepeat(
+                            name='menu-repeat'))
+        screen_m.add_widget(ScoresColorWord(
+                            name='scores-color-word'))
+        screen_m.add_widget(ScoresColorRepeat(
+                            name='scores-color-repeat'))
+        screen_m.add_widget(InstructionsColorRepeat(
+                            name='instruction-color-repeat'))
+        screen_m.add_widget(InstructionsColorWord(
+                            name='instruction-color-word'))
         screen_m.add_widget(WinScreen(name='win'))
+        screen_m.add_widget(LooseColorRepeat(name='loose'))
         return screen_m
 
     def update(self, *args):

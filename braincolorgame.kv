@@ -69,8 +69,14 @@
             #pos_hint: {'center_x': 0.5, 'center_y': 0.75}
         ButtonHelp:
             source: os.getcwd() + "/help.png"
+            pos_hint: {'center_x': 0.09, 'center_y': 0.05}
+            size_hint: 0.4, 0.4
+            on_press: root.manager.current = 'scores-color-repeat'
+        ButtonHelp:
+            source: os.getcwd() + "/help.png"
             pos_hint: {'center_x': 0.9, 'center_y': 0.05}
             size_hint: 0.4, 0.4
+            on_press: root.manager.current = 'instruction-color-repeat'
         ButtonStart:
             source: os.getcwd() + "/Button-Repeat-Mode-Easiest-Empty.png"
             pos_hint: {'center_x': 0.5, 'center_y': 0.63}
@@ -78,10 +84,11 @@
             size_hint: 0.6, 0.25
             text: "Start"
             on_press: root.manager.current = 'game-repeat'
-            on_press: root.manager.get_screen('game-repeat').start_started(1)
-            on_press: root.manager.get_screen('game-repeat').ini()
-            on_press: root.manager.get_screen('game-repeat').hard()
+            #on_press: root.manager.get_screen('game-repeat').start_started(1)
+            #on_press: root.manager.get_screen('game-repeat').ini()
+            #on_press: root.manager.get_screen('game-repeat').hard()
             on_press: root.manager.get_screen('game-repeat').remember()
+            on_press: root.manager.get_screen('game-repeat').button_start_pushed()
         Label:
             text: root.text_easy
             font_size: 20
@@ -110,10 +117,11 @@
             size_hint: 0.6, 0.25
             text: "Start"
             on_press: root.manager.current = 'game-repeat'
-            on_press: root.manager.get_screen('game-repeat').start_started(1)
-            on_press: root.manager.get_screen('game-repeat').ini()
-            on_press: root.manager.get_screen('game-repeat').hard()
+            #on_press: root.manager.get_screen('game-repeat').start_started(1)
+            #on_press: root.manager.get_screen('game-repeat').ini()
+            #on_press: root.manager.get_screen('game-repeat').hard()
             on_press: root.manager.get_screen('game-repeat').forgot()
+            on_press: root.manager.get_screen('game-repeat').button_start_pushed()
         Label:
             text: root.text_hard
             font_size: 20
@@ -144,6 +152,13 @@
             color: 0,0,0,1
             text: root.lenquestion
             pos_hint: {'center_x': 0.2, 'center_y': 0.95}
+        Label:
+            id: lifelabel
+            bold: True
+            font_size: 25
+            color: 0,0,0,1
+            text: "Life: " + str(root.life)
+            pos_hint: {'center_x': 0.6, 'center_y': 0.95}
         ButtonHelp:
             source: os.getcwd() + "/btpush4-moreshadow.png"
             pos_hint: {'center_x': 0.25, 'center_y': 0.68}
@@ -151,6 +166,7 @@
             size_hint: 0.5, 0.5
             color: root.colours['yellow']
             on_press: root.bt1_pressed()
+            on_press: app.score_repeat = str(root.level)
         ButtonHelp:
             # source: os.getcwd() + "/btpush2.png"
             source: os.getcwd() + "/btpush4-moreshadow.png"
@@ -202,9 +218,14 @@
         #    on_press: root.manager.get_screen('game').sound_play()
         ButtonHelp:
             source: os.getcwd() + "/help.png"
+            pos_hint: {'center_x': 0.09, 'center_y': 0.05}
+            size_hint: 0.4, 0.4
+            on_press: root.manager.current = 'scores-color-word'
+        ButtonHelp:
+            source: os.getcwd() + "/help.png"
             pos_hint: {'center_x': 0.9, 'center_y': 0.05}
             size_hint: 0.4, 0.4
-
+            on_press: root.manager.current = 'instruction-color-word'
         ButtonColours:
             source: os.getcwd() + ("/Button_purple.png")
             pos_hint: {'center_x': 0.5, 'center_y': 0.62}
@@ -212,6 +233,7 @@
             size_hint: 0.6, 0.25
             on_press: root.sound_validation()
             on_press: root.start_color_mode()
+            on_press: root.manager.get_screen('game').reset_points_str()
             on_press: root.manager.current = 'game'
         ButtonText:
             source: os.getcwd() + ("/Button_purple.png")
@@ -220,6 +242,7 @@
             size_hint: 0.6, 0.25
             on_press: root.start_text_mode()
             on_press: root.sound_validation()
+            on_press: root.manager.get_screen('game').reset_points_str()
             on_press: root.manager.current = 'game'
         Label:
             text: "Color Mode"
@@ -514,3 +537,58 @@
             size_hint: 0.5, 0.12
             on_press: root.manager.current = 'game'
             on_press: root.sound_stop()
+<InstructionsColorWord>
+    Image:
+        source: os.getcwd() + "/"
+    FloatLayout:
+        ButtonExit:
+            source: os.getcwd() + ("/Button-Return.png")
+            pos_hint: {'center_x': 0.5, 'center_y': 0.12}
+            size_hint: 0.6, 0.25
+            on_press: root.manager.current = 'menu'
+        Label:
+            text: "Return"
+            font_size: 20
+            color: 0,0,0,1
+            pos_hint: {'center_x': 0.5, 'center_y': 0.12}
+<InstructionsColorRepeat>
+    Image:
+        source: os.getcwd() + "/"
+    FloatLayout:
+        ButtonExit:
+            source: os.getcwd() + ("/Button-Return.png")
+            pos_hint: {'center_x': 0.5, 'center_y': 0.12}
+            size_hint: 0.6, 0.25
+            on_press: root.manager.current = 'menu-repeat'
+        Label:
+            text: "Return"
+            font_size: 20
+            color: 0,0,0,1
+            pos_hint: {'center_x': 0.5, 'center_y': 0.12}
+        Label:
+            text: root.text
+            font_size: 20
+            color: 0,0,0,1
+            pos_hint: {'center_x': 0.4, 'center_y': 0.7}
+<LooseColorRepeat>
+    Image:
+        source: os.getcwd() + "/"
+    FloatLayout:
+        ButtonExit:
+            source: os.getcwd() + ("/Button-Return.png")
+            pos_hint: {'center_x': 0.5, 'center_y': 0.12}
+            size_hint: 0.6, 0.25
+            on_press: root.manager.current = 'menu-repeat'
+        Label:
+            text: "Return"
+            font_size: 20
+            color: 0,0,0,1
+            pos_hint: {'center_x': 0.5, 'center_y': 0.12}
+        Label:
+            id: scorelabel
+            # text: str(root.score)
+            text: app.score_repeat
+            font_size: 20
+            color: 0,0,0,1
+            pos_hint: {'center_x': 0.4, 'center_y': 0.7}
+   
