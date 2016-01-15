@@ -2,21 +2,21 @@
 #:import os os
 <StartScreen>:
     Image:
-        source: os.getcwd() +"/BCG_fond.png"
+        source: os.getcwd() +"/data/BCG_fond.png"
     FloatLayout:
         ButtonHelp:
-            source: os.getcwd() + "/help.png"
+            source: os.getcwd() + "/data/help.png"
             pos_hint: {'center_x': 0.9, 'center_y': 0.05}
             size_hint: 0.4, 0.4
         ButtonSound:
-            source: os.getcwd() + "/sound_off_on1.png"
+            source: os.getcwd() + "/data/sound_off_on1.png"
             #source: os.getcwd() + "/b_Sound2.png"
             pos_hint: {'center_x': 0.09, 'center_y': 0.05}
             size_hint: 0.4, 0.4
             on_press: root.manager.get_screen('game').sound_play()
             on_press: root.manager.get_screen('game').self_active()
         ButtonColorWord:
-            source: os.getcwd() + "/Button-Color-Word.png"
+            source: os.getcwd() + "/data/Button-Color-Word.png"
             size_hint: 0.6, 0.25
             pos_hint: {'center_x': 0.5, 'center_y': 0.63}
             on_press: root.manager.current = 'menu'
@@ -27,7 +27,7 @@
             color: 0,0,0,1
             pos_hint: {'center_x': 0.5, 'center_y': 0.63}
         ButtonMenuRepeat:
-            source: os.getcwd() + "/Button-Repeat-Mode.png"
+            source: os.getcwd() + "/data/Button-Repeat-Mode.png"
             size_hint: 0.6, 0.25
             pos_hint: {'center_x': 0.5, 'center_y': 0.47}
             on_press: root.manager.current = 'menu-repeat'
@@ -38,7 +38,7 @@
             color: 0,0,0,1
             pos_hint: {'center_x': 0.5, 'center_y': 0.47}
         ButtonExit:
-            source: os.getcwd() + ("/Button-Return.png")
+            source: os.getcwd() + ("/data/Button-Return.png")
             pos_hint: {'center_x': 0.5, 'center_y': 0.12}
             size_hint: 0.6, 0.25
             on_press: root.leave()
@@ -51,7 +51,7 @@
 
 <MenuScreenRepeat>:
     Image:
-        source: os.getcwd() + "/CR_fond_P2.png"
+        source: os.getcwd() + "/data/CR_fond_P2.png"
     FloatLayout:
         #ButtonStart:
          #   source: os.getcwd() + "/Button-Repeat-Mode-Easiest-Empty.png"
@@ -68,7 +68,7 @@
             #color: 0,0,0,1
             #pos_hint: {'center_x': 0.5, 'center_y': 0.75}
         ButtonHelp:
-            source: os.getcwd() + "/scores.png"
+            source: os.getcwd() + "/data/scores.png"
             pos_hint: {'center_x': 0.09, 'center_y': 0.05}
             size_hint: 0.4, 0.4
             on_press: root.manager.current = 'scores-color-repeat'
@@ -76,12 +76,12 @@
             on_press: root.manager.get_screen('game-repeat').update_records()
             on_press: root.manager.get_screen('game-repeat').open_init()
         ButtonHelp:
-            source: os.getcwd() + "/help.png"
+            source: os.getcwd() + "/data/help.png"
             pos_hint: {'center_x': 0.9, 'center_y': 0.05}
             size_hint: 0.4, 0.4
             on_press: root.manager.current = 'instruction-color-repeat'
         ButtonStart:
-            source: os.getcwd() + "/Button-Repeat-Mode-Easiest-Empty.png"
+            source: os.getcwd() + "/data/Button-Repeat-Mode-Easiest-Empty.png"
             pos_hint: {'center_x': 0.5, 'center_y': 0.63}
             # pos_hint: {'center_x': 0.5, 'center_y': 0.58}
             size_hint: 0.6, 0.25
@@ -117,7 +117,7 @@
             #color: 0,0,0,1
             #pos_hint: {'center_x': 0.5, 'center_y': 0.41}
         ButtonStart:
-            source: os.getcwd() + "/Button-Repeat-Mode-Easiest-Empty.png"
+            source: os.getcwd() + "/data/Button-Repeat-Mode-Easiest-Empty.png"
             # pos_hint: {'center_x': 0.5, 'center_y': 0.24}
             pos_hint: {'center_x': 0.5, 'center_y': 0.48}
             size_hint: 0.6, 0.25
@@ -138,7 +138,7 @@
             # pos_hint: {'center_x': 0.5, 'center_y': 0.24}
             pos_hint: {'center_x': 0.5, 'center_y': 0.48}
         ButtonExit:
-            source: os.getcwd() + ("/Button-Return.png")
+            source: os.getcwd() + ("/data/Button-Return.png")
             pos_hint: {'center_x': 0.5, 'center_y': 0.12}
             size_hint: 0.6, 0.25
             on_press: root.manager.current = 'start'
@@ -151,7 +151,7 @@
 
 <GameScreenRepeat>:
     Image:
-        source: os.getcwd() + "/GameScreenRepeat_fond.png"
+        source: os.getcwd() + "/data/GameScreenRepeat_fond.png"
     FloatLayout:
         cols: 2
         Label:
@@ -170,11 +170,11 @@
             pos_hint: {'center_x': 0.6, 'center_y': 0.95}
         Image:
             id: lifeimage
-            source: os.getcwd() + "/ColorRepeat_Life3.png"
+            source: os.getcwd() + "/data/ColorRepeat_Life3.png"
             pos_hint: {'center_x': 0.8, 'center_y': 0.95}
             size_hint: 0.3, 0.3
         ButtonHelp:
-            source: os.getcwd() + "/btpush4-moreshadow.png"
+            source: os.getcwd() + "/data/btpush4-moreshadow.png"
             pos_hint: {'center_x': 0.25, 'center_y': 0.68}
             id: bt1
             size_hint: 0.5, 0.5
@@ -183,21 +183,21 @@
             on_press: app.score_repeat = str(root.level-1)
         ButtonHelp:
             # source: os.getcwd() + "/btpush2.png"
-            source: os.getcwd() + "/btpush4-moreshadow.png"
+            source: os.getcwd() + "/data/btpush4-moreshadow.png"
             pos_hint: {'center_x': 0.74, 'center_y': 0.68}
             id: bt2
             size_hint: 0.5, 0.5
             color: root.colours['green']
             on_press: root.bt2_pressed()
         ButtonHelp:
-            source: os.getcwd() + "/btpush4.png"
+            source: os.getcwd() + "/data/btpush4.png"
             id: bt3
             size_hint: 0.5, 0.5
             pos_hint: {'center_x': 0.25, 'center_y': 0.31}
             color: root.colours['red']
             on_press: root.bt3_pressed()
         ButtonHelp:
-            source: os.getcwd() + "/btpush3.png"
+            source: os.getcwd() + "/data/btpush3.png"
             pos_hint: {'center_x': 0.74, 'center_y': 0.31}
             id: bt4
             size_hint: 0.5, 0.5
@@ -206,7 +206,7 @@
 
 <MenuScreen>:
     Image:
-        source: os.getcwd() + "/ColorWord_fond.png"
+        source: os.getcwd() + "/data/ColorWord_fond.png"
     FloatLayout:
         orientation: 'vertical'
         background_color: [1, 1, 0, 1]
@@ -230,7 +230,7 @@
         #    on_press: root.manager.get_screen('game').self_active()
         #    on_press: root.manager.get_screen('game').sound_play()
         ButtonHelp:
-            source: os.getcwd() + "/scores.png"
+            source: os.getcwd() + "/data/scores.png"
             pos_hint: {'center_x': 0.09, 'center_y': 0.05}
             size_hint: 0.4, 0.4
             on_press: root.manager.current = 'scores-color-word'
@@ -238,12 +238,12 @@
             on_press: root.manager.get_screen('game').update_records()
             on_press: root.manager.get_screen('game').open_init()
         ButtonHelp:
-            source: os.getcwd() + "/help.png"
+            source: os.getcwd() + "/data/help.png"
             pos_hint: {'center_x': 0.9, 'center_y': 0.05}
             size_hint: 0.4, 0.4
             on_press: root.manager.current = 'instruction-color-word'
         ButtonColours:
-            source: os.getcwd() + ("/Button_purple.png")
+            source: os.getcwd() + ("/data/Button_purple.png")
             pos_hint: {'center_x': 0.5, 'center_y': 0.62}
             #pos_hint: {'center_x': 0.5, 'y': 0.6}
             size_hint: 0.6, 0.25
@@ -252,7 +252,7 @@
             on_press: root.manager.get_screen('game').reset_points_str()
             on_press: root.manager.current = 'game'
         ButtonText:
-            source: os.getcwd() + ("/Button_purple.png")
+            source: os.getcwd() + ("/data/Button_purple.png")
             pos_hint: {'center_x': 0.5, 'center_y': 0.45}
             # pos_hint: {'center_x': 0.5, 'y': 0.37}
             size_hint: 0.6, 0.25
@@ -271,7 +271,7 @@
             color: 0,0,0,1
             pos_hint: {'center_x': 0.5, 'center_y': 0.45}
         ButtonExit:
-            source: os.getcwd() + ("/Button-Return.png")
+            source: os.getcwd() + ("/data/Button-Return.png")
             pos_hint: {'center_x': 0.5, 'center_y': 0.12}
             size_hint: 0.6, 0.25
             on_press: root.manager.current = 'start'
@@ -284,7 +284,7 @@
 
 <GameScreen>:
     Image:
-        source: os.getcwd() + "/GameScreen_fond.png"
+        source: os.getcwd() + "/data/GameScreen_fond.png"
     BoxLayout:
         spacing: 5
         orientation: 'vertical'
@@ -351,7 +351,7 @@
                 text: str(root.points_str)
                 color: 0,0,0,1
             ButtonHelp:
-                source: os.getcwd() + "/btpush1.png"
+                source: os.getcwd() + "/data/btpush1.png"
                 id: bt1
                 size_hint: 0.5, 0.5
                 pos_hint: {'center_x': 0.25, 'center_y': 0.2}
@@ -368,7 +368,7 @@
                 on_press: root.count_points(0)
                 on_press: app.text_3 = str(root.no_points)
             ButtonHelp:
-                source: os.getcwd() + "/btpush1.png"
+                source: os.getcwd() + "/data/btpush1.png"
                 id: bt2
                 size_hint: 0.5, 0.5
                 # size: root.width/4, root.height/4
@@ -386,7 +386,7 @@
                 on_press: root.count_points(1)
                 on_press: app.text_3 = str(root.no_points)
             ButtonHelp:
-                source: os.getcwd() + "/btpush1.png"
+                source: os.getcwd() + "/data/btpush1.png"
                 id: bt3
                 size_hint: 0.5, 0.5
                 # size: root.width/8, root.height/8
@@ -404,7 +404,7 @@
                 on_press: root.count_points(2)
                 on_press: app.text_3 = str(root.no_points)
             ButtonHelp:
-                source: os.getcwd() + "/btpush1.png"
+                source: os.getcwd() + "/data/btpush1.png"
                 id: bt4
                 size_hint: 0.5, 0.5
                 # size: root.width/4, root.height/4
@@ -502,7 +502,7 @@
 
 <WinScreen>:
     Image:
-        source: os.getcwd() + "/BCG_fond.png"
+        source: os.getcwd() + "/data/BCG_fond.png"
     FloatLayout:
         # canvas.before:
           #  Color:
@@ -515,51 +515,51 @@
         orientation: 'vertical'
         Label:
             pos_hint: {'center_x': 0.5, 'center_y': 0.67}
-            color: 1, 1, 1, 1
+            color: 0, 0, 0, 1
             font_size: 25
             bold: True
             text: "You win !"
         Label:
             pos_hint: {'center_x': 0.5, 'center_y': 0.6}
-            color: 1, 1, 1, 1
+            color: 0, 0, 0, 1
             font_size: 20
             text: root.text_2
             text: "time: " + app.text_2 + " seconds"
         Label:
             id: label_3
             pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-            color: 1, 1, 1, 1
+            color: 0, 0, 0, 1
             font_size: 20
             text: "Miss: " + app.text_3
         Label:
             pos_hint: {'center_x': 0.5, 'center_y': 0.4}
-            color: 1, 1, 1, 1
+            color: 0, 0, 0, 1
             font_size: 20
             text: "Penality: 3x" + app.text_3 + " = " + app.text_4 + " seconds"
         Label:
             pos_hint: {'center_x': 0.5, 'center_y': 0.3}
-            color: 1, 1, 1, 1
+            color: 0, 0, 0, 1
             font_size: 30
             bold: True
             text: "Time final: " + app.text_5 + " seconds"
         Label:
             pos_hint: {'center_x': 0.5, 'center_y': 0.2}
-            color: 1, 1, 1, 1
+            color: 0, 0, 0, 1
             font_size: 20
             bold: True
             text: app.text_6
         ButtonOk:
-            source: os.getcwd() + ("/Button-Ok.png")
+            source: os.getcwd() + ("/data/Button-Ok.png")
             pos_hint: {'center_x': 0.5, 'center_y': 0.12}
             size_hint: 0.5, 0.12
             on_press: root.manager.current = 'game'
             on_press: root.sound_stop()
 <InstructionsColorWord>
     Image:
-        source: os.getcwd() + "/GameScreen_fond.png"
+        source: os.getcwd() + "/data/GameScreen_fond.png"
     FloatLayout:
         ButtonExit:
-            source: os.getcwd() + ("/Button-Return.png")
+            source: os.getcwd() + ("/data/Button-Return.png")
             pos_hint: {'center_x': 0.5, 'center_y': 0.12}
             size_hint: 0.6, 0.25
             on_press: root.manager.current = 'menu'
@@ -581,10 +581,10 @@
             pos_hint: {'center_x': 0.5, 'center_y': 0.9}
 <InstructionsColorRepeat>
     Image:
-        source: os.getcwd() + "/GameScreenRepeat_fond.png"
+        source: os.getcwd() + "/data/GameScreenRepeat_fond.png"
     FloatLayout:
         ButtonExit:
-            source: os.getcwd() + ("/Button-Return.png")
+            source: os.getcwd() + ("/data/Button-Return.png")
             pos_hint: {'center_x': 0.5, 'center_y': 0.12}
             size_hint: 0.6, 0.25
             on_press: root.manager.current = 'menu-repeat'
@@ -607,7 +607,7 @@
 
 <LooseColorRepeat>
     Image:
-        source: os.getcwd() + "/CR_fond_P2.png"
+        source: os.getcwd() + "/data/CR_fond_P2.png"
     FloatLayout:
         Label:
             pos_hint: {'center_x': 0.5, 'center_y': 0.8}
@@ -616,7 +616,7 @@
             bold: True
             text: "No more Lifes !"
         ButtonExit:
-            source: os.getcwd() + ("/Button-Return.png")
+            source: os.getcwd() + ("/data/Button-Return.png")
             pos_hint: {'center_x': 0.5, 'center_y': 0.12}
             size_hint: 0.6, 0.25
             on_press: root.manager.current = 'menu-repeat'
@@ -652,10 +652,10 @@
             pos_hint: {'center_x': 0.6, 'center_y': 0.4}
 <ScoresColorWord>
     Image:
-        source: os.getcwd() + "/ColorWord_fond.png"
+        source: os.getcwd() + "/data/ColorWord_fond.png"
     FloatLayout:
         ButtonExit:
-            source: os.getcwd() + ("/Button-Return.png")
+            source: os.getcwd() + ("/data/Button-Return.png")
             pos_hint: {'center_x': 0.5, 'center_y': 0.12}
             size_hint: 0.6, 0.25
             on_press: root.manager.current = 'menu'
@@ -694,10 +694,10 @@
 
 <ScoresColorRepeat>
     Image:
-        source: os.getcwd() + "/Scores_Color_Repeat_fond.png"
+        source: os.getcwd() + "/data/Scores_Color_Repeat_fond.png"
     FloatLayout:
         ButtonExit:
-            source: os.getcwd() + ("/Button-Return.png")
+            source: os.getcwd() + ("/data/Button-Return.png")
             pos_hint: {'center_x': 0.5, 'center_y': 0.12}
             size_hint: 0.6, 0.25
             on_press: root.manager.current = 'menu-repeat'

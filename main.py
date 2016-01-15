@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """ simple Color Games made with kivy """
-__version__ = '0.5.24'
+__version__ = '0.5.28'
 
 from kivy.app import App
 from kivy.uix.progressbar import ProgressBar
@@ -47,9 +47,9 @@ class ButtonSound(ButtonBehavior, Image):
         """ Change the img source when the button is pressed """
         print GameScreen.active
         if BrainColorGame.sound_game.volume == 0:
-            self.source = (os.getcwd() + "/sound_on_off1.png")
+            self.source = (os.getcwd() + "/data/sound_on_off1.png")
         else:
-            self.source = (os.getcwd() + "/sound_off_on1.png")
+            self.source = (os.getcwd() + "/data/sound_off_on1.png")
 
 
 class ButtonColorWord(ButtonBehavior, Image):
@@ -231,10 +231,10 @@ class ButtonOk(ButtonBehavior, Image):
 
     def state_changed(self, *args):
         """ Change the img source when the button is pressed """
-        if self.source == (os.getcwd() + "/Button-Ok-push.png"):
-            self.source = (os.getcwd() + "/Button-Ok.png")
+        if self.source == (os.getcwd() + "/data/Button-Ok-push.png"):
+            self.source = (os.getcwd() + "/data/Button-Ok.png")
         else:
-            self.source = (os.getcwd() + "/Button-Ok-push.png")
+            self.source = (os.getcwd() + "/data/Button-Ok-push.png")
             pass
 
 
@@ -250,10 +250,10 @@ class ButtonColours(ButtonBehavior, Image):
 
     def state_changed(self, *args):
         """ Change the img source when the button is pressed """
-        if self.source == (os.getcwd() + "/Button_yellow.png"):
-            self.source = (os.getcwd() + "/Button_purple.png")
+        if self.source == (os.getcwd() + "/data/Button_yellow.png"):
+            self.source = (os.getcwd() + "/data/Button_purple.png")
         else:
-            self.source = (os.getcwd() + "/Button_yellow.png")
+            self.source = (os.getcwd() + "/data/Button_yellow.png")
             pass
 
 
@@ -265,10 +265,10 @@ class ButtonText(ButtonBehavior, Image):
 
     def state_changed(self, *args):
         """ Change the img source when the button is pressed """
-        if self.source == (os.getcwd() + "/Button_yellow.png"):
-            self.source = (os.getcwd() + "/Button_purple.png")
+        if self.source == (os.getcwd() + "/data/Button_yellow.png"):
+            self.source = (os.getcwd() + "/data/Button_purple.png")
         else:
-            self.source = (os.getcwd() + "/Button_yellow.png")
+            self.source = (os.getcwd() + "/data/Button_yellow.png")
 
 
 class ButtonExit(ButtonBehavior, Image):
@@ -303,7 +303,7 @@ class MenuScreen(Screen):
     @staticmethod
     def sound_validation():
         """ Play a sound when call by MyButton: kv file """
-        sound_valid = SoundLoader.load("validation.ogg")
+        sound_valid = SoundLoader.load("data/validation.ogg")
         sound_valid.play()
 
 
@@ -618,25 +618,25 @@ class GameScreen(Screen):
     @staticmethod
     def sound_miss_play():
         """ If no points: play miss sound """
-        sound1 = SoundLoader.load('miss.ogg')
+        sound1 = SoundLoader.load('data/miss.ogg')
         sound1.play()
 
     @staticmethod
     def sound_points_play():
         """ If points: play point sound """
-        sound1 = SoundLoader.load('points.ogg')
+        sound1 = SoundLoader.load('data/points.ogg')
         sound1.play()
 
     @staticmethod
     def sound_play():
         """ When change mode: play point sound """
-        sound1 = SoundLoader.load('change.ogg')
+        sound1 = SoundLoader.load('data/change.ogg')
         sound1.play()
 
     @staticmethod
     def sound_validation():
         """ Play a sound when call by MyButton: kv file """
-        sound_valid = SoundLoader.load("validation.ogg")
+        sound_valid = SoundLoader.load("data/validation.ogg")
         sound_valid.play()
 
     def color_name_to_rgb(self, name):
@@ -748,19 +748,19 @@ class GameScreenRepeat(Screen):
     started = 0
     life = 3
     path = os.getcwd()
-    bt1_sound = SoundLoader.load(path + '/bt1_sound.ogg')
-    bt2_sound = SoundLoader.load(path + '/bt2_sound.ogg')
-    bt3_sound = SoundLoader.load(path + '/bt3_sound.ogg')
-    bt4_sound = SoundLoader.load(path + '/bt4_sound.ogg')
-    sound_false = SoundLoader.load(path + '/sound_false.ogg')
-    sound_win = SoundLoader.load(path + '/sound_win.ogg')
+    bt1_sound = SoundLoader.load(path + '/data/bt1_sound.ogg')
+    bt2_sound = SoundLoader.load(path + '/data/bt2_sound.ogg')
+    bt3_sound = SoundLoader.load(path + '/data/bt3_sound.ogg')
+    bt4_sound = SoundLoader.load(path + '/data/bt4_sound.ogg')
+    sound_false = SoundLoader.load(path + '/data/sound_false.ogg')
+    sound_win = SoundLoader.load(path + '/data/sound_win.ogg')
     level_best_medium = 1
     level_best_hard = 1
     score_file_repeat_medium = os.getcwd() + "/scores_repeat_medium_bcg"
     score_file_repeat_hard = os.getcwd() + "/scores_repeat_hard_bcg"
-    color_repeat_life_3 = os.getcwd() + "/ColorRepeat_Life3.png"
-    color_repeat_life_2 = os.getcwd() + "/ColorRepeat_Life2.png"
-    color_repeat_life_1 = os.getcwd() + "/ColorRepeat_Life1.png"
+    color_repeat_life_3 = os.getcwd() + "/data/ColorRepeat_Life3.png"
+    color_repeat_life_2 = os.getcwd() + "/data/ColorRepeat_Life2.png"
+    color_repeat_life_1 = os.getcwd() + "/data/ColorRepeat_Life1.png"
 
     def __init__(self, **kwargs):
         """ """
@@ -1101,9 +1101,9 @@ class MenuScreenRepeat(Screen):
 
 class BrainColorGame(App):
     """ Main App """
-    sound_game = SoundLoader.load('BCG-01.ogg')
+    sound_game = SoundLoader.load('data/BCG-01.ogg')
     sound_game.loop = True
-    sound_win = SoundLoader.load("win.ogg")
+    sound_win = SoundLoader.load("data/win.ogg")
 
     # t_final_no_penality
     text_2 = StringProperty('')
