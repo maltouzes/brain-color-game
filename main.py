@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """ simple Color Games made with kivy """
-__version__ = '0.5.22'
+__version__ = '0.5.24'
 
 from kivy.app import App
 from kivy.uix.progressbar import ProgressBar
@@ -58,6 +58,7 @@ class ButtonColorWord(ButtonBehavior, Image):
 
 class LooseColorRepeat(Screen):
     score = 0
+    scores_ = str(1)
 
     def __init__(self, **kwargs):
         """ """
@@ -79,6 +80,16 @@ class LooseColorRepeat(Screen):
                 self.manager.current = 'menu-repeat'
                 return True
             return False
+
+    def best_score_medium(self):
+        self.scores_ = str(BrainColorGame.best_scores_color_repeat_medium)
+        best_score = self.ids['best_score']
+        best_score.text = self.scores_
+
+    def best_score_hard(self):
+        self.scores_ = str(BrainColorGame.best_scores_color_repeat_hard)
+        best_score = self.ids['best_score']
+        best_score.text = self.scores_
 
 
 class ScoresColorWord(Screen):

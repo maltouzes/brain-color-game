@@ -73,7 +73,7 @@
             size_hint: 0.4, 0.4
             on_press: root.manager.current = 'scores-color-repeat'
             on_press: root.manager.get_screen('scores-color-repeat').update()
-            on_press: root.manager.get_screen('game-repeat').update_records() 
+            on_press: root.manager.get_screen('game-repeat').update_records()
             on_press: root.manager.get_screen('game-repeat').open_init()
         ButtonHelp:
             source: os.getcwd() + "/help.png"
@@ -90,8 +90,11 @@
             #on_press: root.manager.get_screen('game-repeat').start_started(1)
             #on_press: root.manager.get_screen('game-repeat').ini()
             #on_press: root.manager.get_screen('game-repeat').hard()
+            on_press: root.manager.get_screen('loose').best_score_medium()
             on_press: root.manager.get_screen('game-repeat').remember()
             on_press: root.manager.get_screen('game-repeat').button_start_pushed()
+            on_press: root.manager.get_screen('game-repeat').update_records()
+            on_press: root.manager.get_screen('game-repeat').open_init()
         Label:
             text: root.text_easy
             font_size: 20
@@ -123,8 +126,11 @@
             #on_press: root.manager.get_screen('game-repeat').start_started(1)
             #on_press: root.manager.get_screen('game-repeat').ini()
             #on_press: root.manager.get_screen('game-repeat').hard()
+            on_press: root.manager.get_screen('loose').best_score_hard()
             on_press: root.manager.get_screen('game-repeat').forgot()
             on_press: root.manager.get_screen('game-repeat').button_start_pushed()
+            on_press: root.manager.get_screen('game-repeat').update_records()
+            on_press: root.manager.get_screen('game-repeat').open_init()
         Label:
             text: root.text_hard
             font_size: 20
@@ -202,7 +208,6 @@
     Image:
         source: os.getcwd() + "/ColorWord_fond.png"
     FloatLayout:
-
         orientation: 'vertical'
         background_color: [1, 1, 0, 1]
         height: root.height
@@ -230,7 +235,7 @@
             size_hint: 0.4, 0.4
             on_press: root.manager.current = 'scores-color-word'
             on_press: root.manager.get_screen('scores-color-word').update()
-            on_press: root.manager.get_screen('game').update_records() 
+            on_press: root.manager.get_screen('game').update_records()
             on_press: root.manager.get_screen('game').open_init()
         ButtonHelp:
             source: os.getcwd() + "/help.png"
@@ -265,7 +270,6 @@
             font_size: 20
             color: 0,0,0,1
             pos_hint: {'center_x': 0.5, 'center_y': 0.45}
-
         ButtonExit:
             source: os.getcwd() + ("/Button-Return.png")
             pos_hint: {'center_x': 0.5, 'center_y': 0.12}
@@ -346,7 +350,6 @@
                 height: 100
                 text: str(root.points_str)
                 color: 0,0,0,1
-
             ButtonHelp:
                 source: os.getcwd() + "/btpush1.png"
                 id: bt1
@@ -635,6 +638,18 @@
             bold: True
             color: 0,0,0,1
             pos_hint: {'center_x': 0.6, 'center_y': 0.5}
+        Label:
+            pos_hint: {'center_x': 0.3, 'center_y': 0.4}
+            color: 0,0,0,1
+            font_size: 35
+            text: "Best Level"
+        Label:
+            id: best_score
+            text: root.scores_
+            font_size: 35
+            bold: True
+            color: 0,0,0,1
+            pos_hint: {'center_x': 0.6, 'center_y': 0.4}
 <ScoresColorWord>
     Image:
         source: os.getcwd() + "/ColorWord_fond.png"
