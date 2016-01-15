@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """ simple Color Games made with kivy """
-__version__ = '0.5.21'
+__version__ = '0.5.22'
 
 from kivy.app import App
 from kivy.uix.progressbar import ProgressBar
@@ -747,6 +747,9 @@ class GameScreenRepeat(Screen):
     level_best_hard = 1
     score_file_repeat_medium = os.getcwd() + "/scores_repeat_medium_bcg"
     score_file_repeat_hard = os.getcwd() + "/scores_repeat_hard_bcg"
+    color_repeat_life_3 = os.getcwd() + "/ColorRepeat_Life3.png"
+    color_repeat_life_2 = os.getcwd() + "/ColorRepeat_Life2.png"
+    color_repeat_life_1 = os.getcwd() + "/ColorRepeat_Life1.png"
 
     def __init__(self, **kwargs):
         """ """
@@ -818,7 +821,7 @@ class GameScreenRepeat(Screen):
         lenquestionlabel.text = self.lenquestion
         self.life = 3
         lifelabel = self.ids['lifelabel']
-        lifelabel.text = "Life: " + str(self.life)
+        lifelabel.text = "Life: "   # + str(self.life)
         self.level = 2
         self.question = []
         self.question_index = 0
@@ -850,6 +853,8 @@ class GameScreenRepeat(Screen):
             pass
 
     def button_start_pushed(self):
+        lifeimage = self.ids['lifeimage']
+        lifeimage.source = self.color_repeat_life_3
         Clock.schedule_once(lambda dt: self.button_start_pushed_go(), 0.7)
 
     def button_start_pushed_go(self):
@@ -1004,6 +1009,7 @@ class GameScreenRepeat(Screen):
 
     def check_answer(self):
         """ Called by Button's push """
+        lifeimage = self.ids['lifeimage']
         if self.colors == self.question:
             print "win"
             self.win()
@@ -1021,7 +1027,11 @@ class GameScreenRepeat(Screen):
                         print "false"
                         self.life -= 1
                         lifelabel = self.ids['lifelabel']
-                        lifelabel.text = "Life: " + str(self.life)
+                        lifelabel.text = "Life: "  # + str(self.life)
+                        if self.life == 1:
+                            lifeimage.source = self.color_repeat_life_1
+                        if self.life == 2:
+                            lifeimage.source = self.color_repeat_life_2
                         self.colors = []
                         self.question_index = 0
                         Clock.schedule_once(self.start, 0.5)
@@ -1030,7 +1040,12 @@ class GameScreenRepeat(Screen):
             else:
                 self.life -= 1
                 lifelabel = self.ids['lifelabel']
-                lifelabel.text = "Life: " + str(self.life)
+                lifelabel.text = "Life: "  # + str(self.life)
+                if self.life == 2:
+                    lifeimage.source = self.color_repeat_life_2
+                if self.life == 1:
+                    lifeimage.source = self.color_repeat_life_1
+
                 print "you loose"
                 self.sound_false.play()
                 self.colors = []
@@ -1114,7 +1129,7 @@ class BrainColorGame(App):
         """ Use ScreenManager """
         self.use_kivy_settings = False
         self.settings_cls = SettingsWithNoMenu
-        # self.sound_game.play()
+        self.sound_game.play()
         self.bind(text_2=self.update)
         # Create the screen manager
         screen_m = ScreenManager()

@@ -160,8 +160,13 @@
             bold: True
             font_size: 25
             color: 0,0,0,1
-            text: "Life: " + str(root.life)
+            text: "Life: " # + str(root.life)
             pos_hint: {'center_x': 0.6, 'center_y': 0.95}
+        Image:
+            id: lifeimage
+            source: os.getcwd() + "/ColorRepeat_Life3.png"
+            pos_hint: {'center_x': 0.8, 'center_y': 0.95}
+            size_hint: 0.3, 0.3
         ButtonHelp:
             source: os.getcwd() + "/btpush4-moreshadow.png"
             pos_hint: {'center_x': 0.25, 'center_y': 0.68}
@@ -506,46 +511,49 @@
         pos: root.pos
         orientation: 'vertical'
         Label:
-            pos_hint: {'center_x': 0.5, 'y': 0.35}
+            pos_hint: {'center_x': 0.5, 'center_y': 0.67}
             color: 1, 1, 1, 1
-            font_size: 20
+            font_size: 25
+            bold: True
             text: "You win !"
         Label:
-            pos_hint: {'center_x': 0.5, 'y': 0.28}
+            pos_hint: {'center_x': 0.5, 'center_y': 0.6}
             color: 1, 1, 1, 1
             font_size: 20
             text: root.text_2
             text: "time: " + app.text_2 + " seconds"
         Label:
             id: label_3
-            pos_hint: {'center_x': 0.5, 'y': 0.20}
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
             color: 1, 1, 1, 1
             font_size: 20
             text: "Miss: " + app.text_3
         Label:
-            pos_hint: {'center_x': 0.5, 'y': 0.10}
+            pos_hint: {'center_x': 0.5, 'center_y': 0.4}
             color: 1, 1, 1, 1
             font_size: 20
             text: "Penality: 3x" + app.text_3 + " = " + app.text_4 + " seconds"
         Label:
-            pos_hint: {'center_x': 0.5, 'y': 0.0}
+            pos_hint: {'center_x': 0.5, 'center_y': 0.3}
             color: 1, 1, 1, 1
-            font_size: 20
+            font_size: 30
+            bold: True
             text: "Time final: " + app.text_5 + " seconds"
         Label:
-            pos_hint: {'center_x': 0.5, 'y': -0.2}
+            pos_hint: {'center_x': 0.5, 'center_y': 0.2}
             color: 1, 1, 1, 1
             font_size: 20
+            bold: True
             text: app.text_6
         ButtonOk:
             source: os.getcwd() + ("/Button-Ok.png")
-            pos_hint: {'center_x': 0.5, 'y': 0.1}
+            pos_hint: {'center_x': 0.5, 'center_y': 0.12}
             size_hint: 0.5, 0.12
             on_press: root.manager.current = 'game'
             on_press: root.sound_stop()
 <InstructionsColorWord>
     Image:
-        source: os.getcwd() + "/"
+        source: os.getcwd() + "/GameScreen_fond.png"
     FloatLayout:
         ButtonExit:
             source: os.getcwd() + ("/Button-Return.png")
@@ -561,10 +569,16 @@
             text: root.text
             font_size: 20
             color: 0,0,0,1
-            pos_hint: {'center_x': 0.5, 'center_y': 0.7}
+            pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+        Label:
+            text: "Color Word"
+            font_size: 30
+            bold: True
+            color: 0,0,0,1
+            pos_hint: {'center_x': 0.5, 'center_y': 0.9}
 <InstructionsColorRepeat>
     Image:
-        source: os.getcwd() + "/"
+        source: os.getcwd() + "/GameScreenRepeat_fond.png"
     FloatLayout:
         ButtonExit:
             source: os.getcwd() + ("/Button-Return.png")
@@ -580,11 +594,24 @@
             text: root.text
             font_size: 20
             color: 0,0,0,1
-            pos_hint: {'center_x': 0.5, 'center_y': 0.7}
+            pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+        Label:
+            text: "Color Repeat"
+            font_size: 30
+            bold: True
+            color: 0,0,0,1
+            pos_hint: {'center_x': 0.5, 'center_y': 0.9}
+
 <LooseColorRepeat>
     Image:
-        source: os.getcwd() + "/"
+        source: os.getcwd() + "/CR_fond_P2.png"
     FloatLayout:
+        Label:
+            pos_hint: {'center_x': 0.5, 'center_y': 0.8}
+            color: 0,0,0,1
+            font_size: 25
+            bold: True
+            text: "No more Lifes !"
         ButtonExit:
             source: os.getcwd() + ("/Button-Return.png")
             pos_hint: {'center_x': 0.5, 'center_y': 0.12}
@@ -596,12 +623,18 @@
             color: 0,0,0,1
             pos_hint: {'center_x': 0.5, 'center_y': 0.12}
         Label:
+            pos_hint: {'center_x': 0.3, 'center_y': 0.5}
+            color: 0,0,0,1
+            font_size: 35
+            text: "Level"
+        Label:
             id: scorelabel
             # text: str(root.score)
             text: app.score_repeat
-            font_size: 20
+            font_size: 35
+            bold: True
             color: 0,0,0,1
-            pos_hint: {'center_x': 0.4, 'center_y': 0.7}
+            pos_hint: {'center_x': 0.6, 'center_y': 0.5}
 <ScoresColorWord>
     Image:
         source: os.getcwd() + "/ColorWord_fond.png"
@@ -619,26 +652,30 @@
         Label:
             id: best_scores_color_word_color_label
             text: app.best_scores_color_word_color
-            font_size: 35
+            font_size: 45
+            bold: True
             color: 0,0,0,1
-            pos_hint: {'center_x': 0.78, 'center_y': 0.8}
+            pos_hint: {'center_x': 0.80, 'center_y': 0.8}
         Label:
-            text: "High Level in Color mode: "
-            font_size: 20
+            text: "High Score in Color mode: "
+            font_size: 22
+            bold: True
             color: 0,0,0,1
-            pos_hint: {'center_x': 0.4, 'center_y': 0.8}
+            pos_hint: {'center_x': 0.36, 'center_y': 0.8}
 
         Label:
             id: best_scores_color_word_text_label
             text: app.best_scores_color_word_text
-            font_size: 35
+            font_size: 45
+            bold: True
             color: 0,0,0,1
-            pos_hint: {'center_x': 0.78, 'center_y': 0.5}
+            pos_hint: {'center_x': 0.80, 'center_y': 0.5}
         Label:
-            text: "High Level in Text mode: "
-            font_size: 20
+            text: "High Score in Text mode: "
+            font_size: 22
+            bold: True
             color: 0,0,0,1
-            pos_hint: {'center_x': 0.4, 'center_y': 0.5}
+            pos_hint: {'center_x': 0.38, 'center_y': 0.5}
 
 <ScoresColorRepeat>
     Image:
@@ -657,24 +694,28 @@
         Label:
             id: best_scores_color_repeat_medium_label
             text: app.best_scores_color_repeat_medium
-            font_size: 35
+            font_size: 45
+            bold: True
             color: 0,0,0,1
             pos_hint: {'center_x': 0.77, 'center_y': 0.8}
         Label:
             text: "High Level in Medium mode: "
-            font_size: 20
+            font_size: 22
+            bold: True
             color: 0,0,0,1
             pos_hint: {'center_x': 0.4, 'center_y': 0.8}
 
         Label:
             id: best_scores_color_repeat_hard_label
             text: app.best_scores_color_repeat_hard
-            font_size: 35
+            font_size: 45
+            bold: True
             color: 0,0,0,1
             pos_hint: {'center_x': 0.77, 'center_y': 0.5}
         Label:
             text: "High Level in Hard mode: "
-            font_size: 20
+            font_size: 22
+            bold: True
             color: 0,0,0,1
             pos_hint: {'center_x': 0.4, 'center_y': 0.5}
 
