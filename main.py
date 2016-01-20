@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """ simple Color Games made with kivy """
-__version__ = '0.5.28'
+__version__ = '0.5.34'
 
 from kivy.app import App
 from kivy.uix.progressbar import ProgressBar
@@ -20,26 +20,22 @@ import random
 import time
 import os
 Window.size = (480, 800)
-# Window.size = (240, 400)  # Same as 480, 800 --> ok
-# Window.size = (720, 1280)
-# Window.size = (360, 640)  # Same as 720, 1280 --> ok
-# Window.size = (1080, 1920)
-# Window.size = (540, 960)  # Same as 1080, 1920 --> ok
 
 
 class Buttonmy(ButtonBehavior, Label):
-    """ My custon button """
-    # def on_press(self):
-    # print("on_press")
+    """ kv: GameScreen custon button """
     pass
 
 
 class ButtonHelp(ButtonBehavior, Image):
+    """ kv: MenuScreen, MenuScreenRepeat... custonm button """
     pass
 
 
 class ButtonSound(ButtonBehavior, Image):
+    """ kv: StartScreen: Display sound image """
     def __init__(self, **kwargs):
+        """ Bind the button state """
         super(ButtonSound, self).__init__(**kwargs)
         self.bind(state=self.state_changed)
 
@@ -52,98 +48,50 @@ class ButtonSound(ButtonBehavior, Image):
             self.source = (os.getcwd() + "/data/sound_off_on1.png")
 
 
-class ButtonColorWord(ButtonBehavior, Image):
-    pass
-
-
 class LooseColorRepeat(Screen):
+    """ name: loose """
     score = 0
     scores_ = str(1)
 
     def __init__(self, **kwargs):
         """ """
         super(LooseColorRepeat, self).__init__(**kwargs)
-        self.post_build_init()
-
-    def post_build_init(self):
-        """ Bind the android or the keyboard key """
-        if platform() == 'android':
-            import android
-            android.map_key(android.KEYCODE_BACK, 1001)
-        win = Window
-        win.bind(on_keyboard=self.key_handler)
-
-    def key_handler(self, window, keycode1, keycode2, text, modifiers):
-        """ Called by escape key, 'reboot' the game """
-        if keycode1 == 27 or keycode1 == 1001:
-            if self.manager.current == 'loose':
-                self.manager.current = 'menu-repeat'
-                return True
-            return False
 
     def best_score_medium(self):
+        """ MenuScreenRepeat: called by ButtonSrart (kv) """
         self.scores_ = str(BrainColorGame.best_scores_color_repeat_medium)
         best_score = self.ids['best_score']
         best_score.text = self.scores_
 
     def best_score_hard(self):
+        """ MenuScreenRepeat: called by ButtonSrart (kv) """
         self.scores_ = str(BrainColorGame.best_scores_color_repeat_hard)
         best_score = self.ids['best_score']
         best_score.text = self.scores_
 
 
 class ScoresColorWord(Screen):
+    """ Screen Name = scores-color-word """
     def __init__(self, **kwargs):
         """ """
         super(ScoresColorWord, self).__init__(**kwargs)
-        self.post_build_init()
-
-    def post_build_init(self):
-        """ Bind the android or the keyboard key """
-        if platform() == 'android':
-            import android
-            android.map_key(android.KEYCODE_BACK, 1001)
-        win = Window
-        win.bind(on_keyboard=self.key_handler)
-
-    def key_handler(self, window, keycode1, keycode2, text, modifiers):
-        """ Called by escape key, 'reboot' the game """
-        if keycode1 == 27 or keycode1 == 1001:
-            if self.manager.current == 'scores-color-word':
-                self.manager.current = 'menu'
-                return True
-            return False
 
     def update(self):
-        ok = self.ids['best_scores_color_word_color_label']
-        ok.text = str(BrainColorGame.best_scores_color_word_color)
-        ok1 = self.ids['best_scores_color_word_text_label']
-        ok1.text = str(BrainColorGame.best_scores_color_word_text)
+        """ called by MenuScreen ButtonHelp """
+        word_color_ = self.ids['best_scores_color_word_color_label']
+        word_color_.text = str(BrainColorGame.best_scores_color_word_color)
+        word_text_ = self.ids['best_scores_color_word_text_label']
+        word_text_.text = str(BrainColorGame.best_scores_color_word_text)
 
 
 class ScoresColorRepeat(Screen):
+    """ Screen Name = scores-color-repeat """
     def __init__(self, **kwargs):
         """ """
         super(ScoresColorRepeat, self).__init__(**kwargs)
-        self.post_build_init()
-
-    def post_build_init(self):
-        """ Bind the android or the keyboard key """
-        if platform() == 'android':
-            import android
-            android.map_key(android.KEYCODE_BACK, 1001)
-        win = Window
-        win.bind(on_keyboard=self.key_handler)
-
-    def key_handler(self, window, keycode1, keycode2, text, modifiers):
-        """ Called by escape key, 'reboot' the game """
-        if keycode1 == 27 or keycode1 == 1001:
-            if self.manager.current == 'scores-color-repeat':
-                self.manager.current = 'menu-repeat'
-                return True
-            return False
 
     def update(self):
+        """ called by MenuScreen ButtonHelp """
         ok = self.ids['best_scores_color_repeat_medium_label']
         ok.text = str(BrainColorGame.best_scores_color_repeat_medium)
         ok1 = self.ids['best_scores_color_repeat_hard_label']
@@ -151,6 +99,7 @@ class ScoresColorRepeat(Screen):
 
 
 class InstructionsColorRepeat(Screen):
+    """ Screen Name = instruction-color-repeat """
     text = "There is two modes in this game:\n"\
            "Medium and Hard.\n"\
            "\n"\
@@ -166,26 +115,10 @@ class InstructionsColorRepeat(Screen):
     def __init__(self, **kwargs):
         """ """
         super(InstructionsColorRepeat, self).__init__(**kwargs)
-        self.post_build_init()
-
-    def post_build_init(self):
-        """ Bind the android or the keyboard key """
-        if platform() == 'android':
-            import android
-            android.map_key(android.KEYCODE_BACK, 1001)
-        win = Window
-        win.bind(on_keyboard=self.key_handler)
-
-    def key_handler(self, window, keycode1, keycode2, text, modifiers):
-        """ Called by escape key, 'reboot' the game """
-        if keycode1 == 27 or keycode1 == 1001:
-            if self.manager.current == 'instruction-color-repeat':
-                self.manager.current = 'menu-repeat'
-                return True
-            return False
 
 
 class InstructionsColorWord(Screen):
+    """ Screen Name = instruction-color-word """
     text = "There is two modes in this game:\n"\
            "Color and Text.\n"\
            "\n"\
@@ -204,28 +137,12 @@ class InstructionsColorWord(Screen):
     def __init__(self, **kwargs):
         """ """
         super(InstructionsColorWord, self).__init__(**kwargs)
-        self.post_build_init()
-
-    def post_build_init(self):
-        """ Bind the android or the keyboard key """
-        if platform() == 'android':
-            import android
-            android.map_key(android.KEYCODE_BACK, 1001)
-        win = Window
-        win.bind(on_keyboard=self.key_handler)
-
-    def key_handler(self, window, keycode1, keycode2, text, modifiers):
-        """ Called by escape key, 'reboot' the game """
-        if keycode1 == 27 or keycode1 == 1001:
-            if self.manager.current == 'instruction-color-word':
-                self.manager.current = 'menu'
-                return True
-            return False
 
 
 class ButtonOk(ButtonBehavior, Image):
     """ Custon Ok Button """
     def __init__(self, **kwargs):
+        """ """
         super(ButtonOk, self).__init__(**kwargs)
         self.bind(state=self.state_changed)
 
@@ -236,10 +153,6 @@ class ButtonOk(ButtonBehavior, Image):
         else:
             self.source = (os.getcwd() + "/data/Button-Ok-push.png")
             pass
-
-
-class ButtonMenuRepeat(ButtonBehavior, Image):
-    pass
 
 
 class ButtonColours(ButtonBehavior, Image):
@@ -254,7 +167,6 @@ class ButtonColours(ButtonBehavior, Image):
             self.source = (os.getcwd() + "/data/Button_purple.png")
         else:
             self.source = (os.getcwd() + "/data/Button_yellow.png")
-            pass
 
 
 class ButtonText(ButtonBehavior, Image):
@@ -271,12 +183,59 @@ class ButtonText(ButtonBehavior, Image):
             self.source = (os.getcwd() + "/data/Button_yellow.png")
 
 
-class ButtonExit(ButtonBehavior, Image):
-    """ My Custom Exit Button """
-    pass
-
-
 class StartScreen(Screen):
+    """ The main start Screen """
+    def __init__(self, **kwargs):
+        """ """
+        super(StartScreen, self).__init__(**kwargs)
+        self.post_build_init()
+
+    def post_build_init(self):
+        """ Bind the android or the keyboard key """
+        if platform() == 'android':
+            import android
+            android.map_key(android.KEYCODE_BACK, 1001)
+        win = Window
+        win.bind(on_keyboard=self.key_handler)
+
+    def key_handler(self, window, keycode1, keycode2, text, modifiers):
+        """ Called by escape key, 'reboot' the game """
+        if keycode1 == 27 or keycode1 == 1001:
+            if self.manager.current == 'loose':
+                self.manager.current = 'menu-repeat'
+                return True
+            elif self.manager.current == 'win':
+                self.manager.current = 'menu'
+                return True
+            elif self.manager.current == 'menu':
+                self.manager.current = 'start'
+                return True
+            elif self.manager.current == 'menu-repeat':
+                self.manager.current = 'start'
+                return True
+            elif self.manager.current == 'game':
+                self.manager.current = 'menu'
+                return True
+            elif self.manager.current == 'game-repeat':
+                self.manager.current = 'menu-repeat'
+                return True
+            elif self.manager.current == 'scores-color-word':
+                self.manager.current = 'menu'
+                return True
+            elif self.manager.current == 'scores-color-repeat':
+                self.manager.current = 'menu-repeat'
+                return True
+            elif self.manager.current == 'instruction-color-repeat':
+                self.manager.current = 'menu-repeat'
+                return True
+            elif self.manager.current == 'instruction-color-word':
+                self.manager.current = 'menu'
+                return True
+            elif self.manager.current == 'start':
+                self.leave()
+                return True
+            return False
+
     @staticmethod
     def leave():
         """ Leave the apps """
@@ -285,10 +244,6 @@ class StartScreen(Screen):
 
 class MenuScreen(Screen):
     """ BoxLayout called by kivy """
-    @staticmethod
-    def leave():
-        """ Leave the apps """
-        App.get_running_app().stop()
 
     @staticmethod
     def start_text_mode():
@@ -370,6 +325,7 @@ class GameScreen(Screen):
     value_progress_bar = 0
 
     def __init__(self, **kwargs):
+        """ """
         super(GameScreen, self).__init__(**kwargs)
         self.post_build_init()
 
@@ -382,6 +338,7 @@ class GameScreen(Screen):
         self.time_2 = time.time()
 
     def reset_points_str(self):
+        """ Called by kv: MenuScreen Button """
         self.points_str = ""
 
     def get_time_final(self, mode):
@@ -393,6 +350,7 @@ class GameScreen(Screen):
         self.compare_time_final(mode)
 
     def update_records(self):
+        """ Called by kv """
         BrainColorGame.best_scores_color_word_color = self.t_best_color
         BrainColorGame.best_scores_color_word_text = self.t_best_text
 
@@ -426,8 +384,9 @@ class GameScreen(Screen):
                 self.no_new_record()
 
     def open_init(self):
-                self.open_file(self.score_file_color, "Colour")
-                self.open_file(self.score_file_text, "Text")
+        """ Called by kv """
+        self.open_file(self.score_file_color, "Colour")
+        self.open_file(self.score_file_text, "Text")
 
     def open_file(self, score_file_mode, mode):
         """ Open scores file """
@@ -649,26 +608,13 @@ class GameScreen(Screen):
         if platform() == 'android':
             import android
             android.map_key(android.KEYCODE_BACK, 1001)
-
         win = Window
         win.bind(on_keyboard=self.key_handler)
 
     def key_handler(self, window, keycode1, keycode2, text, modifiers):
         """ On push Back_key: run go_start (popup) """
-        if self.manager.current == 'menu' or \
-                self.manager.current == 'game' or \
-                self.manager.current == 'start':
-            if keycode1 == 27 or keycode1 == 1001:
-                self.replay()
-                # Returning True will eat the keypress
-                if self.manager.current == 'start':
-                    MenuScreen.leave()
-                if self.manager.current == 'menu':
-                    self.manager.current = 'start'
-                if self.manager.current == 'game':
-                    self.manager.current = 'menu'
-                return True
-            return False
+        if keycode1 == 27 or keycode1 == 1001:
+            self.replay()
 
     def on_pause(self):
         """ Enable pause on mobile """
@@ -731,7 +677,6 @@ class ButtonStart(ButtonBehavior, Image):
 class GameScreenRepeat(Screen):
     """ What do you want I describe here? ^^ """
     mode = 'forgot'  # forgot, remember
-    easy_hard = 'easy'  # easy , hard
     question_index = 0
     bt1 = Button()
     bt2 = Button()
@@ -778,25 +723,17 @@ class GameScreenRepeat(Screen):
 
     def key_handler(self, window, keycode1, keycode2, text, modifiers):
         """ Called by escape key, 'reboot' the game """
-        if self.manager.current == 'menu-repeat' or \
-                self.manager.current == 'game-repeat':
-            if keycode1 == 27 or keycode1 == 1001:
-                if self.manager.current == 'menu-repeat':  # hum
-                    BrainColorGame.sound_game.play()
-                    self.manager.current = 'start'
-                else:
-                    self.level = 2
-                    self.started = 0
-                    self.question = []
-                    self.colors = []
-                    self.question_index = 0
-                    self.manager.current = 'menu-repeat'
-                return True
-            return False
+        if keycode1 == 27 or keycode1 == 1001:
+            self.level = 2
+            self.started = 0
+            self.question = []
+            self.colors = []
+            self.question_index = 0
 
     def open_init(self):
-                self.open_file(self.score_file_repeat_medium, "medium")
-                self.open_file(self.score_file_repeat_hard, "hard")
+        """ Called by kv """
+        self.open_file(self.score_file_repeat_medium, "medium")
+        self.open_file(self.score_file_repeat_hard, "hard")
 
     def open_file(self, score_file_mode, level):
         """ Open scores file """
@@ -813,6 +750,7 @@ class GameScreenRepeat(Screen):
             pass
 
     def update_records(self):
+        """ Called by kv """
         BrainColorGame.best_scores_color_repeat_medium = self.level_best_medium
         BrainColorGame.best_scores_color_repeat_hard = self.level_best_hard
 
@@ -840,14 +778,6 @@ class GameScreenRepeat(Screen):
             self.question.append(random.choice(self.colours.values()))
             print len(self.question)
 
-    def easy(self):
-        """ See  MenuScreen Button in kv """
-        self.easy_hard = 'easy'
-
-    def hard(self):
-        """ See  MenuScreen Button in kv """
-        self.easy_hard = 'hard'
-
     def forgot(self):
         """ See  MenuScreen Button in kv """
         self.mode = 'forgot'
@@ -864,18 +794,18 @@ class GameScreenRepeat(Screen):
             pass
 
     def button_start_pushed(self):
+        """ Called by kv """
         lifeimage = self.ids['lifeimage']
         lifeimage.source = self.color_repeat_life_3
         Clock.schedule_once(lambda dt: self.button_start_pushed_go(), 0.7)
 
     def button_start_pushed_go(self):
-        # self.remember()
-        self.hard()
+        """ see above stupid fat hobbit ! """
         self.ini()
         self.start_started(1)
 
     def start_started(self, delta_time):
-        """ """
+        """ see above too ! """
         BrainColorGame.sound_game.stop()
         bt1 = self.ids['bt1']
         bt2 = self.ids['bt2']
@@ -908,10 +838,7 @@ class GameScreenRepeat(Screen):
                 self.bt4_sound.play()
             else:
                 pass
-            if self.easy_hard == 'easy':
-                Clock.schedule_once(self.reboot_button, 1)
-            elif self.easy_hard == 'hard':
-                Clock.schedule_once(self.reboot_button, 0.5)
+            Clock.schedule_once(self.reboot_button, 0.5)
 
         else:
             pass
@@ -932,6 +859,7 @@ class GameScreenRepeat(Screen):
         Clock.schedule_once(self.start, 0.3)
 
     def button_initial_color(self):
+        """ Called by bt pressed """
         bt1 = self.ids['bt1']
         bt2 = self.ids['bt2']
         bt3 = self.ids['bt3']
@@ -952,7 +880,6 @@ class GameScreenRepeat(Screen):
             self.bt1_sound.stop()
             self.bt1_sound.play()
             bt1.color = [0.3, 1, 3, 1]
-            # Clock.schedule_once(lambda dt: self.check_answer(), 0.2)
             Clock.schedule_once(lambda dt: self.button_initial_color(), 0.2)
             self.check_answer()
 
@@ -967,7 +894,6 @@ class GameScreenRepeat(Screen):
             self.bt2_sound.stop()
             self.bt2_sound.play()
             bt2.color = [0.3, 1, 3, 1]
-            # Clock.schedule_once(lambda dt: self.check_answer(), 0.2)
             Clock.schedule_once(lambda dt: self.button_initial_color(), 0.2)
             self.check_answer()
 
@@ -982,7 +908,6 @@ class GameScreenRepeat(Screen):
             self.bt3_sound.stop()
             self.bt3_sound.play()
             bt3.color = [0.3, 1, 3, 1]
-            # Clock.schedule_once(lambda dt: self.check_answer(), 0.2)
             Clock.schedule_once(lambda dt: self.button_initial_color(), 0.2)
             self.check_answer()
 
@@ -997,7 +922,6 @@ class GameScreenRepeat(Screen):
             self.bt4_sound.stop()
             self.bt4_sound.play()
             bt4.color = [0.3, 1, 3, 1]
-            # Clock.schedule_once(lambda dt: self.check_answer(), 0.2)
             Clock.schedule_once(lambda dt: self.button_initial_color(), 0.2)
             self.check_answer()
 
@@ -1012,7 +936,7 @@ class GameScreenRepeat(Screen):
             for x in range(self.level):
                 self.question.append(random.choice(self.colours.values()))
         else:
-                self.question.append(random.choice(self.colours.values()))
+            self.question.append(random.choice(self.colours.values()))
 
         print self.question
         self.question_index = 0
@@ -1087,11 +1011,6 @@ class MenuScreenRepeat(Screen):
     text_easy = "Medium"
     text_medium = "Hard"
     text_hard = "Hard"
-
-    @staticmethod
-    def leave():
-        """ Good by! """
-        App.get_running_app().stop()
 
     @staticmethod
     def start_game():
@@ -1177,7 +1096,6 @@ class BrainColorGame(App):
 
     def on_resume(self):
         self.sound_game.volume = 1
-
 
 if __name__ == '__main__':
     BrainColorGame().run()
