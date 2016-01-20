@@ -4,16 +4,19 @@
 Brain-color-game
 ******
 Tested on Linux, but should work on Windows, Mac and BSD too.
+Very funniest on Android!
 
-A tuch game color (tactile):
- - Colours Mode: You must click on the button with the correct color.
- - Text Mode: You must click on the button with the same text.
+A tuch game color (tactile) 2 games are availables:
+ - Color Word:
+  * Color Mode:  You must click on the button with the correct color.
+  * Text Mode: You must click on the button with the same text.
+ - Color Repeat: Click on the same sequence of color
 
-You can play with a mouse too (if you have it)
+Play it with your mouse
 
 Enjoy!
 
-Still in alpha. Please do not report any bug.
+Still in alpha
 
 # Installation on computer (for Android system see above)
 Prerequisites:
@@ -24,8 +27,8 @@ Usage:
 Run main.py
 
 # Installation on Android
-Copy the apk (bin/BrainColorGame-0.1-debug.apk) on your phone and install it.
-Run Brain Color Game!
+You need to build it. The app will be soon on the Android market (playstore) or
+maybe on Fdroid :)
 
 You can reach me on:
 * Github: http://github.com/maltouzes/brain-color-game

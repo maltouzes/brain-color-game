@@ -58,6 +58,13 @@ target/
 
 # Vim
 *~
+*.swp
 
 # Buildozer
 *.ini
+
+# Me, Myself and I
+bin/
+data_local/
+help
+.buildozer/
