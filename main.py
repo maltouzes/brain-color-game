@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """ simple Color Games made with kivy """
-__version__ = '0.5.34'
+__version__ = '0.5.35'
 
 from kivy.app import App
 from kivy.uix.progressbar import ProgressBar
@@ -314,7 +314,7 @@ class GameScreen(Screen):
     t_best = 999.
     t_best_color = 999.
     t_best_text = 999.
-    records = "New Records = "
+    records = "New Record = "
     t_best_mode = ObjectProperty(None)
     # 0/1 time mode active/disable
     time_mode = 0
@@ -404,12 +404,12 @@ class GameScreen(Screen):
 
     def no_new_record(self):
         """ if t_final >= t_best_mode """
-        self.records = "Best Records = "
+        self.records = "Best Record = "
         self.sound_validation()
 
     def save_new_record(self, score_file_mode, t_best_mode):
         """ save scores in file: mode = text or color """
-        self.records = "New Records !!! "
+        self.records = "New Record !!! "
         file_saved = open(score_file_mode, 'w')
         file_saved.write(str(t_best_mode))
         file_saved.close()
@@ -706,6 +706,8 @@ class GameScreenRepeat(Screen):
     color_repeat_life_3 = os.getcwd() + "/data/ColorRepeat_Life3.png"
     color_repeat_life_2 = os.getcwd() + "/data/ColorRepeat_Life2.png"
     color_repeat_life_1 = os.getcwd() + "/data/ColorRepeat_Life1.png"
+    new_record = ""
+    old_level = "Best Level"
 
     def __init__(self, **kwargs):
         """ """
@@ -795,13 +797,16 @@ class GameScreenRepeat(Screen):
 
     def button_start_pushed(self):
         """ Called by kv """
+        self.new_record = ""
+        self.old_level = "Best Level"
         lifeimage = self.ids['lifeimage']
         lifeimage.source = self.color_repeat_life_3
+        self.ini()
         Clock.schedule_once(lambda dt: self.button_start_pushed_go(), 0.7)
 
     def button_start_pushed_go(self):
         """ see above stupid fat hobbit ! """
-        self.ini()
+        # self.ini()
         self.start_started(1)
 
     def start_started(self, delta_time):
@@ -942,6 +947,18 @@ class GameScreenRepeat(Screen):
         self.question_index = 0
         Clock.schedule_once(self.start, 1)
 
+    def new_record_check(self):
+        print "here new_record"
+        if self.mode == 'remember':
+            if self.level_best_medium < (len(self.question)-1):
+                self.new_record = "New Record!"
+                self.old_level = "Old Best Level"
+                print "ok NEW REcord!"
+        else:
+            if self.level_best_hard < (len(self.question)-1):
+                self.new_record = "New Record!"
+                self.old_level = "Old Best Level"
+
     def check_answer(self):
         """ Called by Button's push """
         lifeimage = self.ids['lifeimage']
@@ -989,17 +1006,19 @@ class GameScreenRepeat(Screen):
                 Clock.schedule_once(self.start, 0.5)
             LooseColorRepeat.score = (len(self.question)-1)
         LooseColorRepeat.score = (len(self.question)-1)
+        print "here new_record_call"
+        self.new_record_check()
         if self.life <= 0:
             if self.mode == 'remember':
                 if self.level_best_medium < (len(self.question)-1):
                     self.level_best_medium = (len(self.question)-1)
-                    print "New records"
+                    print "New record"
                     print self.level_best_medium
                     self.save_new_record(self.score_file_repeat_medium)
             else:
                 if self.level_best_hard < (len(self.question)-1):
                     self.level_best_hard = (len(self.question)-1)
-                    print "New records"
+                    print "New record"
                     print self.level_best_hard
                     self.save_new_record(self.score_file_repeat_hard)
             self.manager.current = 'loose'
@@ -1035,6 +1054,8 @@ class BrainColorGame(App):
     # records + t_brest
     text_6 = StringProperty('')
     score_repeat = StringProperty('')
+    new_record_color_repeat = StringProperty('')
+    old_record_color_repeat = StringProperty('')
     best_scores_color_word_color = StringProperty('')
     best_scores_color_word_text = StringProperty('')
     best_scores_color_repeat_medium = StringProperty('1')

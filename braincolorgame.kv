@@ -4,10 +4,10 @@
     Image:
         source: os.getcwd() +"/data/BCG_fond.png"
     FloatLayout:
-        ButtonHelp:
-            source: os.getcwd() + "/data/help.png"
-            pos_hint: {'center_x': 0.9, 'center_y': 0.05}
-            size_hint: 0.4, 0.4
+        #ButtonHelp:
+         #   source: os.getcwd() + "/data/help.png"
+          #  pos_hint: {'center_x': 0.9, 'center_y': 0.05}
+           # size_hint: 0.4, 0.4
         ButtonSound:
             source: os.getcwd() + "/data/sound_off_on1.png"
             pos_hint: {'center_x': 0.09, 'center_y': 0.05}
@@ -139,6 +139,8 @@
             color: root.colours['yellow']
             on_press: root.bt1_pressed()
             on_press: app.score_repeat = str(root.level-1)
+            on_press: app.new_record_color_repeat = str(root.new_record)
+            on_press: app.old_record_color_repeat = str(root.old_level)
         ButtonHelp:
             source: os.getcwd() + "/data/btpush4-moreshadow.png"
             pos_hint: {'center_x': 0.74, 'center_y': 0.68}
@@ -146,6 +148,9 @@
             size_hint: 0.5, 0.5
             color: root.colours['green']
             on_press: root.bt2_pressed()
+            on_press: app.score_repeat = str(root.level-1)
+            on_press: app.new_record_color_repeat = str(root.new_record)
+            on_press: app.old_record_color_repeat = str(root.old_level)
         ButtonHelp:
             source: os.getcwd() + "/data/btpush4.png"
             id: bt3
@@ -153,6 +158,9 @@
             pos_hint: {'center_x': 0.25, 'center_y': 0.31}
             color: root.colours['red']
             on_press: root.bt3_pressed()
+            on_press: app.score_repeat = str(root.level-1)
+            on_press: app.new_record_color_repeat = str(root.new_record)
+            on_press: app.old_record_color_repeat = str(root.old_level)
         ButtonHelp:
             source: os.getcwd() + "/data/btpush3.png"
             pos_hint: {'center_x': 0.74, 'center_y': 0.31}
@@ -160,7 +168,9 @@
             size_hint: 0.5, 0.5
             color: root.colours['blue']
             on_press: root.bt4_pressed()
-
+            on_press: app.score_repeat = str(root.level-1)
+            on_press: app.new_record_color_repeat = str(root.new_record)
+            on_press: app.old_record_color_repeat = str(root.old_level)
 <MenuScreen>:
     Image:
         source: os.getcwd() + "/data/ColorWord_fond.png"
@@ -529,7 +539,7 @@
             pos_hint: {'center_x': 0.3, 'center_y': 0.4}
             color: 0,0,0,1
             font_size: 35
-            text: "Best Level"
+            text: app.old_record_color_repeat
         Label:
             id: best_score
             text: root.scores_
@@ -537,6 +547,12 @@
             bold: True
             color: 0,0,0,1
             pos_hint: {'center_x': 0.6, 'center_y': 0.4}
+        Label:
+            text: app.new_record_color_repeat
+            font_size: 35
+            bold: True
+            color: 0,0,0,1
+            pos_hint: {'center_x': 0.6, 'center_y': 0.60}
 <ScoresColorWord>
     Image:
         source: os.getcwd() + "/data/ColorWord_fond.png"
