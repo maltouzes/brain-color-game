@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """ simple Color Games made with kivy """
-__version__ = '0.5.35'
+__version__ = '0.5.39'
 
 from kivy.app import App
 from kivy.uix.progressbar import ProgressBar
@@ -19,7 +19,12 @@ from kivy.uix.image import Image
 import random
 import time
 import os
+import gettext
 Window.size = (480, 800)
+
+# Set up message catalog access
+t = gettext.translation('main', 'locale', fallback=True)
+_ = t.ugettext
 
 
 class Buttonmy(ButtonBehavior, Label):
@@ -72,6 +77,10 @@ class LooseColorRepeat(Screen):
 
 class ScoresColorWord(Screen):
     """ Screen Name = scores-color-word """
+    return_ = _("Return")
+    high_score_in_color_mode = _("High Score in Color mode: ")
+    high_score_in_text_mode = _("High Score in Text mode: ")
+
     def __init__(self, **kwargs):
         """ """
         super(ScoresColorWord, self).__init__(**kwargs)
@@ -86,6 +95,10 @@ class ScoresColorWord(Screen):
 
 class ScoresColorRepeat(Screen):
     """ Screen Name = scores-color-repeat """
+    return_ = _("Return")
+    high_level_in_medium_mode = _("High Level in Medium mode: ")
+    high_level_in_hard_mode = _("High Level in Hard mode: ")
+
     def __init__(self, **kwargs):
         """ """
         super(ScoresColorRepeat, self).__init__(**kwargs)
@@ -100,17 +113,19 @@ class ScoresColorRepeat(Screen):
 
 class InstructionsColorRepeat(Screen):
     """ Screen Name = instruction-color-repeat """
-    text = "There is two modes in this game:\n"\
-           "Medium and Hard.\n"\
-           "\n"\
-           "In medium you must reproduice\n"\
-           "the sequence of\nColor/Sound showned,\n"\
-           "it's always the same sequence.\n"\
-           "\n"\
-           "In Hard:\n"\
-           "The sequence is differente every time!\n"\
-           "\n"\
-           "Good Luck"
+    return_ = _("Return")
+    color_repeat = _("Color Repeat")
+    text = _("There is two modes in this game:\n"
+             "Medium and Hard.\n"
+             "\n"
+             "In medium you must reproduice\n"
+             "the sequence of\nColor/Sound showned,\n"
+             "it's always the same sequence.\n"
+             "\n"
+             "In Hard:\n"
+             "The sequence is differente every time!\n"
+             "\n"
+             "Good Luck")
 
     def __init__(self, **kwargs):
         """ """
@@ -119,20 +134,22 @@ class InstructionsColorRepeat(Screen):
 
 class InstructionsColorWord(Screen):
     """ Screen Name = instruction-color-word """
-    text = "There is two modes in this game:\n"\
-           "Color and Text.\n"\
-           "\n"\
-           "In Color Mode you must click\n"\
-           "on the good color\n"\
-           "You don't care about the text inside the button\n"\
-           "Just click on the good color\n"\
-           "\n"\
-           "In Text Mode you must click\n"\
-           "On the same Text showned\n"\
-           "You don't care about the color\n"\
-           "Just click on the same Text\n"\
-           "\n"\
-           "Good Luck"
+    return_ = _("Return")
+    color_word = _("Color Word")
+    text = _("There is two modes in this game:\n"
+             "Color and Text.\n"
+             "\n"
+             "In Color Mode you must click\n"
+             "on the good color\n"
+             "You don't care about the text inside the button\n"
+             "Just click on the good color\n"
+             "\n"
+             "In Text Mode you must click\n"
+             "On the same Text showned\n"
+             "You don't care about the color\n"
+             "Just click on the same Text\n"
+             "\n"
+             "Good Luck")
 
     def __init__(self, **kwargs):
         """ """
@@ -185,6 +202,10 @@ class ButtonText(ButtonBehavior, Image):
 
 class StartScreen(Screen):
     """ The main start Screen """
+    exit = _("Exit")
+    color_word = _("Color Word")
+    color_repeat = _("Color Repeat")
+
     def __init__(self, **kwargs):
         """ """
         super(StartScreen, self).__init__(**kwargs)
@@ -244,6 +265,9 @@ class StartScreen(Screen):
 
 class MenuScreen(Screen):
     """ BoxLayout called by kivy """
+    text_mode = _("Text Mode")
+    color_mode = _("Color Mode")
+    return_ = _("Return")
 
     @staticmethod
     def start_text_mode():
@@ -266,8 +290,8 @@ class GameScreen(Screen):
     """ BoxLayout called by kivy """
     sound_pos = "unmute"
     # Text when the game start
-    text = 'Push a button for start'
-    text_button = "Push a button for start"
+    text = _('Push a button for start')
+    text_button = _("Push a button for start")
     # Color: rouge, vert, bleu and jaune
     colour1 = [1, 0, 0, 1]
     # colour2 = [0, 1, 0.2, 1]
@@ -275,18 +299,18 @@ class GameScreen(Screen):
     colour3 = [0, 0, 1, 1]
     colour4 = [1, 1, 0, 1]
 
-    text1 = 'rouge'
-    text2 = 'vert'
-    text3 = 'bleu'
-    text4 = 'jaune'
+    text1 = _("red")
+    text2 = _("green")
+    text3 = _("blue")
+    text4 = _("yellow")
 
     colors = [colour1, colour2, colour3, colour4]
     texts = [text1, text2, text3, text4]
 
-    colors_dict = {'rouge': [1, 0, 0, 1],
-                   'vert': [0.02, 0.898, 0.2, 1],
-                   'bleu': [0, 0, 1, 1],
-                   'jaune': [1, 1, 0, 1]}
+    colors_dict = {_("red"): [1, 0, 0, 1],
+                   _("green"): [0.02, 0.898, 0.2, 1],
+                   _("blue"): [0, 0, 1, 1],
+                   _("yellow"): [1, 1, 0, 1]}
 
     texts_test = ""
     # Used for mix colors and texts
@@ -323,6 +347,8 @@ class GameScreen(Screen):
     # ProgressBar for time mode
     progress_bar_1 = ObjectProperty(None)
     value_progress_bar = 0
+
+    time_mode_ = _("Time Mode")
 
     def __init__(self, **kwargs):
         """ """
@@ -438,7 +464,7 @@ class GameScreen(Screen):
         pts_kv = self.ids['points']
         pts_kv.text = ""
         welcome1 = self.ids['welcome_text']
-        welcome1.text = "Push a button for start"
+        welcome1.text = _("Push a button for start")
 
     def ask(self):
         """ update question text """
@@ -450,9 +476,9 @@ class GameScreen(Screen):
         # Better than: self.number_random = random.randint(0, 3)
         self.number_random = int(random.choice('0123'))
         if GameScreen.mode_game == "Colours Mode":
-            self.text = 'Push on the good color'
+            self.text = _('Push on the good color')
         elif GameScreen.mode_game == "Text Mode":
-            self.text = 'Push on the Good Text'
+            self.text = _('Push on the Good Text')
         else:
             pass
         self.text_button = str(self.texts[self.number_random])
@@ -554,8 +580,8 @@ class GameScreen(Screen):
 
             else:
                 pass
-            points_kv.text = "Points " + str(self.points) +\
-                             "   Miss " + str(self.no_points)
+            points_kv.text = (_("Points ") + str(self.points) +
+                              _("   Miss ") + str(self.no_points))
             if self.value_progress_bar >= 99:
                 self.count_points_win()
 
@@ -659,6 +685,12 @@ class WinScreen(Screen):
     text4 = StringProperty("")
     text5 = StringProperty("")
     text6 = StringProperty("")
+    you_win_ = _("You Win !")
+    time_ = _("time: ")
+    seconds_ = _("seconds")
+    time_final_ = _("Time final: ")
+    miss_ = _("Miss: ")
+    penality_ = _("Penality: 3x")
 
     @staticmethod
     def sound_stop():
@@ -688,7 +720,7 @@ class GameScreenRepeat(Screen):
                'green': [0, 1, 0, 1]}
     colors = []
     question = []
-    lenquestion = "Level: " + str(1)
+    lenquestion = _("Level: ") + str(1)
     level = 2
     started = 0
     life = 3
@@ -707,7 +739,7 @@ class GameScreenRepeat(Screen):
     color_repeat_life_2 = os.getcwd() + "/data/ColorRepeat_Life2.png"
     color_repeat_life_1 = os.getcwd() + "/data/ColorRepeat_Life1.png"
     new_record = ""
-    old_level = "Best Level"
+    old_level = _("Best Level")
 
     def __init__(self, **kwargs):
         """ """
@@ -767,12 +799,12 @@ class GameScreenRepeat(Screen):
 
     def ini(self):
         """ build """
-        self.lenquestion = "Level: " + str(1)
+        self.lenquestion = _("Level: ") + str(1)
         lenquestionlabel = self.ids['lenquestionlabel']
         lenquestionlabel.text = self.lenquestion
         self.life = 3
         lifelabel = self.ids['lifelabel']
-        lifelabel.text = "Life: "   # + str(self.life)
+        lifelabel.text = _("Life: ")   # + str(self.life)
         self.level = 2
         self.question = []
         self.question_index = 0
@@ -797,8 +829,8 @@ class GameScreenRepeat(Screen):
 
     def button_start_pushed(self):
         """ Called by kv """
-        self.new_record = ""
-        self.old_level = "Best Level"
+        self.new_record = "Level"
+        self.old_level = _("Best Level")
         lifeimage = self.ids['lifeimage']
         lifeimage.source = self.color_repeat_life_3
         self.ini()
@@ -951,13 +983,13 @@ class GameScreenRepeat(Screen):
         print "here new_record"
         if self.mode == 'remember':
             if self.level_best_medium < (len(self.question)-1):
-                self.new_record = "New Record!"
-                self.old_level = "Old Best Level"
+                self.new_record = _("New Record!")
+                self.old_level = _("Old Best Level")
                 print "ok NEW REcord!"
         else:
             if self.level_best_hard < (len(self.question)-1):
-                self.new_record = "New Record!"
-                self.old_level = "Old Best Level"
+                self.new_record = _("New Record!")
+                self.old_level = _("Old Best Level")
 
     def check_answer(self):
         """ Called by Button's push """
@@ -965,7 +997,7 @@ class GameScreenRepeat(Screen):
         if self.colors == self.question:
             print "win"
             self.win()
-            self.lenquestion = "Level: " + str(len(self.question)-1)
+            self.lenquestion = _("Level: ") + str(len(self.question)-1)
             lenquestionlabel = self.ids['lenquestionlabel']
             lenquestionlabel.text = self.lenquestion
 
@@ -979,7 +1011,7 @@ class GameScreenRepeat(Screen):
                         print "false"
                         self.life -= 1
                         lifelabel = self.ids['lifelabel']
-                        lifelabel.text = "Life: "  # + str(self.life)
+                        lifelabel.text = _("Life: ")  # + str(self.life)
                         if self.life == 1:
                             lifeimage.source = self.color_repeat_life_1
                         if self.life == 2:
@@ -992,7 +1024,7 @@ class GameScreenRepeat(Screen):
             else:
                 self.life -= 1
                 lifelabel = self.ids['lifelabel']
-                lifelabel.text = "Life: "  # + str(self.life)
+                lifelabel.text = _("Life: ")  # + str(self.life)
                 if self.life == 2:
                     lifeimage.source = self.color_repeat_life_2
                 if self.life == 1:
@@ -1026,10 +1058,11 @@ class GameScreenRepeat(Screen):
 
 class MenuScreenRepeat(Screen):
     """ The Menu Class """
-    text_easiest = "Easiest"
-    text_easy = "Medium"
-    text_medium = "Hard"
-    text_hard = "Hard"
+    # text_easiest = "Easiest"
+    text_easy = _("Medium")
+    # text_medium = "Hard"
+    text_hard = _("Hard")
+    return_ = _("Return")
 
     @staticmethod
     def start_game():
@@ -1080,7 +1113,7 @@ class BrainColorGame(App):
         """ Use ScreenManager """
         self.use_kivy_settings = False
         self.settings_cls = SettingsWithNoMenu
-        self.sound_game.play()
+        # self.sound_game.play()
         self.bind(text_2=self.update)
         # Create the screen manager
         screen_m = ScreenManager()

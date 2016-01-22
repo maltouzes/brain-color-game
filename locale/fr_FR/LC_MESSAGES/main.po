@@ -1,0 +1,209 @@
+# Brain Color Game
+# Copyright (C) 2016 Maltouzes
+# This file is distributed under the same license as the Brain Color Game package.
+# Maltouzes <maltouzes@gmail.com>, 2016.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.5.35\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-21 17:02+0100\n"
+"PO-Revision-Date: 2016-01-21 17:04+0100\n"
+"Last-Translator: Maltouzes <maltouzes@gmail.com>\n"
+"Language-Team: fr_French <maltouzes@gmail.com>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: main.py:80 main.py:98 main.py:116 main.py:137 main.py:270 main.py:1065
+msgid "Return"
+msgstr "Return"
+
+#: main.py:81
+msgid "High Score in Color mode: "
+msgstr "Meilleur Score Mode Couleur"
+
+#: main.py:82
+msgid "High Score in Text mode: "
+msgstr "Meilleur Score Mode Texte"
+
+#: main.py:99
+msgid "High Level in Medium mode: "
+msgstr "Meilleur Niveau Mode Moyen"
+
+#: main.py:100
+msgid "High Level in Hard mode: "
+msgstr "Meilleur Niveau Mode difficile"
+
+#: main.py:117 main.py:207
+msgid "Color Repeat"
+msgstr "Couleur Répétition"
+
+#: main.py:118
+msgid ""
+"There is two modes in this game:\n"
+"Medium and Hard.\n"
+"\n"
+"In medium you must reproduice\n"
+"the sequence of\n"
+"Color/Sound showned,\n"
+"it's always the same sequence.\n"
+"\n"
+"In Hard:\n"
+"The sequence is differente every time!\n"
+"\n"
+"Good Luck"
+msgstr ""
+"Ce jeu comporte 2 modes:\n"
+"Moyen et Difficile.\n"
+"\n"
+"En moyen tu dois reproduire\n"
+"la sequence de\n"
+"Couleurs/Sons montrée, \n"
+"c'est toujours la même sequence.\n"
+"\n"
+"En difficile:\n"
+"La sequence est differente à chaque fois!\n"
+"\n"
+"Bonne chance"
+
+#: main.py:138 main.py:206
+msgid "Color Word"
+msgstr "Mots Couleur"
+
+#: main.py:139
+msgid ""
+"There is two modes in this game:\n"
+"Color and Text.\n"
+"\n"
+"In Color Mode you must click\n"
+"on the good color\n"
+"You don't care about the text inside the button\n"
+"Just click on the good color\n"
+"\n"
+"In Text Mode you must click\n"
+"On the same Text showned\n"
+"You don't care about the color\n"
+"Just click on the same Text\n"
+"\n"
+"Good Luck"
+msgstr ""
+" Ce jeu comporte 2 modes:\n"
+"Couleur et Texte:\n"
+"\n"
+"En Mode Couleur tu dois cliquer\n"
+"sur la bonne Couleur\n"
+"Ne te préocupe pas du texte dans le button\n"
+"Tu dois juste cliquer sur la bonne couleur\n"
+"\n"
+"En Mode Texte tu dois cliquer\n"
+"Sur le même Texte\n"
+"Ne te préocupe pas de la couleur\n"
+"Clique uniquement sur le même texte\n"
+"\n"
+"Bonne Chance"
+
+#: main.py:205
+msgid "Exit"
+msgstr "Quitter"
+
+#: main.py:268
+msgid "Text Mode"
+msgstr "Mode Texte"
+
+#: main.py:269
+msgid "Color Mode"
+msgstr "Mode Couleur"
+
+#: main.py:293 main.py:294 main.py:467
+msgid "Push a button for start"
+msgstr "Appuyez sur un boutton"
+
+#: main.py:302 main.py:310
+msgid "red"
+msgstr "rouge"
+
+#: main.py:303 main.py:311
+msgid "green"
+msgstr "vert"
+
+#: main.py:304 main.py:312
+msgid "blue"
+msgstr "bleu"
+
+#: main.py:305 main.py:313
+msgid "yellow"
+msgstr "jaune"
+
+#: main.py:351
+msgid "Time Mode"
+msgstr "Mode Chrono"
+
+#: main.py:479
+msgid "Push on the good color"
+msgstr "Cherchez la Couleur"
+
+#: main.py:481
+msgid "Push on the Good Text"
+msgstr "Cherchez le Texte"
+
+#: main.py:583
+msgid "Points "
+msgstr "Points "
+
+#: main.py:584
+msgid "   Miss "
+msgstr "   Raté "
+
+#: main.py:688
+msgid "You Win !"
+msgstr "Vous avez Gagné !"
+
+#: main.py:689
+msgid "time: "
+msgstr "Temps: "
+
+#: main.py:690
+msgid "seconds"
+msgstr "Secondes"
+
+#: main.py:691
+msgid "Time final: "
+msgstr "Temps final: "
+
+#: main.py:692
+msgid "Miss: "
+msgstr "Raté: "
+
+#: main.py:693
+msgid "Penality: 3x"
+msgstr "Pénalitées: 3x"
+
+#: main.py:723 main.py:802 main.py:1000
+msgid "Level: "
+msgstr "Level: "
+
+#: main.py:742 main.py:833
+msgid "Best Level"
+msgstr "Meilleur Score"
+
+#: main.py:807 main.py:1014 main.py:1027
+msgid "Life: "
+msgstr "Vie: "
+
+#: main.py:986 main.py:991
+msgid "New Record!"
+msgstr "Nouveau Record!"
+
+#: main.py:987 main.py:992
+msgid "Old Best Level"
+msgstr "Ancien Score"
+
+#: main.py:1062
+msgid "Medium"
+msgstr "Moyen"
+
+#: main.py:1064
+msgid "Hard"
+msgstr "Difficile"

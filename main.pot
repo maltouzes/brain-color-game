@@ -1,0 +1,184 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-22 10:35+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: main.py:80 main.py:98 main.py:116 main.py:137 main.py:270 main.py:1065
+msgid "Return"
+msgstr ""
+
+#: main.py:81
+msgid "High Score in Color mode: "
+msgstr ""
+
+#: main.py:82
+msgid "High Score in Text mode: "
+msgstr ""
+
+#: main.py:99
+msgid "High Level in Medium mode: "
+msgstr ""
+
+#: main.py:100
+msgid "High Level in Hard mode: "
+msgstr ""
+
+#: main.py:117 main.py:207
+msgid "Color Repeat"
+msgstr ""
+
+#: main.py:118
+msgid ""
+"There is two modes in this game:\n"
+"Medium and Hard.\n"
+"\n"
+"In medium you must reproduice\n"
+"the sequence of\n"
+"Color/Sound showned,\n"
+"it's always the same sequence.\n"
+"\n"
+"In Hard:\n"
+"The sequence is differente every time!\n"
+"\n"
+"Good Luck"
+msgstr ""
+
+#: main.py:138 main.py:206
+msgid "Color Word"
+msgstr ""
+
+#: main.py:139
+msgid ""
+"There is two modes in this game:\n"
+"Color and Text.\n"
+"\n"
+"In Color Mode you must click\n"
+"on the good color\n"
+"You don't care about the text inside the button\n"
+"Just click on the good color\n"
+"\n"
+"In Text Mode you must click\n"
+"On the same Text showned\n"
+"You don't care about the color\n"
+"Just click on the same Text\n"
+"\n"
+"Good Luck"
+msgstr ""
+
+#: main.py:205
+msgid "Exit"
+msgstr ""
+
+#: main.py:268
+msgid "Text Mode"
+msgstr ""
+
+#: main.py:269
+msgid "Color Mode"
+msgstr ""
+
+#: main.py:293 main.py:294 main.py:467
+msgid "Push a button for start"
+msgstr ""
+
+#: main.py:302 main.py:310
+msgid "red"
+msgstr ""
+
+#: main.py:303 main.py:311
+msgid "green"
+msgstr ""
+
+#: main.py:304 main.py:312
+msgid "blue"
+msgstr ""
+
+#: main.py:305 main.py:313
+msgid "yellow"
+msgstr ""
+
+#: main.py:351
+msgid "Time Mode"
+msgstr ""
+
+#: main.py:479
+msgid "Push on the good color"
+msgstr ""
+
+#: main.py:481
+msgid "Push on the Good Text"
+msgstr ""
+
+#: main.py:583
+msgid "Points "
+msgstr ""
+
+#: main.py:584
+msgid "   Miss "
+msgstr ""
+
+#: main.py:688
+msgid "You Win !"
+msgstr ""
+
+#: main.py:689
+msgid "time: "
+msgstr ""
+
+#: main.py:690
+msgid "seconds"
+msgstr ""
+
+#: main.py:691
+msgid "Time final: "
+msgstr ""
+
+#: main.py:692
+msgid "Miss: "
+msgstr ""
+
+#: main.py:693
+msgid "Penality: 3x"
+msgstr ""
+
+#: main.py:723 main.py:802 main.py:1000
+msgid "Level: "
+msgstr ""
+
+#: main.py:742 main.py:833
+msgid "Best Level"
+msgstr ""
+
+#: main.py:807 main.py:1014 main.py:1027
+msgid "Life: "
+msgstr ""
+
+#: main.py:986 main.py:991
+msgid "New Record!"
+msgstr ""
+
+#: main.py:987 main.py:992
+msgid "Old Best Level"
+msgstr ""
+
+#: main.py:1062
+msgid "Medium"
+msgstr ""
+
+#: main.py:1064
+msgid "Hard"
+msgstr ""
